@@ -1,17 +1,28 @@
 from sklearn.preprocessing import LabelEncoder
 import os
 import joblib
+import sys
+from loguru import logger
 
 from config import cache_dir, encode_path
+
+# Configure loguru logger
+logger.remove()
+logger.add(
+    sys.stderr, 
+    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+    level="INFO",
+    colorize=True
+)
 
 def encode(labels):
     encoder = LabelEncoder()
     encoded_labels = encoder.fit_transform(labels)
     mapping = {str(k): v for k, v in zip(encoder.classes_, range(len(encoder.classes_)))}
-    print(f"[info@encoder] -> Encoder: {mapping}")
+    logger.info(f"Encoder: {mapping}")
     # Save the mapping encoder
     joblib.dump(encoder, encode_path)
-    print(f"[info@encoder] -> Encoder saved to {encode_path}.")
+    logger.info(f"Encoder saved to {encode_path}.")
     return encoded_labels
 
 def get_encoder():

@@ -29,7 +29,7 @@ pca_model_path = os.path.join(cache_dir, 'pca_model.joblib')
 movement_dir = os.path.join(rootDir, r'Data/Movement data')
 transport_dir = os.path.join(rootDir, r'Data/Transport data') # TODO
 walking_dir= os.path.join(rootDir, r'Data/Walking data') # TODO
-others_dir = os.path.join(rootDir, r'Data/Others data') # TODO
+others_dir = os.path.join(rootDir, r'Data/Others data')
 
 
 # Directory of the training data from original data sources

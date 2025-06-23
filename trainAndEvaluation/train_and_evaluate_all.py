@@ -4,9 +4,10 @@ import pandas as pd
 import datetime
 
 from config import models, models_dir, save_dir
-from trainAndEvaluation.train_and_evaluate import train_and_evaluate
+from trainAndEvaluation.train_and_evaluate import train_and_evaluate, plot_confusion_matrix
 
-def train_and_evaluate_all(X_train_scaled, X_test_scaled, y_train, y_test, getBest=False, mode='MTWO'):
+def train_and_evaluate_all(X_train_scaled, X_test_scaled, y_train, y_test, getBest=False, mode='MTWO', 
+                          class_names=None, save_confusion_matrices=False):
     # To store all model performance metrics
     model_results = {}
     
@@ -37,13 +38,26 @@ def train_and_evaluate_all(X_train_scaled, X_test_scaled, y_train, y_test, getBe
     for model_name, model in selected_models.items():
         print(f"-------------------- [{model_name}] --------------------")
         accuracy, aurc, roc_auc, report, trained_model = train_and_evaluate(
-            model, X_train_scaled, X_test_scaled, y_train, y_test
+            model, X_train_scaled, X_test_scaled, y_train, y_test, class_names=class_names
         )
         
         # Save the trained model
         model_filename = os.path.join(models_dir, f"{model_name}.pkl")
         joblib.dump(trained_model, model_filename)
         print(f"Model saved to {model_filename}")
+        
+        # Save confusion matrix if requested
+        if save_confusion_matrices:
+            # 创建cm目录
+            cm_dir = os.path.join(save_dir, 'cm')
+            os.makedirs(cm_dir, exist_ok=True)
+            cm_save_path = os.path.join(cm_dir, f"confusion_matrix_{model_name}_{mode}.png")
+            # Re-predict to get predictions for confusion matrix
+            y_pred = trained_model.predict(X_test_scaled)
+            # 修改plot_confusion_matrix函数调用，不显示图像
+            from trainAndEvaluation.confusion_matrix_utils import save_confusion_matrix
+            save_confusion_matrix(y_test, y_pred, class_names=class_names, 
+                                model_name=model_name, save_path=cm_save_path)
         
         model_results[model_name] = {
             'accuracy': accuracy,

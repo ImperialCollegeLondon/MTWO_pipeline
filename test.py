@@ -44,14 +44,21 @@ def predict(model, data_path, mode='MTWO'):
         features_list.append(features)
     X_features = np.array(features_list)
 
+    # print(f"[debug] -> Features before scaling: {X_features.shape}")
+    
     # 4. Scale the features
     scaler = joblib.load(scaler_path)
     X_features = scaler.transform(X_features)
+    # print(f"[debug] -> Features after scaling: {X_features.shape}")
 
     # 5. PCA 
     pca_model = joblib.load(pca_model_path)
-    # print(f"[info@test] -> PCA model loaded from {pca_model_path}.")
     X_features = pca_model.transform(X_features)
+    # print(f"[debug] -> Features after PCA: {X_features.shape}")
+    
+    # 检查模型期望的特征数量
+    expected_features = getattr(model, 'n_features_in_', 'Unknown')
+    # print(f"[debug] -> Model expects {expected_features} features, providing {X_features.shape[1]} features")
 
     # 6. Predict
     predictions = model.predict_proba(X_features)
@@ -100,7 +107,8 @@ def predict_all(file_list, data_dir, mode='MTWO'):
             # ATTENTION!!!!!!!!!!!!!!!!!!!!
             # ATTENTION!!!!!!!!!!!!!!!!!!!!
             # ATTENTION!!!!!!!!!!!!!!!!!!!!
-            ground_truth = testInit.test_config.ground_truth_dic[file_name.split("-")[3][-1]]
+            ground_truth_dic = testInit.test_config.ground_truth_dic_mo if mode == 'MO' else testInit.test_config.ground_truth_dic
+            ground_truth = ground_truth_dic.get(file_name.split("-")[3][-1], 'Unknown')
             # ground_truth = 'M'  # Test the new GERF data, all ground truth is 'M'
 
             preds = prediction_results['prediction'].values
@@ -161,13 +169,14 @@ if __name__ == '__main__':
 
     mode = 'MO'
 
-    # data_dir = os.path.join(rootDir, r"Data/my_data/") # Without mapping model (apple watch)
-    data_dir = os.path.join(rootDir, r"Data/my_data/mapped_data") # With mapping model (converted to AX form)
-    # data_dir = os.path.join(rootDir, r'Data/my_Movement_data') # The new gerf data (all movement)
+    data_dir = os.path.join(rootDir, r"Data/my_data/") # Without mapping model (apple watch)
+    # data_dir = os.path.join(rootDir, r"Data/my_data/mapped_data") # With mapping model (converted to AX form)
 
     # 1. Load all csv name from the directory
     # file_list contains all file basenames in the data_dir user provided
-    file_list = testInit.init.get_gerf_files(data_dir, pattern_style='gerf')
+    # pattern_style = 'gerf'
+    pattern_style = 'all_csv'
+    file_list = testInit.init.get_gerf_files(data_dir, pattern_style=pattern_style)
 
     # 2. Initialise the results CSV file
     testInit.init.init_res_csv(data_dir)

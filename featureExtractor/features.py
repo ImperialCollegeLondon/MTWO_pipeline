@@ -319,5 +319,5 @@ if __name__ == "__main__":
         "Z": np.random.rand(10)
     }
     df = pd.DataFrame(data)
-    features = compute_features(df)
+    features = compute_features_MO(df)
     print(f"\nLength of features : {len(features)}\n")

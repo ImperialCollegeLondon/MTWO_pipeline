@@ -1,9 +1,20 @@
 import joblib
 import os
 import numpy as np
+import sys
 from sklearn.decomposition import PCA
+from loguru import logger
 
 from config import cache_dir, SEED, pca_model_path
+
+# Configure loguru logger
+logger.remove()
+logger.add(
+    sys.stderr, 
+    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+    level="INFO",
+    colorize=True
+)
 
 def apply_pca(X_train, X_test, n_components=0.95, plot_variance=False):
     """
@@ -15,7 +26,7 @@ def apply_pca(X_train, X_test, n_components=0.95, plot_variance=False):
     pca = PCA(n_components=n_components, random_state=SEED)
     X_train_pca = pca.fit_transform(X_train)
     X_test_pca = pca.transform(X_test)
-    print(f"[info@PCA.apply_pca] -> Number of features after PCA: {X_train_pca.shape[1]}")
+    logger.info(f"Number of features after PCA: {X_train_pca.shape[1]}")
     if plot_variance:
         import matplotlib.pyplot as plt
         plt.figure(figsize=(6,3))
@@ -31,7 +42,7 @@ def pca(X_train_scaled, X_test_scaled, n_components=0.95, vis=False):
     X_train_scaled, X_test_scaled, pca_model = apply_pca(X_train_scaled, X_test_scaled, n_components=n_components, plot_variance=vis)
     # Save the PCA model
     joblib.dump(pca_model, pca_model_path, compress=3)
-    print(f"[info@PCA.pca] -> PCA model saved to {pca_model_path}.")
+    logger.info(f"PCA model saved to {pca_model_path}.")
 
     if vis:
         # Draw heatmap of PCA components
@@ -44,7 +55,7 @@ def pca(X_train_scaled, X_test_scaled, n_components=0.95, vis=False):
         plt.title('Heatmap of PCA components')
         plt.show()
 
-    print(f"[info@PCA.pca] -> Explained variance ratio: {pca_model.explained_variance_ratio_}")
-    print(f"[info@PCA.pca] -> Total explained variance: {np.sum(pca_model.explained_variance_ratio_)}")
+    logger.info(f"Explained variance ratio: {pca_model.explained_variance_ratio_}")
+    logger.info(f"Total explained variance: {np.sum(pca_model.explained_variance_ratio_)}")
 
-    return X_train_scaled, X_test_scaled, pca_model
+    return X_train_scaled, X_test_scaled

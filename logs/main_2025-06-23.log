@@ -1,0 +1,72 @@
+2025-06-23 13:22:38 | INFO | 
+2025-06-23 13:22:38 | INFO | Training started. Mode: MO.
+2025-06-23 13:22:38 | INFO | Step #1 Loading data...
+2025-06-23 13:23:14 | INFO | Other data mapped from AX format to Apple Watch.
+2025-06-23 13:23:15 | INFO | All data Loaded: Movement: 3034, Other: 2139
+2025-06-23 13:23:15 | INFO | Movement shape: (3034, 100, 3), Other shape: (2139, 100, 3)
+2025-06-23 13:23:15 | INFO | ----------------------------------------------------
+
+2025-06-23 13:23:15 | INFO | Step #2 Data Augmenting...
+2025-06-23 13:23:15 | INFO | Data Augmentation Completed: 6068 samples with 2 unique labels.
+2025-06-23 13:23:15 | INFO | ----------------------------------------------------
+
+2025-06-23 13:23:15 | INFO | Step #3 Feature Extraction...
+2025-06-23 13:23:16 | INFO | Feature Extraction Completed: Extracted 14 features from 6068 samples.
+2025-06-23 13:23:16 | INFO | ----------------------------------------------------
+
+2025-06-23 13:23:16 | INFO | Step #4 Data Processing...
+2025-06-23 13:23:16 | INFO | Data Processing Completed: Training set size: (4854, 14), Test set size: (1214, 14)
+2025-06-23 13:23:16 | INFO | ----------------------------------------------------
+
+2025-06-23 13:23:16 | INFO | Step #5 Dimensionality Reduction...
+2025-06-23 13:23:16 | INFO | Dimensionality Reduction Completed: Reduced features from 14 to 7 dimensions.
+2025-06-23 13:23:16 | INFO | ----------------------------------------------------
+
+2025-06-23 13:23:16 | INFO | Step #6 Training and Evaluation...
+2025-06-23 13:23:19 | INFO | Training and Evaluation Completed. Best Model: mlp with accuracy 1.00.
+2025-06-23 13:23:19 | INFO | 
+Step #7 Generating confusion matrix comparison...
+2025-06-23 13:23:20 | INFO | 
+Script last run at 2025-06-23 13:23:20
+2025-06-23 13:23:20 | SUCCESS | Pipeline completed successfully!
+2025-06-23 13:43:54 | INFO     | __main__:main:81 - Training started. Mode: MO.
+2025-06-23 13:43:54 | INFO     | __main__:main:82 - ----------------------------------------------------
+2025-06-23 13:43:54 | INFO     | __main__:main:103 - Step #1 Loading data...
+2025-06-23 13:43:56 | ERROR    | transform:transform_data:161 - 转换数据时发生错误: Input X contains NaN.
+MLPRegressor does not accept missing values encoded as NaN natively. For supervised learning, you might want to consider sklearn.ensemble.HistGradientBoostingClassifier and Regressor which accept missing values encoded as NaNs natively. Alternatively, it is possible to preprocess the data, for instance by using an imputer transformer in a pipeline or drop samples with missing values. See https://scikit-learn.org/stable/modules/impute.html You can find a list of all estimators that handle NaN values at the following page: https://scikit-learn.org/stable/modules/impute.html#estimators-that-handle-nan-values
+2025-06-23 13:43:56 | INFO     | __main__:main:114 - Other data mapped from AX format to Apple Watch.
+2025-06-23 13:43:57 | INFO     | __main__:main:131 - All data Loaded: Movement: 3034, Other: 0
+2025-06-23 13:43:57 | INFO     | __main__:main:132 - Movement shape: (3034, 100, 3), Other shape: (0,)
+2025-06-23 13:43:57 | INFO     | __main__:main:133 - ----------------------------------------------------
+
+2025-06-23 13:43:57 | INFO     | __main__:main:137 - Step #2 Data Augmenting...
+2025-06-23 13:47:30 | INFO     | __main__:main:81 - Training started. Mode: MO.
+2025-06-23 13:47:30 | INFO     | __main__:main:82 - ----------------------------------------------------
+2025-06-23 13:47:30 | INFO     | __main__:main:103 - Step #1 Loading data...
+2025-06-23 13:47:32 | INFO     | __main__:main:132 - All data Loaded: Movement: 3034, Other: 37
+2025-06-23 13:47:32 | INFO     | __main__:main:133 - Movement shape: (3034, 100, 3), Other shape: (37, 100, 3)
+2025-06-23 13:47:32 | INFO     | __main__:main:134 - ----------------------------------------------------
+
+2025-06-23 13:47:32 | INFO     | __main__:main:138 - Step #2 Data Augmenting...
+2025-06-23 13:47:33 | INFO     | __main__:main:140 - Data Augmentation Completed: 6068 samples with 2 unique labels.
+2025-06-23 13:47:33 | INFO     | __main__:main:141 - ----------------------------------------------------
+
+2025-06-23 13:47:33 | INFO     | __main__:main:145 - Step #3 Feature Extraction...
+2025-06-23 13:47:35 | INFO     | __main__:main:147 - Feature Extraction Completed: Extracted 14 features from 6068 samples.
+2025-06-23 13:47:35 | INFO     | __main__:main:148 - ----------------------------------------------------
+
+2025-06-23 13:47:35 | INFO     | __main__:main:152 - Step #4 Data Processing...
+2025-06-23 13:47:35 | INFO     | __main__:main:156 - Data Processing Completed: Training set size: (4854, 14), Test set size: (1214, 14)
+2025-06-23 13:47:35 | INFO     | __main__:main:157 - ----------------------------------------------------
+
+2025-06-23 13:47:35 | INFO     | __main__:main:161 - Step #5 Dimensionality Reduction...
+2025-06-23 13:47:35 | INFO     | __main__:main:163 - Dimensionality Reduction Completed: Reduced features from 14 to 7 dimensions.
+2025-06-23 13:47:35 | INFO     | __main__:main:164 - ----------------------------------------------------
+
+2025-06-23 13:47:35 | INFO     | __main__:main:172 - Step #6 Training and Evaluation...
+2025-06-23 13:47:40 | INFO     | __main__:main:178 - Training and Evaluation Completed. Best Model: mlp with accuracy 1.00.
+2025-06-23 13:47:40 | INFO     | __main__:main:181 - 
+Step #7 Generating confusion matrix comparison...
+2025-06-23 13:47:41 | INFO     | __main__:main:188 - 
+Script last run at 2025-06-23 13:47:41
+2025-06-23 13:47:41 | SUCCESS  | __main__:<module>:210 - Pipeline completed successfully!
