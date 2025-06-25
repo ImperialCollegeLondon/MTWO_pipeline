@@ -5,12 +5,15 @@ import pandas as pd
 import os
 import re
 import joblib
+import sys
 from joblib import Parallel, delayed
 from pathlib import Path
 from itertools import chain
 import gc
 from tqdm import tqdm
 
+# Add the parent directory to the Python path to import config
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import WINDOW_SIZE, OVERLAPPING_PERCENTAGE, LAB_SAMPLING_RATE, lab_data_dir, cache_dir
 
 def annotate(labDir, cache_dir):

@@ -10,20 +10,55 @@ import pandas as pd
 import numpy as np
 import os
 import joblib
+import sys
 from tqdm import tqdm
 from collections import Counter
 import datetime
+from tabulate import tabulate
 
+# Add the current directory to the Python path to import config
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from featureExtractor.features import compute_features, compute_features_MO
+from loguru import logger
+# Configure loguru logger with colors
+logger.remove()  # Remove default handler
+logger.add(
+    sys.stderr, 
+    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+    level="INFO",
+    colorize=True
+)
+logger.add(
+    "logs/main_{time:YYYY-MM-DD}.log", 
+    rotation="1 day", 
+    retention="7 days", 
+    format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}",
+    level="DEBUG",
+    colorize=False  # 文件输出不需要颜色
+)
+
+# 自定义级别颜色
+logger.level("INFO", color="<blue>")
+logger.level("SUCCESS", color="<green>")
+logger.level("WARNING", color="<yellow>")
+logger.level("ERROR", color="<red>")
+logger.level("DEBUG", color="<cyan>")
 import testInit.init
 import testInit.test_config
 from config import rootDir, encode_path, scaler_path, pca_model_path
 from config import WINDOW_SIZE
 
+
+
+# ============================
+# Following is the core code
+# ============================
+
+
+
 # --------load test data from csv file-----------------
 def predict(model, data_path, mode='MTWO'):
     '''The prediction pipeline for a single data file'''
-    # print(f"[info@test] -> Starting prediction for {data_path} with mode {mode}...")
     from dataLoader.load_data import parse_csv
     df = parse_csv(data_path, useFilter=True)  # Load (and filter) the data from CSV file
 
@@ -38,27 +73,26 @@ def predict(model, data_path, mode='MTWO'):
             continue
         # Choose feature extraction function based on mode
         if mode == 'MO':
-            features = compute_features_MO(window_df)
+            features_list.append(compute_features_MO(window_df))
         else:  # MTWO mode
-            features = compute_features(window_df)
-        features_list.append(features)
+            features_list.append(compute_features(window_df))
     X_features = np.array(features_list)
 
-    # print(f"[debug] -> Features before scaling: {X_features.shape}")
+    logger.debug(f"Features before scaling: {X_features.shape}")
     
     # 4. Scale the features
     scaler = joblib.load(scaler_path)
     X_features = scaler.transform(X_features)
-    # print(f"[debug] -> Features after scaling: {X_features.shape}")
+    logger.debug(f"Features after scaling: {X_features.shape}")
 
     # 5. PCA 
     pca_model = joblib.load(pca_model_path)
     X_features = pca_model.transform(X_features)
-    # print(f"[debug] -> Features after PCA: {X_features.shape}")
+    logger.debug(f"Features after PCA: {X_features.shape}")
     
     # 检查模型期望的特征数量
     expected_features = getattr(model, 'n_features_in_', 'Unknown')
-    # print(f"[debug] -> Model expects {expected_features} features, providing {X_features.shape[1]} features")
+    logger.debug(f"Model expects {expected_features} features, providing {X_features.shape[1]} features")
 
     # 6. Predict
     predictions = model.predict_proba(X_features)
@@ -78,15 +112,15 @@ def predict_all(file_list, data_dir, mode='MTWO'):
     model_dics = testInit.test_config.model_dics_mo if mode == 'MO' else testInit.test_config.model_dics
     
     results = {
-        'overall': {'correct': Counter(), 'total': Counter()},
-        'movement': {'correct': Counter(), 'total': Counter()},
-        'transport': {'correct': Counter(), 'total': Counter()},
-        'walking': {'correct': Counter(), 'total': Counter()},
-        'others': {'correct': Counter(), 'total': Counter()}
+        'overall': {'tp': Counter(), 'fp': Counter(), 'fn': Counter(), 'total': Counter()},
+        'movement': {'tp': Counter(), 'fp': Counter(), 'fn': Counter(), 'total': Counter()},
+        'transport': {'tp': Counter(), 'fp': Counter(), 'fn': Counter(), 'total': Counter()},
+        'walking': {'tp': Counter(), 'fp': Counter(), 'fn': Counter(), 'total': Counter()},
+        'others': {'tp': Counter(), 'fp': Counter(), 'fn': Counter(), 'total': Counter()}
     } if mode == 'MTWO' else {
-        'overall': {'correct': Counter(), 'total': Counter()},
-        'movement': {'correct': Counter(), 'total': Counter()},
-        'others': {'correct': Counter(), 'total': Counter()}
+        'overall': {'tp': Counter(), 'fp': Counter(), 'fn': Counter(), 'total': Counter()},
+        'movement': {'tp': Counter(), 'fp': Counter(), 'fn': Counter(), 'total': Counter()},
+        'others': {'tp': Counter(), 'fp': Counter(), 'fn': Counter(), 'total': Counter()}
     }
 
     model_name_list = list(model_dics.keys())
@@ -101,7 +135,7 @@ def predict_all(file_list, data_dir, mode='MTWO'):
             prediction_results = predict(model_file, file_path, mode=mode)
 
             if prediction_results is None:
-                print(f"[Warning] {file_name} too short, skipping.")
+                logger.warning(f"[Warning] {file_name} too short, skipping.")
                 continue
             
             # ATTENTION!!!!!!!!!!!!!!!!!!!!
@@ -112,58 +146,129 @@ def predict_all(file_list, data_dir, mode='MTWO'):
             # ground_truth = 'M'  # Test the new GERF data, all ground truth is 'M'
 
             preds = prediction_results['prediction'].values
-            correct = np.sum(preds == ground_truth)
-
-            # # DEBUG
-            # print(ground_truth)
-            # print(preds)
             
-            # Update overall results
-            results['overall']['correct'][model_name] += correct
+            # Calculate metrics for overall
+            tp_overall = np.sum(preds == ground_truth)
+            fp_overall = np.sum(preds != ground_truth)
+            fn_overall = 0  # For overall, we consider all samples
+            
+            results['overall']['tp'][model_name] += tp_overall
+            results['overall']['fp'][model_name] += fp_overall
             results['overall']['total'][model_name] += len(preds)
 
+            # # DEBUG
+            logger.debug(f"Ground truth: {ground_truth}")
+            logger.debug(f"Predictions: {preds}")
+            
             # Update category-specific results
             category_map = {'M': 'movement', 'T': 'transport', 'W': 'walking', 'O': 'others'} if mode == 'MTWO' else {'M': 'movement', 'O': 'others'}
-            if ground_truth in category_map:
-                category = category_map[ground_truth]
-                results[category]['correct'][model_name] += correct
-                results[category]['total'][model_name] += len(preds)
+            
+            # For each category, calculate TP, FP, FN
+            for gt_label, category in category_map.items():
+                tp = np.sum((preds == gt_label) & (ground_truth == gt_label))
+                fp = np.sum((preds == gt_label) & (ground_truth != gt_label))
+                fn = np.sum((preds != gt_label) & (ground_truth == gt_label))
+                
+                results[category]['tp'][model_name] += tp
+                results[category]['fp'][model_name] += fp
+                results[category]['fn'][model_name] += fn
+                
+                # Total samples for this category
+                if ground_truth == gt_label:
+                    results[category]['total'][model_name] += len(preds)
+            
             # except Exception as e:
-            #     print(f"[Error@test] {file_basename} with model {model_name} failed: {e}")
+            #     logger.error(f"{file_basename} with model {model_name} failed: {e}")
             #     Error_file_cnt += 1
             #     continue
-        # print(f"[info@test] {model_name} completed with {Error_file_cnt} errors.")
+        # print(f"{model_name} completed with {Error_file_cnt} errors.")
     return results
+
+def calculate_metrics(tp, fp, fn, total):
+    """Calculate accuracy, precision, recall, and F1 score"""
+    if total == 0:
+        return 0.0, 0.0, 0.0, 0.0
+    
+    accuracy = tp / total * 100 if total > 0 else 0.0
+    precision = tp / (tp + fp) * 100 if (tp + fp) > 0 else 0.0
+    recall = tp / (tp + fn) * 100 if (tp + fn) > 0 else 0.0
+    f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0.0
+    
+    return accuracy, precision, recall, f1
 
 def display_accuracy(results, mode='MTWO'):
     model_dics = testInit.test_config.model_dics if mode == 'MTWO' else testInit.test_config.model_dics_mo
     model_name_list = list(model_dics.keys())
     class_list = ['movement', 'transport', 'walking', 'others'] if mode == 'MTWO' else ['movement', 'others']
-    
-    print('\n------------------------------------------')
-    print("Accuracies on real world data (per window):")
 
-    # Display overall accuracy
-    display_category_accuracy(results['overall'], model_name_list)
+    print('\n' + '='*80)
+    print("Performance Metrics on Real World Data (Per Window)")
+    print('='*80)
 
-    # Display accuracy for each category
+    # Display overall metrics
+    print("\nOverall Performance:")
+    display_category_metrics_table(results['overall'], model_name_list, is_overall=True)
+
+    # Display metrics for each category
     for category_name in class_list:
-        print(f"\n{category_name.capitalize()} accuracy (per window):")
-        display_category_accuracy(results[category_name], model_name_list)
+        print(f"\n {category_name.capitalize()} Performance:")
+        display_category_metrics_table(results[category_name], model_name_list, is_overall=False)
 
-    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"\nLast test run at {current_time}")
-    print('------------------------------------------')
-            
-def display_category_accuracy(category_results, model_name_list):
-    """Display accuracy for a specific category"""
+    print('='*80)
+
+def display_category_metrics_table(category_results, model_name_list, is_overall=False):
+    """Display metrics in a beautiful table format"""
+    table_data = []
+    headers = ["Model", "Accuracy (%)", "Sample Count"] if is_overall else ["Model", "Accuracy (%)", "Precision (%)", "Recall (%)", "F1 Score (%)", "Sample Count"]
+    
     for model_name in model_name_list:
+        tp = category_results['tp'][model_name]
+        fp = category_results['fp'][model_name]
+        fn = category_results['fn'][model_name]
         total = category_results['total'][model_name]
+        
         if total > 0:
-            acc = category_results['correct'][model_name] / total * 100
-            print(f"{model_name}: {acc:.2f}%")
+            if is_overall:
+                # For overall metrics, use accuracy calculation
+                accuracy = tp / total * 100
+                row = [
+                    model_name.capitalize(),
+                    f"{accuracy:.2f}",
+                    f"{tp}/{total}"
+                ]
+            else:
+                # For category-specific metrics, calculate all metrics
+                accuracy, precision, recall, f1 = calculate_metrics(tp, fp, fn, total)
+                row = [
+                    model_name.capitalize(),
+                    f"{accuracy:.2f}",
+                    f"{precision:.2f}",
+                    f"{recall:.2f}",
+                    f"{f1:.2f}",
+                    f"{total}"
+                ]
+            table_data.append(row)
         else:
-            print(f"The denominator for {model_name} is {total}, cannot compute accuracy.")
+            # Handle case where no samples exist for this category
+            if is_overall:
+                row = [model_name.capitalize(), "N/A", "0/0"]
+            else:
+                row = [model_name.capitalize(), "N/A", "N/A", "N/A", "N/A", "0"]
+            table_data.append(row)
+            
+    if table_data:
+        table = tabulate(table_data, headers=headers, tablefmt="grid", numalign="center", stralign="center")
+        # Split table into lines and log each line
+        for line in table.split('\n'):
+            print(line)
+        
+        # Check for any models with no samples and log warnings
+        for i, model_name in enumerate(model_name_list):
+            total = category_results['total'][model_name]
+            if total == 0:
+                logger.warning(f"{model_name}: No samples belong to this category! Please check the pattern settings or file path of the ground truth.")
+    else:
+        logger.warning("No data to display for this category!")
 
 if __name__ == '__main__':
 
@@ -175,18 +280,21 @@ if __name__ == '__main__':
     # 1. Load all csv name from the directory
     # file_list contains all file basenames in the data_dir user provided
     # pattern_style = 'gerf'
-    pattern_style = 'all_csv'
+    pattern_style = 'gerf_mo' if mode == 'MO' else 'gerf'
     file_list = testInit.init.get_gerf_files(data_dir, pattern_style=pattern_style)
+
 
     # 2. Initialise the results CSV file
     testInit.init.init_res_csv(data_dir)
 
+
     # 3. Predict each file for each model
-    results = predict_all(file_list, data_dir, mode=mode)  # 根据你的模型选择正确的模式
+    results = predict_all(file_list, data_dir, mode=mode)
+
 
     # 4. Compute and display the accuracy
-    display_accuracy(results, mode=mode)  # 根据你的模型选择正确的模式
+    display_accuracy(results, mode=mode)
 
     # 5. Save the results
     # testInit.init.save_res_csv(data_dir)
-    # print(f"[info@main] -> All predictions completed and saved to {data_dir}.")
+    # print(f"All predictions completed and saved to {data_dir}.")

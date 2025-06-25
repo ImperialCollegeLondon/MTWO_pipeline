@@ -1,8 +1,12 @@
 import numpy as np
+import sys
+import os
 from scipy.interpolate import CubicSpline
 from scipy.ndimage import gaussian_filter1d
 import random
 
+# Add the parent directory to the Python path to import config
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import SEED
 
 class TimeSeriesAugmenter:

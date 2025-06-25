@@ -1,8 +1,21 @@
 import os
 import re
 import pandas as pd
+import sys
 
+# Add the parent directory to the Python path to import config
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import save_dir
+
+from loguru import logger
+# Configure loguru logger with colors
+logger.remove()  # Remove default handler
+logger.add(
+    sys.stderr, 
+    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+    level="INFO",
+    colorize=True
+)
 
 def get_gerf_files(data_dir, pattern_style='gerf'):
     '''Load all GERF data files from the specified directory.
@@ -19,7 +32,9 @@ def get_gerf_files(data_dir, pattern_style='gerf'):
     
     if pattern_style == 'gerf':
         pattern = re.compile(r'^GERF-(L|R)-D\d{3}-M(1|2|3|6)-S\d{4}\.csv$')
-    elif pattern_style == 'all_csv':
+    elif pattern_style == 'gerf_mo':
+        pattern = re.compile(r'^GERF-(L|R)-D\d{3}-M(1|3)-S\d{4}\.csv$')
+    elif pattern_style == 'csv':
         pattern = re.compile(r'.*\.csv$')
     else:
         pattern = re.compile(pattern_style)
@@ -68,4 +83,4 @@ def init_res_csv(data_dir, gt='default'):
         df[col] = df[col].astype(str)
 
     df.to_csv(res_csv, index=False)
-    print(f"[info@testInit.init.init_res_csv] -> Results CSV initialised at save_dir as res_summary.csv.")
+    logger.info(f"Results CSV initialised at {save_dir} as res_summary.csv.")

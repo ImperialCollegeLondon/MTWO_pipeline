@@ -1,5 +1,9 @@
 import numpy as np
+import sys
+import os
 
+# Add the parent directory to the Python path to import config
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from dataAugmenter.TimeSeriesAugmenter import TimeSeriesAugmenter 
 from config import SEED
 

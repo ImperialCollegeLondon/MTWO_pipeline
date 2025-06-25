@@ -1,3 +1,10 @@
+import sys
+import os
+
+# Add the parent directory to the Python path to import config
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+
 from config import *
 
 def splitIntoOverlappingWindows(df, ax_window_size=None, ax_step_size=None):

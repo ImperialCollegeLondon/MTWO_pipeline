@@ -5,6 +5,8 @@ import sys
 from sklearn.decomposition import PCA
 from loguru import logger
 
+# Add the parent directory to the Python path to import config
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import cache_dir, SEED, pca_model_path
 
 # Configure loguru logger

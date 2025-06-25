@@ -10,12 +10,10 @@
 
 from sklearn.model_selection import train_test_split
 import random
-import datetime
 import numpy as np
 import sys
 
 import pandas as pd
-from loguru import logger
 
 from config import *
 
@@ -35,11 +33,12 @@ from trainAndEvaluation.train_and_evaluate_all import save_comparison
 sys.path.insert(0, '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/my_data/compare')
 import transform  # Import the transform module to use its functions
 
+from loguru import logger
 # Configure loguru logger with colors
 logger.remove()  # Remove default handler
 logger.add(
     sys.stderr, 
-    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
     level="INFO",
     colorize=True
 )
@@ -79,7 +78,6 @@ def main(mode):
     """Main function to run the entire ML pipeline."""
     random.seed(SEED)  # Set random seed for reproducibility
     logger.info(f'Training started. Mode: {mode}.')
-    logger.info("----------------------------------------------------")
 
     if mode == 'MTWO':
         logger.info("Step #1 Loading data...")
@@ -103,15 +101,15 @@ def main(mode):
         logger.info("Step #1 Loading data...")
         # 1. Load Data
         movement_list = load_data(movement_dir, useFilter=True) # Load data from custom dataset, return: list(pd.Dataframe,)
-        other_list = load_data(others_dir, useFilter=True) # Load data from custom dataset
-        # _, _, _, other = load_data_from_original_sources(loadNewTransport=False) # Load data from original sources (AX and LAB data)
+        # other_list = load_data(others_dir, useFilter=True) # Load data from custom dataset
 
 
+        _, _, _, other = load_data_from_original_sources(loadNewTransport=False) # Load data from original sources (AX and LAB data)
         # Mapping other from AX to Apple Watch # Convert numpy array to DataFrame list for mapping
-        # other_dataframes = array_to_dataframe_list(other)
-        # other_mapped = transform.map_from_custom_data(other_dataframes)
-        # logger.info("Other data mapped from AX format to Apple Watch.")
-        # other = np.array([df[['accelerationX', 'accelerationY', 'accelerationZ']].values for df in other_mapped]) # Convert mapped DataFrames back to numpy array format
+        other_dataframes = array_to_dataframe_list(other)
+        other_mapped = transform.map_from_custom_data(other_dataframes)
+        logger.info("Other data mapped from AX format to Apple Watch.")
+        other = np.array([df[['accelerationX', 'accelerationY', 'accelerationZ']].values for df in other_mapped]) # Convert mapped DataFrames back to numpy array format
 
 
         # Convert custom data to the same format as original sources data
@@ -121,47 +119,42 @@ def main(mode):
         for df in movement_list:
             windows = splitIntoOverlappingWindows(df)
             movement_windowed.extend(windows)
-        for df in other_list:
-            windows = splitIntoOverlappingWindows(df)
-            other_windowed.extend(windows)
+        # for df in other_list:
+        #     windows = splitIntoOverlappingWindows(df)
+        #     other_windowed.extend(windows)
         
         # Convert to numpy arrays maintaining the 3D structure (samples, time_steps, features)
         movement = np.array([window.values for window in movement_windowed])
-        other = np.array([window.values for window in other_windowed])
+        # other = np.array([window.values for window in other_windowed])
 
-        logger.info(f"All data Loaded: Movement: {len(movement)}, Other: {len(other)}")
-        logger.info(f"Movement shape: {movement.shape}, Other shape: {other.shape}")
-        logger.info('----------------------------------------------------\n')
-
+        logger.success(f"All data Loaded: Movement: {len(movement)}, Other: {len(other)}")
+        logger.success(f"Movement shape: {movement.shape}, Other shape: {other.shape}")
 
         # 2. Data Augmentation
         logger.info("Step #2 Data Augmenting...")
         data, labels = augment_data_MO(movement, other)
-        logger.info(f"Data Augmentation Completed: {len(data)} samples with {len(set(labels))} unique labels.")
-        logger.info('----------------------------------------------------\n')
+        logger.success(f"Data Augmentation Completed: {len(data)} samples with {len(set(labels))} unique labels.")
+
 
 
     # 3. Feature Extraction
     logger.info("Step #3 Feature Extraction...")
     X_features = extract_features(data, labels, mode=mode)
-    logger.info(f"Feature Extraction Completed: Extracted {X_features.shape[1]} features from {len(data)} samples.")
-    logger.info('----------------------------------------------------\n')
-
+    logger.success(f"Feature Extraction Completed: Extracted {X_features.shape[1]} features from {len(data)} samples.")
 
     # 4. Data processing: encoding and scaling
     logger.info("Step #4 Data Processing...")
     y_labels = encoder.encode(labels) # encode the labels from str to int
     X_train, X_test, y_train, y_test = train_test_split(X_features, y_labels, test_size=0.2)
     X_train_scaled, X_test_scaled = scaler.scale(X_train, X_test)  # scale the features
-    logger.info(f"Data Processing Completed: Training set size: {X_train.shape}, Test set size: {X_test.shape}")
-    logger.info('----------------------------------------------------\n')
+    logger.success(f"Data Processing Completed: Training set size: {X_train.shape}, Test set size: {X_test.shape}")
 
 
     # 5. Dimensionality Reduction
     logger.info("Step #5 Dimensionality Reduction...")
     X_train_pca, X_test_pca = PCA.pca(X_train_scaled, X_test_scaled, n_components=0.95, vis=False)
-    logger.info(f"Dimensionality Reduction Completed: Reduced features from {X_train_scaled.shape[1]} to {X_train_pca.shape[1]} dimensions.")
-    logger.info('----------------------------------------------------\n')
+    logger.success(f"Dimensionality Reduction Completed: Reduced features from {X_train_scaled.shape[1]} to {X_train_pca.shape[1]} dimensions.")
+
     
     # 6. Train and Evaluate
     if mode == 'MO':
@@ -175,36 +168,64 @@ def main(mode):
         getBest=True, mode=mode, class_names=class_names, save_confusion_matrices=True
     )
     save_comparison(results_dict, (best_model_name, best_accuracy, best_aurc))
-    logger.info(f"Training and Evaluation Completed. Best Model: {best_model_name} with accuracy {best_accuracy:.2f}.")
+    logger.success(f"Training and Evaluation Completed. Best Model: {best_model_name} with accuracy {best_accuracy:.2f}.")
     
     # 7. Generate confusion matrix comparison
-    logger.info("\nStep #7 Generating confusion matrix comparison...")
+    logger.info("Step #7 Generating confusion matrix comparison...")
     from trainAndEvaluation.confusion_matrix_utils import compare_models_confusion_matrices
     models_to_compare = ['xgboost', 'rf', 'mlp'] if mode == 'MTWO' else ['xgboost2', 'rf', 'mlp']
     compare_models_confusion_matrices(X_test_pca, y_test, models_to_compare, 
                                     class_names=class_names, mode=mode)
     
-    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") # Print the time of the last run
-    logger.info(f"\nScript last run at {current_time}")
+    logger.success('Pipeline completed successfully!')
 
 if __name__ == '__main__':
     main(mode='MO')
+    '''
 
-    # Plot feature importance for XGBoost model
-    # import joblib
-    # import xgboost as xgb
-    # import matplotlib.pyplot as plt
-    # booster = joblib.load('/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/saved_models/ML/xgboost.pkl')
-    # # 画出基于 "gain" 的特征重要性条形图
-    # xgb.plot_importance(booster, 
-    #                     importance_type='gain', 
-    #                     max_num_features=15,  # 显示前15个
-    #                     height=0.5,
-    #                     xlabel='Average Gain',
-    #                     title='Feature Importance (by Gain)',
-    #                     grid=False)
+    # 可视化对比增强前后的加速度数据
+    # 1. Load Data
+    movement_list = load_data(movement_dir, useFilter=True) # Load data from custom dataset, return: list(pd.Dataframe,)
+    other_list = load_data(others_dir, useFilter=True) # Load data from custom dataset
 
-    # plt.tight_layout()
-    # plt.show()
+    # Convert custom data to the same format as original sources data
+    # Apply sliding window to convert DataFrames to windowed arrays
+    from dataTransformer.sliding_window import splitIntoOverlappingWindows
+    movement_windowed, other_windowed = [], []
+    for df in movement_list:
+        windows = splitIntoOverlappingWindows(df)
+        movement_windowed.extend(windows)
+    for df in other_list:
+        windows = splitIntoOverlappingWindows(df)
+        other_windowed.extend(windows)
+    
+    # Convert to numpy arrays maintaining the 3D structure (samples, time_steps, features)
+    movement = np.array([window.values for window in movement_windowed])
+    other = np.array([window.values for window in other_windowed])
 
-    logger.success('Pipeline completed successfully!')
+    # 合并原始数据用于对比可视化
+    original_data = np.concatenate([movement, other], axis=0)
+    # 生成原始数据的标签
+    original_labels = np.concatenate([
+        np.array(['M'] * len(movement)), 
+        np.array(['O'] * len(other))
+    ])
+    logger.info(f"Original data shape: Movement: {movement.shape}, Other: {other.shape}, Combined: {original_data.shape}")
+
+    # 2. Data Augmentation
+    balanced_X, balanced_y = augment_data_MO(movement, other)
+    logger.info(f"Augmented data shape: {balanced_X.shape}")
+
+    # 3. Visualize augmentation comparison
+    from dataAugmenter.augment_data import visualize_augmentation_comparison
+    visualize_augmentation_comparison(
+        original_acc=original_data,
+        original_labels=original_labels,
+        augmented_acc=balanced_X,
+        augmented_labels=balanced_y,
+        mode="MO",
+        comparison_type="full",  # 可以改为 "full", "segment", 或 "random"
+        segment_length=200,  # 可视化的样本数量
+        figsize=(18, 12)
+    )
+    '''

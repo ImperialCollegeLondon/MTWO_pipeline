@@ -7,10 +7,13 @@ import datetime
 import joblib
 import pandas as pd
 import os
+import sys
 from joblib import Parallel, delayed
 from itertools import chain
 from tqdm import tqdm
 
+# Add the parent directory to the Python path to import config
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import ax_data_dir, cache_dir
 from config import WINDOW_SIZE, OVERLAPPING_PERCENTAGE, AW_SAMPLING_RATE
 

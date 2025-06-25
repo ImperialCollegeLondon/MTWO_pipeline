@@ -10,7 +10,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import joblib
 import os
+import sys
 from sklearn.metrics import confusion_matrix
+
+# Add the parent directory to the Python path to import config
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import models_dir, save_dir
 
 def plot_model_confusion_matrix(model_name, X_test, y_test, class_names=None, 

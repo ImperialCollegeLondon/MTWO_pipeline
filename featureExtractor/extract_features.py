@@ -1,12 +1,26 @@
 import numpy as np
 import pandas as pd
 import gc
+import sys
+import os
 from joblib import Parallel, delayed
 from tqdm import tqdm
+from loguru import logger
 
+# Add the parent directory to the Python path to import config
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from featureExtractor.features import compute_features
 from featureExtractor.features import compute_features_1
 from featureExtractor.features import compute_features_MO
+
+# Configure loguru logger
+logger.remove()
+logger.add(
+    sys.stderr, 
+    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+    level="INFO",
+    colorize=True
+)
 
 def extract_features_batch(batch, batch_labels, mode='MTWO'):
     """
@@ -38,14 +52,14 @@ def extract_features_batch(batch, batch_labels, mode='MTWO'):
     return np.array(batch_features)
 
 def extract_features(balanced_X, balanced_y, mode='MTWO', batch_size=100, n_jobs=-1, show_details=False):
-    print("[info@extract_features] -> Extracting features from data...")
+    logger.info("Extracting features from data...")
     n_samples = balanced_X.shape[0]
     batches = [balanced_X[i:min(i+batch_size, n_samples)] for i in range(0, n_samples, batch_size)]
     batch_labels = [balanced_y[i:min(i+batch_size, n_samples)] for i in range(0, n_samples, batch_size)]
 
     # Extract features in parallel
     features = Parallel(n_jobs=n_jobs)(
-        delayed(extract_features_batch)(batch, labels, mode) for batch, labels in tqdm(zip(batches, batch_labels), total=len(batches), desc="[info@extract_features] -> Processing batches", leave=False, unit="batch")
+        delayed(extract_features_batch)(batch, labels, mode) for batch, labels in tqdm(zip(batches, batch_labels), total=len(batches), desc="Processing batches", leave=False, unit="batch")
     )
 
     # Combine all batches
@@ -64,18 +78,18 @@ def extract_features(balanced_X, balanced_y, mode='MTWO', batch_size=100, n_jobs
     # print(f"Features saved to {features_path}")
     # print(f"Labels saved to {labels_path}")
     if show_details:
-        print("\n---------------- Features Details ----------------")
-        print("@extract_features")
-        print("Features shape:", X_features.shape)
+        logger.info("\n---------------- Features Details ----------------")
+        logger.info("@extract_features")
+        logger.info(f"Features shape: {X_features.shape}")
         # Show sample of the extracted features
-        print("\nSample of extracted features (first 3 samples):")
-        print(X_features[:3])
+        logger.info("\nSample of extracted features (first 3 samples):")
+        logger.info(f"{X_features[:3]}")
 
         # Show feature statistics
-        print("\nFeature statistics:")
-        print(f"Min: {X_features.min()}, Max: {X_features.max()}")
-        print(f"Mean: {X_features.mean():.4f}, Std: {X_features.std():.4f}")
-        print('--------------------------------------------------\n')
+        logger.info("\nFeature statistics:")
+        logger.info(f"Min: {X_features.min()}, Max: {X_features.max()}")
+        logger.info(f"Mean: {X_features.mean():.4f}, Std: {X_features.std():.4f}")
+        logger.info('--------------------------------------------------\n')
     # Memory cleanup
     del batches, features
     gc.collect()

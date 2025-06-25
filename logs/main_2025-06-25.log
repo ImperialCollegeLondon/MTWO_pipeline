@@ -1,0 +1,943 @@
+2025-06-25 05:36:53 | INFO     | __main__:main:80 - Training started. Mode: MO.
+2025-06-25 05:36:53 | INFO     | __main__:main:81 - ----------------------------------------------------
+2025-06-25 05:36:53 | INFO     | __main__:main:102 - Step #1 Loading data...
+2025-06-25 05:36:56 | SUCCESS  | __main__:main:131 - All data Loaded: Movement: 3034, Other: 104
+2025-06-25 05:36:56 | SUCCESS  | __main__:main:132 - Movement shape: (3034, 100, 3), Other shape: (104, 100, 3)
+2025-06-25 05:36:56 | INFO     | __main__:main:135 - Step #2 Data Augmenting...
+2025-06-25 05:36:56 | INFO     | dataAugmenter.augment_data:augment_data_MO:66 - Class distribution after balancing: Counter({'M': 3034, 'O': 3034})
+2025-06-25 05:36:56 | INFO     | dataAugmenter.augment_data:augment_data_MO:70 - Balanced data saved as cache.
+2025-06-25 05:36:56 | SUCCESS  | __main__:main:137 - Data Augmentation Completed: 6068 samples with 2 unique labels.
+2025-06-25 05:36:56 | INFO     | __main__:main:142 - Step #3 Feature Extraction...
+2025-06-25 05:36:56 | INFO     | featureExtractor.extract_features:extract_features:55 - Extracting features from data...
+2025-06-25 05:36:59 | SUCCESS  | __main__:main:144 - Feature Extraction Completed: Extracted 14 features from 6068 samples.
+2025-06-25 05:36:59 | INFO     | __main__:main:147 - Step #4 Data Processing...
+2025-06-25 05:36:59 | INFO     | dataTransformer.encoder:encode:24 - Encoder: {'M': 0, 'O': 1}
+2025-06-25 05:36:59 | INFO     | dataTransformer.encoder:encode:27 - Encoder saved to /Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/MTWO/old_cache/label_encoder.pkl.
+2025-06-25 05:36:59 | INFO     | dataTransformer.scaler:scale:26 - Scaler saved to /Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/MTWO/old_cache/scaler.joblib.
+2025-06-25 05:36:59 | SUCCESS  | __main__:main:151 - Data Processing Completed: Training set size: (4854, 14), Test set size: (1214, 14)
+2025-06-25 05:36:59 | INFO     | __main__:main:155 - Step #5 Dimensionality Reduction...
+2025-06-25 05:36:59 | INFO     | dataTransformer.PCA:apply_pca:31 - Number of features after PCA: 7
+2025-06-25 05:36:59 | INFO     | dataTransformer.PCA:pca:47 - PCA model saved to /Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/MTWO/old_cache/pca_model.joblib.
+2025-06-25 05:36:59 | INFO     | dataTransformer.PCA:pca:60 - Explained variance ratio: [0.58022777 0.08362383 0.08032472 0.07062656 0.05844434 0.05146564
+ 0.03674791]
+2025-06-25 05:36:59 | INFO     | dataTransformer.PCA:pca:61 - Total explained variance: 0.9614607618172567
+2025-06-25 05:36:59 | SUCCESS  | __main__:main:157 - Dimensionality Reduction Completed: Reduced features from 14 to 7 dimensions.
+2025-06-25 05:36:59 | INFO     | __main__:main:166 - Step #6 Training and Evaluation...
+2025-06-25 05:37:04 | SUCCESS  | __main__:main:172 - Training and Evaluation Completed. Best Model: mlp with accuracy 1.00.
+2025-06-25 05:37:04 | INFO     | __main__:main:175 - Step #7 Generating confusion matrix comparison...
+2025-06-25 05:37:04 | SUCCESS  | __main__:main:181 - Pipeline completed successfully!
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:80 - Features before scaling: (3, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:85 - Features after scaling: (3, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:90 - Features after PCA: (3, 7)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:80 - Features before scaling: (64, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:85 - Features after scaling: (64, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:90 - Features after PCA: (64, 7)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:80 - Features before scaling: (24, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:85 - Features after scaling: (24, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:90 - Features after PCA: (24, 7)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:80 - Features before scaling: (29, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:85 - Features after scaling: (29, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:90 - Features after PCA: (29, 7)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:80 - Features before scaling: (12, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:85 - Features after scaling: (12, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:90 - Features after PCA: (12, 7)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:80 - Features before scaling: (44, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:85 - Features after scaling: (44, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:90 - Features after PCA: (44, 7)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:80 - Features before scaling: (159, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:85 - Features after scaling: (159, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:90 - Features after PCA: (159, 7)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:80 - Features before scaling: (37, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:85 - Features after scaling: (37, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:90 - Features after PCA: (37, 7)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:80 - Features before scaling: (84, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:85 - Features after scaling: (84, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:90 - Features after PCA: (84, 7)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:80 - Features before scaling: (48, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:85 - Features after scaling: (48, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:90 - Features after PCA: (48, 7)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:80 - Features before scaling: (3, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:85 - Features after scaling: (3, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:90 - Features after PCA: (3, 7)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:80 - Features before scaling: (64, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:85 - Features after scaling: (64, 14)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:90 - Features after PCA: (64, 7)
+2025-06-25 05:56:50 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (24, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (24, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (24, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (29, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (29, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (29, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (12, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (12, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (12, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (44, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (44, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (44, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (159, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (159, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (159, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (37, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (37, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (37, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (84, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (84, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (84, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (48, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (48, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (48, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (3, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (3, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (3, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (64, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (64, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (64, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (24, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (24, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (24, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (29, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (29, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (29, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (12, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (12, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (12, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (44, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (44, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (44, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (159, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (159, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (159, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (37, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (37, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (37, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (84, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (84, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (84, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:56:51 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (48, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (48, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (48, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (3, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (3, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (3, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (64, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (64, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (64, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (24, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (24, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (24, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (29, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (29, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (29, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (12, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (12, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (12, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (44, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (44, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (44, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (159, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (159, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (159, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (37, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (37, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (37, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (84, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (84, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (84, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (48, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (48, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (48, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (3, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (3, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (3, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (64, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (64, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (64, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (24, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (24, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (24, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (29, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (29, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (29, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (12, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (12, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (12, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (44, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (44, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (44, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (159, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (159, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (159, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (37, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (37, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (37, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (84, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (84, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (84, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (48, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (48, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (48, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (3, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (3, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (3, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:80 - Features before scaling: (64, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:85 - Features after scaling: (64, 14)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:90 - Features after PCA: (64, 7)
+2025-06-25 05:56:52 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:80 - Features before scaling: (24, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:85 - Features after scaling: (24, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:90 - Features after PCA: (24, 7)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:80 - Features before scaling: (29, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:85 - Features after scaling: (29, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:90 - Features after PCA: (29, 7)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:80 - Features before scaling: (12, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:85 - Features after scaling: (12, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:90 - Features after PCA: (12, 7)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:80 - Features before scaling: (44, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:85 - Features after scaling: (44, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:90 - Features after PCA: (44, 7)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:80 - Features before scaling: (159, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:85 - Features after scaling: (159, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:90 - Features after PCA: (159, 7)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:80 - Features before scaling: (37, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:85 - Features after scaling: (37, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:90 - Features after PCA: (37, 7)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:80 - Features before scaling: (84, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:85 - Features after scaling: (84, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:90 - Features after PCA: (84, 7)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:80 - Features before scaling: (48, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:85 - Features after scaling: (48, 14)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:90 - Features after PCA: (48, 7)
+2025-06-25 05:56:53 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:56:53 | INFO     | __main__:display_accuracy:176 - 
+------------------------------------------
+2025-06-25 05:56:53 | INFO     | __main__:display_accuracy:177 - Accuracies on real world data (per window):
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - xgboost2: 70.80% (371/524)
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - rf: 61.26% (321/524)
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - mlp: 82.82% (434/524)
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - lr: 56.30% (295/524)
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - svm: 59.35% (311/524)
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - knn: 56.49% (296/524)
+2025-06-25 05:56:53 | INFO     | __main__:display_accuracy:184 - 
+Movement accuracy (per window):
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - xgboost2: 63.57% (267/420)
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - rf: 51.67% (217/420)
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - mlp: 78.57% (330/420)
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - lr: 45.48% (191/420)
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - svm: 50.00% (210/420)
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - knn: 45.71% (192/420)
+2025-06-25 05:56:53 | INFO     | __main__:display_accuracy:184 - 
+Others accuracy (per window):
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - xgboost2: 100.00% (104/104)
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - rf: 100.00% (104/104)
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - mlp: 100.00% (104/104)
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - lr: 100.00% (104/104)
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - svm: 97.12% (101/104)
+2025-06-25 05:56:53 | INFO     | __main__:display_category_accuracy:197 - knn: 100.00% (104/104)
+2025-06-25 05:56:53 | INFO     | __main__:display_accuracy:188 - 
+Last test run at 2025-06-25 05:56:53
+2025-06-25 05:56:53 | INFO     | __main__:display_accuracy:189 - ------------------------------------------
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:80 - Features before scaling: (3, 14)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:85 - Features after scaling: (3, 14)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:90 - Features after PCA: (3, 7)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:31 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:31 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'O' 'O']
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:80 - Features before scaling: (64, 14)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:85 - Features after scaling: (64, 14)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:90 - Features after PCA: (64, 7)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:31 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:31 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O']
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:80 - Features before scaling: (24, 14)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:85 - Features after scaling: (24, 14)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:90 - Features after PCA: (24, 7)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:31 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:31 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:80 - Features before scaling: (29, 14)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:85 - Features after scaling: (29, 14)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:90 - Features after PCA: (29, 7)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:31 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:31 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'O' 'O' 'O' 'M' 'M' 'O' 'M'
+ 'O' 'M' 'O' 'M' 'O' 'O' 'O' 'O' 'M' 'M' 'M']
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:31 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:31 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:80 - Features before scaling: (12, 14)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:85 - Features after scaling: (12, 14)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:90 - Features after PCA: (12, 7)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:31 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:31 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'O' 'M' 'O' 'M' 'O' 'M' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:80 - Features before scaling: (44, 14)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:85 - Features after scaling: (44, 14)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:90 - Features after PCA: (44, 7)
+2025-06-25 05:59:31 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:31 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:31 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M'
+ 'M' 'O' 'O' 'O' 'M' 'M' 'O' 'O']
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:80 - Features before scaling: (159, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:85 - Features after scaling: (159, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:90 - Features after PCA: (159, 7)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'O' 'M' 'M' 'O' 'O'
+ 'O' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'O' 'O' 'M' 'O' 'M' 'O' 'O' 'O' 'M'
+ 'O' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'O' 'O' 'O' 'O'
+ 'M' 'M' 'M' 'O' 'O' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'O' 'O' 'M' 'M' 'M' 'M'
+ 'M' 'O' 'M' 'M' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'O' 'O' 'M' 'O' 'O' 'O' 'M' 'M' 'M' 'M'
+ 'O' 'O' 'M' 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:80 - Features before scaling: (37, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:85 - Features after scaling: (37, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:90 - Features after PCA: (37, 7)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O']
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:80 - Features before scaling: (84, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:85 - Features after scaling: (84, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:90 - Features after PCA: (84, 7)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M']
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'O' 'O' 'O' 'M' 'O' 'O' 'O']
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:80 - Features before scaling: (48, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:85 - Features after scaling: (48, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:90 - Features after PCA: (48, 7)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'M' 'O' 'O' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'O'
+ 'O' 'O' 'O' 'M' 'M' 'M' 'M' 'O' 'O' 'M' 'O' 'O']
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:80 - Features before scaling: (3, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:85 - Features after scaling: (3, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:90 - Features after PCA: (3, 7)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'O' 'O']
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:80 - Features before scaling: (64, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:85 - Features after scaling: (64, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:90 - Features after PCA: (64, 7)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O']
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:80 - Features before scaling: (24, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:85 - Features after scaling: (24, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:90 - Features after PCA: (24, 7)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:80 - Features before scaling: (29, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:85 - Features after scaling: (29, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:90 - Features after PCA: (29, 7)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'M' 'M' 'O' 'O'
+ 'O' 'O' 'O' 'M' 'O' 'O' 'O' 'O' 'M' 'M' 'M']
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:80 - Features before scaling: (12, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:85 - Features after scaling: (12, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:90 - Features after PCA: (12, 7)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'O' 'M' 'M']
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:80 - Features before scaling: (44, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:85 - Features after scaling: (44, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:90 - Features after PCA: (44, 7)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'M' 'O' 'O' 'M'
+ 'M' 'O' 'O' 'O' 'O' 'M' 'O' 'M']
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:80 - Features before scaling: (159, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:85 - Features after scaling: (159, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:90 - Features after PCA: (159, 7)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'O' 'M' 'M'
+ 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'M'
+ 'O' 'O' 'O' 'M' 'M' 'M' 'M' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'M' 'M' 'M' 'O' 'M' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'M'
+ 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'O'
+ 'O' 'O' 'O' 'M' 'M' 'M' 'M' 'O' 'O' 'O' 'M' 'O' 'O' 'O' 'M' 'O' 'O' 'M'
+ 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'M']
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:80 - Features before scaling: (37, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:85 - Features after scaling: (37, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:90 - Features after PCA: (37, 7)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O']
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:80 - Features before scaling: (84, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:85 - Features after scaling: (84, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:90 - Features after PCA: (84, 7)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'O' 'M' 'M' 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'O' 'M' 'M' 'M' 'M' 'O' 'O' 'O' 'M' 'M' 'M']
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:59:32 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:32 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'O' 'O' 'O' 'O' 'O' 'M' 'O' 'O' 'O']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (48, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (48, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (48, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (3, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (3, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (3, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'O' 'O']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (64, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (64, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (64, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (24, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (24, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (24, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (29, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (29, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (29, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'M' 'O' 'O'
+ 'M' 'M' 'M' 'M' 'O' 'O' 'M' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (12, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (12, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (12, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'O' 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (44, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (44, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (44, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'O' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M'
+ 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (159, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (159, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (159, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'O'
+ 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'O' 'M' 'M' 'M' 'M'
+ 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'O' 'M' 'O' 'O' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'O' 'M' 'M' 'M' 'O' 'M' 'O' 'O'
+ 'O' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'O' 'M' 'O' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'O' 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'O' 'M' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (37, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (37, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (37, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (84, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (84, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (84, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'O' 'O' 'O' 'M' 'O' 'O' 'O' 'O']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (48, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (48, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (48, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'O' 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'O' 'O' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'O' 'O' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'M']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (3, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (3, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (3, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'O' 'O']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (64, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (64, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (64, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (24, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (24, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (24, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'O' 'M' 'O' 'O' 'M' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'M' 'M' 'O' 'M' 'O' 'M']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (29, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (29, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (29, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'O' 'M' 'M' 'O' 'O' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'O' 'M' 'M' 'O' 'M' 'M' 'M' 'O' 'M']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'O' 'O' 'M' 'O' 'O' 'O' 'M' 'M']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (12, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (12, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (12, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (44, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (44, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (44, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'O' 'O' 'O' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (159, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (159, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (159, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'O' 'M' 'M' 'O' 'O' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'M' 'M' 'O' 'O' 'M' 'M' 'O' 'M' 'O'
+ 'M' 'M' 'O' 'M' 'O' 'O' 'M' 'M' 'O' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'O'
+ 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'O' 'O' 'O' 'M' 'M' 'M' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'M' 'O' 'M'
+ 'O' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'M' 'O' 'M' 'M'
+ 'O' 'O' 'O' 'O' 'M' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'M'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'M']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (37, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (37, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (37, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (84, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (84, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (84, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'O' 'M' 'M' 'O' 'O' 'M' 'M' 'O' 'M' 'M' 'O']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (48, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (48, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (48, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'O' 'M' 'O' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (3, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (3, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (3, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'O' 'O']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (64, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (64, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (64, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O']
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:80 - Features before scaling: (24, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:85 - Features after scaling: (24, 14)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:90 - Features after PCA: (24, 7)
+2025-06-25 05:59:33 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:33 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (29, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (29, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (29, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'O' 'O'
+ 'O' 'O' 'O' 'M' 'O' 'O' 'O' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (12, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (12, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (12, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (44, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (44, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (44, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (159, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (159, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (159, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'O' 'O' 'O'
+ 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'M'
+ 'O' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'M' 'M' 'M' 'O' 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'M'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'O'
+ 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'M' 'O' 'O' 'M' 'M' 'O' 'M'
+ 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'M' 'M' 'M']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (37, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (37, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (37, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (84, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (84, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (84, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'O' 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'O' 'O' 'M' 'M' 'M']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (48, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (48, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (48, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (3, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (3, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (3, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'O' 'O']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (64, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (64, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (64, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (24, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (24, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (24, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (29, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (29, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (29, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'O' 'O' 'O' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'O' 'M']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (12, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (12, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (12, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'O' 'O' 'M' 'O' 'M' 'O' 'O' 'M' 'M' 'M' 'M']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (44, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (44, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (44, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'O' 'O' 'O' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (159, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (159, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (159, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'O' 'O' 'M' 'M' 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'O' 'O' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'M' 'O'
+ 'M' 'M' 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'M' 'M' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'M'
+ 'O' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'O' 'M' 'M' 'M' 'M' 'O' 'M' 'O'
+ 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'M' 'M' 'M']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (37, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (37, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (37, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: O
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (84, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (84, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (84, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'M' 'M' 'M' 'O' 'O' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M' 'M'
+ 'M' 'O' 'M' 'M' 'M' 'M' 'M' 'O' 'O' 'M' 'M' 'M']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (10, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (10, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (10, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['M' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O']
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:80 - Features before scaling: (48, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:85 - Features after scaling: (48, 14)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:90 - Features after PCA: (48, 7)
+2025-06-25 05:59:34 | DEBUG    | __main__:predict:94 - Model expects 7 features, providing 7 features
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:151 - Ground truth: M
+2025-06-25 05:59:34 | DEBUG    | __main__:predict_all:152 - Predictions: ['O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'O' 'O' 'O' 'O' 'O' 'O' 'M' 'M' 'M'
+ 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O' 'O'
+ 'O' 'O' 'O' 'M' 'M' 'M' 'O' 'O' 'O' 'O' 'O' 'O']
+2025-06-25 06:23:41 | INFO     | __main__:main:80 - Training started. Mode: MO.
+2025-06-25 06:23:41 | INFO     | __main__:main:81 - ----------------------------------------------------
+2025-06-25 06:23:41 | INFO     | __main__:main:102 - Step #1 Loading data...
+2025-06-25 06:24:16 | INFO     | __main__:main:112 - Other data mapped from AX format to Apple Watch.
+2025-06-25 06:24:17 | SUCCESS  | __main__:main:131 - All data Loaded: Movement: 3034, Other: 2139
+2025-06-25 06:24:17 | SUCCESS  | __main__:main:132 - Movement shape: (3034, 100, 3), Other shape: (2139, 100, 3)
+2025-06-25 06:24:17 | INFO     | __main__:main:135 - Step #2 Data Augmenting...
+2025-06-25 06:24:17 | INFO     | dataAugmenter.augment_data:augment_data_MO:66 - Class distribution after balancing: Counter({'M': 3034, 'O': 3034})
+2025-06-25 06:24:17 | INFO     | dataAugmenter.augment_data:augment_data_MO:70 - Balanced data saved as cache.
+2025-06-25 06:24:17 | SUCCESS  | __main__:main:137 - Data Augmentation Completed: 6068 samples with 2 unique labels.
+2025-06-25 06:24:17 | INFO     | __main__:main:142 - Step #3 Feature Extraction...
+2025-06-25 06:24:17 | INFO     | featureExtractor.extract_features:extract_features:55 - Extracting features from data...
+2025-06-25 06:24:18 | SUCCESS  | __main__:main:144 - Feature Extraction Completed: Extracted 14 features from 6068 samples.
+2025-06-25 06:24:18 | INFO     | __main__:main:147 - Step #4 Data Processing...
+2025-06-25 06:24:18 | INFO     | dataTransformer.encoder:encode:24 - Encoder: {'M': 0, 'O': 1}
+2025-06-25 06:24:18 | INFO     | dataTransformer.encoder:encode:27 - Encoder saved to /Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/MTWO/old_cache/label_encoder.pkl.
+2025-06-25 06:24:18 | INFO     | dataTransformer.scaler:scale:26 - Scaler saved to /Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/MTWO/old_cache/scaler.joblib.
+2025-06-25 06:24:18 | SUCCESS  | __main__:main:151 - Data Processing Completed: Training set size: (4854, 14), Test set size: (1214, 14)
+2025-06-25 06:24:18 | INFO     | __main__:main:155 - Step #5 Dimensionality Reduction...
+2025-06-25 06:24:18 | INFO     | dataTransformer.PCA:apply_pca:31 - Number of features after PCA: 7
+2025-06-25 06:24:18 | INFO     | dataTransformer.PCA:pca:47 - PCA model saved to /Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/MTWO/old_cache/pca_model.joblib.
+2025-06-25 06:24:18 | INFO     | dataTransformer.PCA:pca:60 - Explained variance ratio: [0.64098119 0.07804925 0.07096521 0.06918411 0.04049487 0.03015704
+ 0.02613254]
+2025-06-25 06:24:18 | INFO     | dataTransformer.PCA:pca:61 - Total explained variance: 0.955964202964094
+2025-06-25 06:24:18 | SUCCESS  | __main__:main:157 - Dimensionality Reduction Completed: Reduced features from 14 to 7 dimensions.
+2025-06-25 06:24:18 | INFO     | __main__:main:166 - Step #6 Training and Evaluation...
+2025-06-25 06:24:22 | SUCCESS  | __main__:main:172 - Training and Evaluation Completed. Best Model: mlp with accuracy 1.00.
+2025-06-25 06:24:22 | INFO     | __main__:main:175 - Step #7 Generating confusion matrix comparison...
+2025-06-25 06:24:22 | SUCCESS  | __main__:main:181 - Pipeline completed successfully!

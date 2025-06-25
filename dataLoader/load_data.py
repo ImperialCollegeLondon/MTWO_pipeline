@@ -1,6 +1,11 @@
 import numpy as np
 import pandas as pd
 import os
+import sys
+
+# Add the parent directory to the Python path to import config
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 def parse_csv(file_path:str, useFilter=True) -> pd.DataFrame:
     """Parse a CSV file containing accelerometer data.

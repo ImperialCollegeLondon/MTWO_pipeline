@@ -2,7 +2,10 @@ import os
 import joblib
 import pandas as pd
 import datetime
+import sys
 
+# Add the parent directory to the Python path to import config
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import models, models_dir, save_dir
 from trainAndEvaluation.train_and_evaluate import train_and_evaluate, plot_confusion_matrix
 

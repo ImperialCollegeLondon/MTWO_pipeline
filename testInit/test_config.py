@@ -1,5 +1,8 @@
 import os
+import sys
 
+# Add the parent directory to the Python path to import config
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import models_dir,rootDir
 
 root_save_dir = os.path.join(rootDir,'MTWO_pipeline/pred_res')
@@ -33,5 +36,5 @@ model_dics_mo = {
 
 ground_truth_dic_mo = {
     '1': "M",
-    '2': "O",
+    '3': "O",
 }
