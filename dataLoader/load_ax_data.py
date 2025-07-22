@@ -11,6 +11,31 @@ import sys
 from joblib import Parallel, delayed
 from itertools import chain
 from tqdm import tqdm
+from loguru import logger
+
+# Configure loguru logger with colors
+logger.remove()  # Remove default handler
+logger.add(
+    sys.stderr, 
+    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+    level="INFO",
+    colorize=True
+)
+logger.add(
+    "logs/load_ax_data_{time:YYYY-MM-DD}.log", 
+    rotation="1 day", 
+    retention="7 days", 
+    format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}",
+    level="DEBUG",
+    colorize=False
+)
+
+# 自定义级别颜色
+logger.level("INFO", color="<blue>")
+logger.level("SUCCESS", color="<green>")
+logger.level("WARNING", color="<yellow>")
+logger.level("ERROR", color="<red>")
+logger.level("DEBUG", color="<cyan>")
 
 # Add the parent directory to the Python path to import config
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -62,8 +87,7 @@ def load_ax_data():
             else:
                 raise Exception(f"Unknown Device {device}")
 
-
-        print("[info@load_ax_data] -> Examples Axivity     " + str(data_amount_ax))
+        logger.info(f"Examples Axivity {str(data_amount_ax)}")
         return accelerometer_data
 
     checkpoint_file = os.path.join(cache_dir, 'AX.joblib')
@@ -73,9 +97,9 @@ def load_ax_data():
         data_walking = data['walking']
         data_other = data['other']
         data_move = data['movement']
-        print("[info@load_ax_data] -> Checkpoint loaded.")
+        logger.success("Checkpoint loaded.")
     else:
-        print("[info@load_ax_data] -> Checkpoint not found, loading data from CSV files...")
+        logger.info("Checkpoint not found, loading data from CSV files...")
         data_transport = load_data(pd.read_csv(ax_data_dir + '/data_transport_index.csv'))
         data_walking = load_data(pd.read_csv(ax_data_dir + '/data_walking_index.csv'))
         data_other = load_data(pd.read_csv(ax_data_dir + '/data_other_index.csv', header=0))
@@ -89,7 +113,7 @@ def load_ax_data():
             'movement': data_move
         }
         joblib.dump(data, checkpoint_file)
-        print("[info@load_ax_data] -> Checkpoint saved.")
+        logger.success("Checkpoint saved.")
     
     data_move, data_transport, data_walking, data_other = splitAll(data_transport, data_walking, data_other, data_move)
 

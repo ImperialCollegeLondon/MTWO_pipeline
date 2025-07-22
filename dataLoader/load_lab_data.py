@@ -26,7 +26,7 @@ def annotate(labDir, cache_dir):
                 inputDataFiles.append(os.path.join(Path(dirpath), Path(filename)))
 
 
-    cacheFileName = f"annoatatedLabData.joblib"
+    cacheFileName = f"annoatatedLabData_new.joblib"
     annotatedLabData = os.path.join(cache_dir, cacheFileName)
     isCached_aLD = os.path.exists(annotatedLabData)
 
@@ -112,7 +112,7 @@ def chunk(movementSegments, otherSegments):
 
     print(f"[info@load_lab_data.chunk] -> window_size: {window_size}, step_size: {step_size}")
 
-    cacheFileName = f"LAB_ws{WINDOW_SIZE}.joblib"
+    cacheFileName = f"LAB_ws{WINDOW_SIZE}_new.joblib"
     checkpoint_ws = os.path.join(cache_dir, cacheFileName)
     isCached = os.path.exists(checkpoint_ws)
 

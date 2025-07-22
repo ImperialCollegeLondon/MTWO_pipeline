@@ -3,3 +3,5 @@
 /logs
 /dataLoader/__pycache__
 *.pyc
+/ax_data
+/__pycache__
