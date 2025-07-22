@@ -19,30 +19,11 @@ from tabulate import tabulate
 # Add the current directory to the Python path to import config
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from featureExtractor.features import compute_features, compute_features_MO
-from loguru import logger
-# Configure loguru logger with colors
-logger.remove()  # Remove default handler
-logger.add(
-    sys.stderr, 
-    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
-    level="INFO",
-    colorize=True
-)
-logger.add(
-    "logs/main_{time:YYYY-MM-DD}.log", 
-    rotation="1 day", 
-    retention="7 days", 
-    format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}",
-    level="DEBUG",
-    colorize=False  # 文件输出不需要颜色
-)
 
-# 自定义级别颜色
-logger.level("INFO", color="<blue>")
-logger.level("SUCCESS", color="<green>")
-logger.level("WARNING", color="<yellow>")
-logger.level("ERROR", color="<red>")
-logger.level("DEBUG", color="<cyan>")
+from config import getLogger
+# Initialize logger
+logger = getLogger()
+
 import testInit.init
 import testInit.test_config
 from config import rootDir, encode_path, scaler_path, pca_model_path
@@ -219,7 +200,7 @@ def display_accuracy(results, mode='MTWO'):
 def display_category_metrics_table(category_results, model_name_list, is_overall=False):
     """Display metrics in a beautiful table format"""
     table_data = []
-    headers = ["Model", "Accuracy (%)", "Sample Count"] if is_overall else ["Model", "Accuracy (%)", "Precision (%)", "Recall (%)", "F1 Score (%)", "Sample Count"]
+    headers = ["Model", "Accuracy (%)", "Correct/Total"] if is_overall else ["Model", "Accuracy (%)", "Precision (%)", "Recall (%)", "F1 Score (%)", "Correct/Total"]
     
     for model_name in model_name_list:
         tp = category_results['tp'][model_name]
@@ -245,7 +226,7 @@ def display_category_metrics_table(category_results, model_name_list, is_overall
                     f"{precision:.2f}",
                     f"{recall:.2f}",
                     f"{f1:.2f}",
-                    f"{total}"
+                    f"{tp}/{total}"
                 ]
             table_data.append(row)
         else:
@@ -253,7 +234,7 @@ def display_category_metrics_table(category_results, model_name_list, is_overall
             if is_overall:
                 row = [model_name.capitalize(), "N/A", "0/0"]
             else:
-                row = [model_name.capitalize(), "N/A", "N/A", "N/A", "N/A", "0"]
+                row = [model_name.capitalize(), "N/A", "N/A", "N/A", "N/A", "0/0"]
             table_data.append(row)
             
     if table_data:
@@ -273,6 +254,7 @@ def display_category_metrics_table(category_results, model_name_list, is_overall
 if __name__ == '__main__':
 
     mode = 'MO'
+    # mode = 'MTWO'
 
     data_dir = os.path.join(rootDir, r"Data/my_data/") # Without mapping model (apple watch)
     # data_dir = os.path.join(rootDir, r"Data/my_data/mapped_data") # With mapping model (converted to AX form)
@@ -294,6 +276,7 @@ if __name__ == '__main__':
 
     # 4. Compute and display the accuracy
     display_accuracy(results, mode=mode)
+    
 
     # 5. Save the results
     # testInit.init.save_res_csv(data_dir)
