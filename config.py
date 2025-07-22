@@ -1,4 +1,36 @@
 import os
+import sys
+
+# ------------------Log--------------------------------
+
+# Configure loguru logger with colors
+def getLogger():
+    from loguru import logger
+    logger.remove()  # Remove default handler
+    logger.add( # logger to print logs to console
+        sys.stderr, 
+        format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+        level="INFO", # 等级按照顺序从低到高为 DEBUG, INFO, SUCCESS, WARNING, ERROR
+        colorize=True
+    )
+    logger.add( # logger to save logs to a file
+        "logs/main_{time:YYYY-MM-DD}.log", 
+        rotation="1 day", 
+        retention="7 days", 
+        format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}",
+        level="DEBUG",
+        colorize=False
+    )
+
+    # Custom Level Colours
+    logger.level("INFO", color="<blue>")
+    logger.level("SUCCESS", color="<green>")
+    logger.level("WARNING", color="<yellow>")
+    logger.level("ERROR", color="<red>")
+    logger.level("DEBUG", color="<cyan>")
+    
+    return logger
+
 
 
 # ------------------Hyperparameters-------------------------
@@ -6,7 +38,7 @@ WINDOW_SIZE = 5  # seconds
 OVERLAPPING_PERCENTAGE = 0.5  # 50% overlapping
 SEED = 42 # Random seed for reproducibility
 LAB_SAMPLING_RATE = 1500  # Hz
-AW_SAMPLING_RATE = 20  # Hz, Axivity sampling rate
+AW_SAMPLING_RATE = 20  # Hz, Apple watch sampling rate
 
 
 
@@ -26,7 +58,8 @@ pca_model_path = os.path.join(cache_dir, 'pca_model.joblib')
 
 
 # Directory of your training data
-movement_dir = os.path.join(rootDir, r'Data/Movement data')
+# movement_dir = os.path.join(rootDir, r'Data/Movement data')
+movement_dir = '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/calibration_combined_movement'
 transport_dir = os.path.join(rootDir, r'Data/Transport data') # TODO
 walking_dir= os.path.join(rootDir, r'Data/Walking data') # TODO
 others_dir = os.path.join(rootDir, r'Data/Others data')
@@ -36,10 +69,12 @@ others_dir = os.path.join(rootDir, r'Data/Others data')
 # Directory of the Axiviity data
 ax_data_dir = os.path.join(rootDir, r"Data/ontrack-activity-classifier/training_data")
 # Directory of the lab data
-lab_data_dir = os.path.join(rootDir, r"Data/OnTrack")
+# lab_data_dir = os.path.join(rootDir, r"Data/OnTrack")
+lab_data_dir = os.path.join(r"Data/revised_lab_data")  # Revised lab data directory
 # Positions of new Transport data
-ax_newT_xsl = os.path.join(rootDir, r"Data/MTWO_transport_0424/data_transport_index_0424.xlsx")
-ax_newT_csv = os.path.join(rootDir, r"Data/MTWO_transport_0424/data_transport_index_0424.csv")
+basePath = os.path.join(rootDir, "Data/MTWO_transport_0424")
+ax_newT_xsl = os.path.join(basePath, r"data_transport_index_0424.xlsx")
+ax_newT_csv = os.path.join(basePath, r"data_transport_index_0424.csv")
 
 
 # Directory to save the trained models
