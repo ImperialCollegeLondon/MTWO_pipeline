@@ -4,13 +4,13 @@ import sys
 # ------------------Log--------------------------------
 
 # Configure loguru logger with colors
-def getLogger():
+def getLogger(show_level='INFO'):
     from loguru import logger
     logger.remove()  # Remove default handler
     logger.add( # logger to print logs to console
         sys.stderr, 
         format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
-        level="INFO", # 等级按照顺序从低到高为 DEBUG, INFO, SUCCESS, WARNING, ERROR
+        level=show_level.upper(), # 等级按照顺序从低到高为 DEBUG, INFO, SUCCESS, WARNING, ERROR
         colorize=True
     )
     logger.add( # logger to save logs to a file

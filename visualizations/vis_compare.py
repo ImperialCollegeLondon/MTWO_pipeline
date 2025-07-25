@@ -6,14 +6,15 @@
 python visualize_lab_ax_comparison.py --lab_file <lab_file_path> --ax_file <ax_file_path>
 或者直接运行脚本，然后按提示输入文件路径
 '''
-
+import sys
+import os
+sys.path.insert(0, '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/MTWO_pipeline')
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import joblib
 import os
-import sys
 import argparse
 import datetime
 from pathlib import Path
@@ -480,44 +481,44 @@ def main():
         elif args.aw_file.startswith("'") and args.aw_file.endswith("'"):
             args.aw_file = args.aw_file[1:-1]
 
-    try:
+    # try:
         # 创建保存目录
-        os.makedirs(args.save_dir, exist_ok=True)
-        
-        logger.info("=== Starting Data Processing Pipeline ===")
-        
-        # 加载数据
-        logger.info("Loading Lab data...")
-        lab_data = load_lab_file(args.lab_file)
-        
-        logger.info("Loading Apple Watch data...")
-        aw_data = load_aw_file(args.aw_file)  # 使用默认的17-35秒裁剪
-        
-        # 对Lab数据进行降采样到20Hz（所有采样率配置都在这里）
-        logger.info("Processing Lab data...")
-        lab_data_processed = downsample_data(lab_data, original_freq=1500, target_freq=20)
+    os.makedirs(args.save_dir, exist_ok=True)
+    
+    logger.info("=== Starting Data Processing Pipeline ===")
+    
+    # 加载数据
+    logger.info("Loading Lab data...")
+    lab_data = load_lab_file(args.lab_file)
+    
+    logger.info("Loading Apple Watch data...")
+    aw_data = load_aw_file(args.aw_file)  # 使用默认的17-35秒裁剪
+    
+    # 对Lab数据进行降采样到20Hz（所有采样率配置都在这里）
+    logger.info("Processing Lab data...")
+    lab_data_processed = downsample_data(lab_data, original_freq=1500, target_freq=20)
 
-        # 打印统计信息
-        logger.info("=== Data Statistics ===")
-        print_stat(lab_data_processed, aw_data)
+    # 打印统计信息
+    logger.info("=== Data Statistics ===")
+    print_stat(lab_data_processed, aw_data)
 
-        # 生成文件名
-        lab_filename = Path(args.lab_file).stem
-        aw_filename = Path(args.aw_file).stem
-        save_path = os.path.join(args.save_dir, f"{lab_filename}_vs_{aw_filename}_comparison.png")
+    # 生成文件名
+    lab_filename = Path(args.lab_file).stem
+    aw_filename = Path(args.aw_file).stem
+    save_path = os.path.join(args.save_dir, f"{lab_filename}_vs_{aw_filename}_comparison.png")
 
-        # 创建可视化（所有绘图配置都在各个函数中）
-        logger.info("Creating visualizations...")
-        plot_comparison(lab_data_processed, aw_data, save_path)
+    # 创建可视化（所有绘图配置都在各个函数中）
+    logger.info("Creating visualizations...")
+    plot_comparison(lab_data_processed, aw_data, save_path)
+    
+    # 可选：启用频域分析
+    # plot_freq(lab_data_processed, aw_data, save_path)
+
+    logger.success("Visualization pipeline completed successfully!")
         
-        # 可选：启用频域分析
-        # plot_freq(lab_data_processed, aw_data, save_path)
-
-        logger.success("Visualization pipeline completed successfully!")
-        
-    except Exception as e:
-        logger.error(f"Error occurred: {str(e)}")
-        sys.exit(1)
+    # except Exception as e:
+    #     logger.error(f"Error occurred: {e}")
+    #     sys.exit(1)
 
 if __name__ == "__main__":
     main()

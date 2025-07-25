@@ -182,7 +182,7 @@ def display_accuracy(results, mode='MTWO'):
     model_name_list = list(model_dics.keys())
     class_list = ['movement', 'transport', 'walking', 'others'] if mode == 'MTWO' else ['movement', 'others']
 
-    print('\n' + '='*80)
+    print('='*80)
     print("Performance Metrics on Real World Data (Per Window)")
     print('='*80)
 
@@ -276,7 +276,7 @@ if __name__ == '__main__':
 
     # 4. Compute and display the accuracy
     display_accuracy(results, mode=mode)
-    
+
 
     # 5. Save the results
     # testInit.init.save_res_csv(data_dir)

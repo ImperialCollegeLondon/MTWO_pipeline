@@ -103,7 +103,54 @@ def annotate(labDir, cache_dir):
 
     return movementSegments, otherSegments
 
-def chunk(movementSegments, otherSegments):
+def annotate_lab_file(file_path):
+    # Load the lab data
+    lab_data = joblib.load(file_path)
+    if lab_data is None:
+        return [], []
+
+    movementSegments = []
+    otherSegments = []
+
+    def annotateSegment(data, startIndex, endIndex, filename):
+        return pd.DataFrame({
+            "filename": filename,
+            "accelX": data["accelX"][startIndex:endIndex],
+            "accelY": data["accelY"][startIndex:endIndex],
+            "accelZ": data["accelZ"][startIndex:endIndex],
+            "accel": data["accel"][startIndex:endIndex],
+        })
+
+    def applyAnnotation(data, filename):
+        startIndex = 0
+        if "movement" not in data:
+            return
+        
+        isMovement = data["movement"][0]
+        for i in range(1, len(data["movement"])):
+            if data["movement"][i] != isMovement:
+                segment = annotateSegment(data, startIndex, i-1, filename)
+                if isMovement == 1 and len(segment["accel"]) > 1000:
+                    movementSegments.append(segment)
+                elif len(segment["accel"]) > 1000:
+                    otherSegments.append(segment)
+                startIndex = i
+            isMovement = data["movement"][i]
+        
+        # Add the last segment
+        segment = annotateSegment(data, startIndex, len(data["movement"]), filename)
+        if isMovement == 1 and len(segment["accel"]) > 1000:
+            movementSegments.append(segment)
+        elif len(segment["accel"]) > 1000:
+            otherSegments.append(segment)
+
+    applyAnnotation(lab_data["left"], lab_data["filename"] + str(" left"))
+    applyAnnotation(lab_data["right"], lab_data["filename"] + str(" right"))
+
+    return movementSegments, otherSegments
+    
+
+def chunk(movementSegments, otherSegments, single_file=False):
     '''
     Preprocess: chunk lab data with overlapping windows
     '''
@@ -116,7 +163,7 @@ def chunk(movementSegments, otherSegments):
     checkpoint_ws = os.path.join(cache_dir, cacheFileName)
     isCached = os.path.exists(checkpoint_ws)
 
-    if not isCached:
+    if not isCached or single_file:
         print("[info@load_lab_data.chunk] -> Chunking examples...")
         chunkedMovement = []
         chunkedOther = []
@@ -208,3 +255,25 @@ def load_lab_data():
     flatMovementLab, flatOtherLab = flatten(chunkedMovement, chunkedOther, method='parallel')
 
     return flatMovementLab, flatOtherLab
+
+if __name__ == "__main__":
+    # Example usage
+    joblib_path = '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/MTWO_pipeline/ID001 Lying01.c3d.ontrackclassifier.joblib'
+    # 1. Annotate the lab data
+    movementSegments, otherSegments = annotate_lab_file(joblib_path)
+
+    # 2. Chunk the annotated data into overlapping windows
+    chunkedMovement, chunkedOther = chunk(movementSegments, otherSegments, single_file=True)
+
+    # 3. Flatten the chunked data into a format suitable for training
+    flatMovementLab, flatOtherLab = flatten(chunkedMovement, chunkedOther, method='parallel')
+
+    print(f"Number of flat movement samples: {len(flatMovementLab)}")
+    print(f"Number of flat other samples: {len(flatOtherLab)}")
+
+    # Save the flattened data as csv
+    flatMovementLab_df = pd.concat(flatMovementLab, ignore_index=True)
+    flatOtherLab_df = pd.concat(flatOtherLab, ignore_index=True)
+    flatMovementLab_df.to_csv(os.path.join(cache_dir, 'flat_movement_lab.csv'), index=False)
+    flatOtherLab_df.to_csv(os.path.join(cache_dir, 'flat_other_lab.csv'), index=False)
+    print("Flattened data saved to CSV files.")

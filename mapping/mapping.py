@@ -1,29 +1,37 @@
+import os
+import sys
+script_path = os.path.abspath(__file__)
+script_dir = os.path.dirname(script_path)
+parent_dir = os.path.join(script_dir, os.pardir)
+sys.path.insert(0, parent_dir)
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import joblib
-import os
-import sys
 import datetime
 from loguru import logger
 from dataTransformer.filter import filter
 from config import getLogger
-logger = getLogger()
 from scipy.signal import resample, butter, filtfilt, correlate
 from scipy.spatial import procrustes
-from dtw import dtw, accelerated_dtw # 需要安装 dtw-python 库
+from dtw import dtw
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from scipy.spatial.transform import Rotation as R_scipy
+logger = getLogger('INFO')
 
 # Set plot style
 plt.style.use('seaborn-v0_8')
 sns.set_palette("husl")
 
-def load_lab_file(lab_file_path: str, side: str = 'right') -> dict:
+def load_lab_file(lab_file_path: str, side: str = 'right') -> pd.DataFrame:
+    '''
+    @param lab_file_path: Path to the lab data file (.joblib)
+    @param side: 'left' or 'right', specifies which leg's data to load
+    @return: DataFrame containing acceleration data with keys 'accelX', 'accelY', 'accelZ', and 'accel'
+    '''
     logger.info(f"Loading lab data from: {lab_file_path}")
     
     if not os.path.exists(lab_file_path):
@@ -60,10 +68,14 @@ def load_lab_file(lab_file_path: str, side: str = 'right') -> dict:
     
     # Compute synthetic acceleration using filtered components
     accel_data['accel'] = np.sqrt(accel_x_filtered**2 + accel_y_filtered**2 + accel_z_filtered**2)
-        
-    return accel_data
 
-def load_aw_file(aw_file_path: str) -> dict:
+    return pd.DataFrame(accel_data)
+
+def load_aw_file(aw_file_path: str) -> pd.DataFrame:
+    ''' 
+    @param aw_file_path: Path to the Apple Watch data file (.csv)
+    @return: DataFrame containing acceleration data with columns 'accelX', 'accelY', 'accelZ', and 'accel'
+    '''
     logger.info(f"Loading Apple Watch data from: {aw_file_path}")
     
     if not os.path.exists(aw_file_path):
@@ -95,8 +107,45 @@ def load_aw_file(aw_file_path: str) -> dict:
         'accel': accel_magnitude_filtered
     }
 
-    return accel_data
+    return pd.DataFrame(accel_data)
 
+def load_calib_lab(csv_path: str) -> pd.DataFrame:
+    """
+    Load calibration data from a CSV file.
+    
+    @param csv_path: Path to the CSV file containing calibration data.
+    @return: DataFrame with columns 'accelX', 'accelY', 'accelZ', and 'accel'.
+    """
+    logger.info(f"Loading calibration data from: {csv_path}")
+    
+    if not os.path.exists(csv_path):
+        raise FileNotFoundError(f"Calibration CSV file not found: {csv_path}")
+    
+    df = pd.read_csv(csv_path)
+    df['Accel'] = np.sqrt(df['AccelX']**2 + df['AccelY']**2 + df['AccelZ']**2)
+
+    # csv中没有timestamp，需要手动添加
+    df['timestamp'] = np.arange(len(df)) / LAB_SAMPLING_RATE
+
+    return pd.DataFrame({
+        'timestamp': df['timestamp'].values,
+        'accelX': df['AccelX'].values,
+        'accelY': df['AccelY'].values,
+        'accelZ': df['AccelZ'].values,
+        'accel': df['Accel'].values
+    })
+
+def visualise(data, show=True):
+    plt.plot(data['timestamp'], data['accelX'], label='X-axis')
+    plt.plot(data['timestamp'], data['accelY'], label='Y-axis')
+    plt.plot(data['timestamp'], data['accelZ'], label='Z-axis')
+    plt.title("Acceleration Data")
+    plt.xlabel("Time (s)")
+    plt.ylabel("Acceleration (m/s^2)")
+    plt.legend()
+    plt.grid()
+    if show:
+        plt.show()
 
 # ---------------------------------------
 AW_SAMPLING_RATE = 20 # Hz, Apple Watch sampling rate
@@ -107,9 +156,9 @@ CUTOFF_FREQ = 5 # Hz, Low-pass filter cutoff frequency
 # --- 1. Data Preprocessing ---
 def preprocess_acceleration_data(df: pd.DataFrame, original_sampling_rate: int, target_sampling_rate: int, cutoff_freq: float) -> pd.DataFrame:
     """
-    Preprocesses the acceleration data by downsampling and applying a low-pass filter.
+    Preprocesses the acceleration data by downsampling and applying a high-pass filter.
 
-    @param df: DataFrame with columns 'Timestamp', 'X', 'Y', 'Z'
+    @param df: DataFrame with columns 'timestamp', 'accelX', 'accelY', 'accelZ'
     @param original_sampling_rate: Original sampling rate of the data
     @param target_sampling_rate: Target sampling rate after downsampling
     @param cutoff_freq: Cutoff frequency for the low-pass filter
@@ -118,16 +167,16 @@ def preprocess_acceleration_data(df: pd.DataFrame, original_sampling_rate: int, 
     # 1.1 Downsampling
     num_samples_target = int(len(df) * (target_sampling_rate / original_sampling_rate))
 
-    accel_data = df[['X', 'Y', 'Z']].values
-    timestamps_original = df['Timestamp'].values
+    accel_data = df[['accelX', 'accelY', 'accelZ']].values
+    timestamps_original = df['timestamp'].values
 
     resampled_accel = np.zeros((num_samples_target, 3))
     resampled_timestamps = np.linspace(timestamps_original.min(), timestamps_original.max(), num_samples_target)
     for i in range(3):
         resampled_accel[:, i] = resample(accel_data[:, i], num_samples_target)
-    
-    resampled_df = pd.DataFrame(resampled_accel, columns=['X', 'Y', 'Z'])
-    resampled_df['Timestamp'] = resampled_timestamps
+
+    resampled_df = pd.DataFrame(resampled_accel, columns=['accelX', 'accelY', 'accelZ'])
+    resampled_df['timestamp'] = resampled_timestamps
 
     # 另一种采样方法：先将Timestamp设为索引，然后使用df.resample
     # (a). Set Timestamp column as TimedeltaIndex
@@ -143,28 +192,30 @@ def preprocess_acceleration_data(df: pd.DataFrame, original_sampling_rate: int, 
     # (d). Reset index to make Timestamp a column again
     # resampled_df = resampled_df.reset_index()
 
-    # 1.2 Low Pass Filter
+    # 1.2 Highpass Filter
     nyquist_freq = 0.5 * target_sampling_rate
     normal_cutoff = cutoff_freq / nyquist_freq
-    b, a = butter(4, normal_cutoff, btype='low', analog=False) # 4th order Butterworth filter
+    b, a = butter(4, normal_cutoff, btype='highpass', analog=False) # 4th order Butterworth filter
 
     filtered_df = resampled_df.copy()
-    for col in ['X', 'Y', 'Z']:
+    for col in ['accelX', 'accelY', 'accelZ']:
         filtered_df[col] = filtfilt(b, a, resampled_df[col].values)
         
     return filtered_df
 
 def normalize_data(df: pd.DataFrame) -> tuple:
     """
-    Applies Z-score normalization to the 'X', 'Y', and 'Z' columns.
+    Applies Z-score normalization to the 'accelX', 'accelY', and 'accelZ' columns.
 
-    @param df: DataFrame with columns 'X', 'Y', 'Z'
+    @param df: DataFrame with columns 'accelX', 'accelY', 'accelZ'
     @return: Normalized DataFrame and the scaler used for normalization
     """
     scaler = StandardScaler()
-    normalized_data = scaler.fit_transform(df[['X', 'Y', 'Z']])
+    normalized_data = scaler.fit_transform(df[['accelX', 'accelY', 'accelZ']])
     normalized_df = df.copy()
-    normalized_df[['X', 'Y', 'Z']] = normalized_data
+    normalized_df[['accelX', 'accelY', 'accelZ']] = normalized_data
+    # Save the scaler for later use
+    joblib.dump(scaler, 'scaler.joblib')
     return normalized_df, scaler # Return the scaler to apply the same normalization to new data
 
 # --- 2. Coordinate System Alignment Functions ---
@@ -177,13 +228,13 @@ def align_coordinate_systems_procrustes(source_df: pd.DataFrame, target_df: pd.D
     对于加速度数据，通常我们只关心旋转。这是因为旋转可以将一个设备的坐标系对齐到另一个设备的坐标系上，或者是一个统一的解剖坐标系。
 
     返回旋转后的source_df的加速度数据。
-    @param source_df: DataFrame containing source acceleration data with columns 'X', 'Y', 'Z'
-    @param target_df: DataFrame containing target acceleration data with columns 'X', 'Y', 'Z'
+    @param source_df: DataFrame containing source acceleration data with columns 'accelX', 'accelY', 'accelZ'
+    @param target_df: DataFrame containing target acceleration data with columns 'accelX', 'accelY', 'accelZ'
     @return: DataFrame with aligned source_df acceleration data and the rotation matrix
     """
     # Extract X,Y,Z columns as point sets
-    source_points = source_df[['X', 'Y', 'Z']].values
-    target_points = target_df[['X', 'Y', 'Z']].values
+    source_points = source_df[['accelX', 'accelY', 'accelZ']].values
+    target_points = target_df[['accelX', 'accelY', 'accelZ']].values
     
     # Procrustes分析会返回 M1_new, M2_new (对齐后的点), disparity
     # M1_new 是 M1 经过旋转、缩放、平移后的结果
@@ -215,7 +266,7 @@ def align_coordinate_systems_procrustes(source_df: pd.DataFrame, target_df: pd.D
     aligned_source_accel = (source_points @ R.T) # 注意矩阵乘法顺序
     
     aligned_df = source_df.copy()
-    aligned_df[['X', 'Y', 'Z']] = aligned_source_accel
+    aligned_df[['accelX', 'accelY', 'accelZ']] = aligned_source_accel
     return aligned_df, R # 返回旋转后的数据和旋转矩阵
 
 def calculate_rotation_matrix_from_flat_pose(vicon_flat_df, aw_flat_df):
@@ -234,8 +285,8 @@ def calculate_rotation_matrix_from_flat_pose(vicon_flat_df, aw_flat_df):
     返回一个3x3的旋转矩阵 R，使得 `R @ aw_accel` 能够对齐到 vicon_accel 的坐标系。
     """
     # 确保数据经过预处理且干净
-    vicon_accel_flat = vicon_flat_df[['X', 'Y', 'Z']].values
-    aw_accel_flat = aw_flat_df[['X', 'Y', 'Z']].values
+    vicon_accel_flat = vicon_flat_df[['accelX', 'accelY', 'accelZ']].values
+    aw_accel_flat = aw_flat_df[['accelX', 'accelY', 'accelZ']].values
 
     # 计算平均加速度向量 (代表重力方向在各自坐标系下的投影)
     v_ref_vec = np.mean(vicon_accel_flat, axis=0)
@@ -257,11 +308,11 @@ def apply_rotation_matrix(df, rotation_matrix):
     """
     将计算出的旋转矩阵应用到DataFrame的加速度数据上。
     """
-    accel_data = df[['X', 'Y', 'Z']].values
+    accel_data = df[['accelX', 'accelY', 'accelZ']].values
     rotated_accel = (rotation_matrix @ accel_data.T).T # 注意矩阵乘法顺序
     
     rotated_df = df.copy()
-    rotated_df[['X', 'Y', 'Z']] = rotated_accel
+    rotated_df[['accelX', 'accelY', 'accelZ']] = rotated_accel
     return rotated_df
 
 def mirror_data_for_hand(df: pd.DataFrame, hand_type: str = 'left') -> pd.DataFrame:
@@ -270,7 +321,7 @@ def mirror_data_for_hand(df: pd.DataFrame, hand_type: str = 'left') -> pd.DataFr
     假设一个标准解剖坐标系：X=内外侧, Y=前后, Z=上下。
     左手与右手在X轴（内外侧）上通常是镜像关系。
 
-    @param df: DataFrame containing acceleration data with columns 'X', 'Y', 'Z'
+    @param df: DataFrame containing acceleration data with columns 'accelX', 'accelY', 'accelZ'
     @param hand_type: 当前数据的类型。'left' 或 'right'。
     @return: Mirrored DataFrame with adjusted 'X' values
     """
@@ -316,15 +367,9 @@ def align_with_dtw(series1: np.ndarray, series2: np.ndarray):
     """
     使用DTW对齐两个时间序列。
     输入为NumPy数组 (X, Y, Z)。
+    @return: DTW对齐结果，包含扭曲路径和距离。使用方式：alignment.index1 和 alignment.index2
     """
-    # 推荐使用 total acceleration magnitude 作为 DTW 的输入，减少维度影响
-    # 也可以对每个轴单独DTW或使用多维DTW (需要 custom_dist)
-    
-    # 为了简化，我们先用 Z 轴 或 加速度幅值
     dist_method = lambda x, y: np.linalg.norm(x - y) # 欧氏距离作为距离度量
-    
-    # 如果输入是多维的，dtw库可以直接处理
-    # accelerated_dtw 更快，但可能需要安装 dtw-python C 扩展
     alignment = dtw(series1, series2, dist_method)
     
     # alignment.index1 和 alignment.index2 提供了扭曲路径
@@ -337,8 +382,8 @@ def train_mapping_model(aligned_vicon_accel: pd.DataFrame, aligned_aw_accel: pd.
     训练一个线性回归模型，将Vicon加速度映射到Apple Watch加速度。
     """
     # 将输入数据转换为 (n_samples, n_features) 形状
-    X = aligned_vicon_accel[['X', 'Y', 'Z']].values
-    y = aligned_aw_accel[['X', 'Y', 'Z']].values # 目标是Apple Watch的XYZ
+    X = aligned_vicon_accel[['accelX', 'accelY', 'accelZ']].values
+    y = aligned_aw_accel[['accelX', 'accelY', 'accelZ']].values # 目标是Apple Watch的XYZ
 
     # 可以针对每个轴训练一个模型，或者训练一个多输出模型
     model = LinearRegression()
@@ -349,7 +394,7 @@ def train_mapping_model(aligned_vicon_accel: pd.DataFrame, aligned_aw_accel: pd.
     rmse = np.sqrt(mean_squared_error(y, y_pred))
     r2 = r2_score(y, y_pred)
     
-    print(f"\nMapping Model Training Result:")
+    print(f"Mapping Model Training Result:")
     print(f"RMSE: {rmse:.4f}")
     print(f"R^2 Score: {r2:.4f}")
     
@@ -357,12 +402,29 @@ def train_mapping_model(aligned_vicon_accel: pd.DataFrame, aligned_aw_accel: pd.
 
 
 if __name__ == "__main__":
+    '''
     # --- 0. 加载平躺姿态数据 ---
     print("--- 0. 加载平躺姿态数据 ---")
-    flat_vicon_filepath = "path/to/vicon_flat_pose_data.csv"
-    flat_aw_filepath = "path/to/aw_flat_pose_data.csv"
-    vicon_flat_data_raw = load_lab_file(flat_vicon_filepath)
+    root_dir = '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/lying_data/'
+    flat_vicon_filepath = root_dir + 'L05 Lying01.c3d.ontrackclassifier.joblib'
+    vicon_flat_data_raw = load_lab_file(flat_vicon_filepath, side='right')
+    flat_aw_filepath = root_dir + 'GERF-L-D524-M3-S0041.csv' # self collected Apple Watch data, with the same lying pose as vicon.
     aw_flat_data_raw = load_aw_file(flat_aw_filepath)
+
+    # 可视化平躺姿态数据，并根据可视化结果粗略截取apple watch数据，使得两者的时间长度大体一致
+    # visualise(vicon_flat_data_raw)
+    # visualise(aw_flat_data_raw)
+    # exit()
+
+    # 手动截取
+    vicon_flat_data_raw = vicon_flat_data_raw[(vicon_flat_data_raw['timestamp'] >= 2) & (vicon_flat_data_raw['timestamp'] <= 39)]
+    vicon_flat_data_raw['timestamp'] -= vicon_flat_data_raw['timestamp'].min() # 将vicon的时间戳转换为相对时间（从0开始）
+    # 将aw的所有加速度从g转化为m/s^2
+    aw_flat_data_raw['accelX'] *= 9.81
+    aw_flat_data_raw['accelY'] *= 9.81
+    aw_flat_data_raw['accelZ'] *= 9.81
+    aw_flat_data_raw = aw_flat_data_raw[(aw_flat_data_raw['timestamp'] >= 122) & (aw_flat_data_raw['timestamp'] <= 159)]
+    aw_flat_data_raw['timestamp'] -= aw_flat_data_raw['timestamp'].min() # 将aw的时间戳转换为相对时间（从0开始）
 
     # 对平躺姿态数据进行预处理（降采样到目标采样率，并滤波）
     vicon_flat_processed = preprocess_acceleration_data(
@@ -371,29 +433,41 @@ if __name__ == "__main__":
     aw_flat_processed = preprocess_acceleration_data(
         aw_flat_data_raw, AW_SAMPLING_RATE, AW_SAMPLING_RATE, CUTOFF_FREQ
     )
-    
+
+    # plt.subplot(2, 1, 1)
+    # visualise(vicon_flat_processed, show=False)
+    # plt.subplot(2, 1, 2)
+    # visualise(aw_flat_processed, show=True)
+
     # --- 1. 计算坐标系旋转矩阵 (基于平躺姿态) ---
+    # Calculate the rotation matrix to align Apple Watch to Vicon
     print("\n--- 1. 计算坐标系旋转矩阵 ---")
     # 假设 Apple Watch 是源设备，Vicon 是目标设备
     rotation_matrix_aw_to_vicon = calculate_rotation_matrix_from_flat_pose(
         vicon_flat_processed, aw_flat_processed
     )
-    print("旋转矩阵计算完成。")
+    print("旋转矩阵计算完成:", rotation_matrix_aw_to_vicon)
 
+    exit()
+    '''
+    # --- 1. 定义坐标系旋转矩阵 ---
+    # 这里的旋转矩阵已经由上面的代码基于平躺姿态数据计算得到
+    rotation_matrix_aw_to_vicon = np.array([[ 0.92497707, -0.34169976,  0.16630901],
+                                            [ 0.25977493,  0.24911404, -0.93298402],
+                                            [ 0.27737051,  0.90619174,  0.31918981]])
+
+    
     # --- 2. 加载运动数据 ---
-    print("\n--- 2. 加载运动数据 ---")
-    motion_vicon_filepath = "path/to/vicon_motion_data.csv"
-    motion_aw_filepath = "path/to/apple_watch_motion_data.csv"
-
-    # 模拟加载运动数据 (实际请替换为你的文件路径)
-    vicon_motion_data_raw = load_lab_file(motion_vicon_filepath)
+    calib_data_dir = '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/Calibration Data/'
+    motion_vicon_filepath = os.path.join(calib_data_dir, 'Lab/LabChopped/chopped_right_M2TestingDrinking03.csv')
+    motion_aw_filepath = os.path.join(calib_data_dir, 'AppleWatch/AW_Chopped/chopped_M2-S0079.csv')
+    vicon_motion_data_raw = load_calib_lab(motion_vicon_filepath)
     aw_motion_data_raw = load_aw_file(motion_aw_filepath)
 
     print(f"Vicon 运动数据点数: {len(vicon_motion_data_raw)}")
     print(f"Apple Watch 运动数据点数: {len(aw_motion_data_raw)}")
     
     # --- 3. 预处理运动数据 ---
-    print("\n--- 3. 预处理运动数据 ---")
     vicon_motion_processed = preprocess_acceleration_data(
         vicon_motion_data_raw, LAB_SAMPLING_RATE, AW_SAMPLING_RATE, CUTOFF_FREQ
     )
@@ -409,30 +483,27 @@ if __name__ == "__main__":
     print(f"Apple Watch 处理后数据点数 ({AW_SAMPLING_RATE}Hz): {len(aw_motion_processed)}")
 
     # --- 4. 应用坐标系旋转 ---
-    print("\n--- 4. 应用坐标系旋转 ---")
     # 将 Apple Watch 运动数据旋转到 Vicon 的坐标系
-    aw_motion_rotated = apply_rotation_matrix(aw_motion_processed, rotation_matrix_aw_to_vicon)
+    aw_motion_rotated = apply_rotation_matrix(aw_motion_normalized, rotation_matrix_aw_to_vicon)
+    vicon_motion_rotated = vicon_motion_normalized.copy()  # Vicon数据不需要旋转
     
     # 如果需要，进行左右手镜像处理 (例如，Vicon在右手，AW在左手)
     # aw_motion_rotated = mirror_data_for_hand(aw_motion_rotated, reference_hand='right', current_hand='left')
-    
-    print("Apple Watch 运动数据已旋转到 Vicon 坐标系。")
+
 
     # --- 5. 初始时间对齐 (粗略对齐) ---
-    print("\n--- 5. 初始时间对齐 ---")
     # 手动进行粗略对齐！
-    valid_start, valid_end = 0, 1
-    # 对齐后的Vicon和AW加速度数据，用于DTW
-    vicon_accel_for_dtw = vicon_motion_rotated[['X', 'Y', 'Z']].values[valid_start:valid_end]
-    aw_accel_for_dtw = aw_motion_rotated[['X', 'Y', 'Z']].values[valid_start:valid_end]
+    valid_start, valid_end = 0, len(vicon_motion_rotated) # 暂且使用整个数据段
+    vicon_accel_for_dtw = vicon_motion_rotated[['accelX', 'accelY', 'accelZ']].values[valid_start:valid_end]
+    valid_start, valid_end = 0, len(aw_motion_rotated)
+    aw_accel_for_dtw = aw_motion_rotated[['accelX', 'accelY', 'accelZ']].values[valid_start:valid_end]
 
 
     # --- 6. 精细时间对齐 (DTW) ---
-    print("\n--- 6. 精细时间对齐 (DTW) ---")
+    print("\n--- 精细时间对齐 (DTW) ---")
     # DTW 对齐坐标系后的数据
     alignment_result = align_with_dtw(vicon_accel_for_dtw, aw_accel_for_dtw)
     
-    print(f"DTW 路径长度: {len(alignment_result.path)}")
     print(f"DTW 距离: {alignment_result.distance:.4f}")
 
     # 获取对齐后的序列（通过 DTW 路径重新采样）
@@ -443,41 +514,67 @@ if __name__ == "__main__":
     print(f"DTW 对齐后 Apple Watch 序列长度: {len(aligned_aw_series)}")
 
     # 可视化对齐效果
-    plt.figure(figsize=(12, 6))
-    plt.plot(aligned_vicon_series[:, 2], label='Vicon Z-axis (DTW Aligned)') # 示例只画Z轴
-    plt.plot(aligned_aw_series[:, 2], label='Apple Watch Z-axis (DTW Aligned)', linestyle='--')
-    plt.title("Z-axis Acceleration after DTW Alignment (Motion Data)")
-    plt.xlabel("Aligned Sample Index")
-    plt.ylabel("Acceleration (g)")
-    plt.legend()
-    plt.grid(True)
+    fig, axs = plt.subplots(2, 2, figsize=(14, 10))
+    axis_labels = ['X', 'Y', 'Z']
+    for i, ax in enumerate(axs.flat[:3]):
+        ax.plot(aligned_vicon_series[:, i], label=f'Vicon {axis_labels[i]}-axis (DTW Aligned)')
+        ax.plot(aligned_aw_series[:, i], label=f'Apple Watch {axis_labels[i]}-axis (DTW Aligned)', linestyle='--')
+        ax.set_title(f"{axis_labels[i]}-axis Acceleration after DTW Alignment")
+        ax.set_xlabel("Aligned Sample Index")
+        ax.set_ylabel("Acceleration (g)")
+        ax.legend()
+        ax.grid(True)
+    # 合成加速度
+    vicon_magnitude = np.linalg.norm(aligned_vicon_series, axis=1)
+    aw_magnitude = np.linalg.norm(aligned_aw_series, axis=1)
+    axs[1, 1].plot(vicon_magnitude, label='Vicon Magnitude (DTW Aligned)')
+    axs[1, 1].plot(aw_magnitude, label='Apple Watch Magnitude (DTW Aligned)', linestyle='--')
+    axs[1, 1].set_title("Magnitude Acceleration after DTW Alignment")
+    axs[1, 1].set_xlabel("Aligned Sample Index")
+    axs[1, 1].set_ylabel("Acceleration (g)")
+    axs[1, 1].legend()
+    axs[1, 1].grid(True)
+    plt.tight_layout()
     plt.show()
 
     # --- 7. 映射模型训练 ---
     print("\n--- 7. 映射模型训练 ---")
     # 使用DTW对齐后的数据训练映射模型
-    mapping_model = train_mapping_model(pd.DataFrame(aligned_vicon_series, columns=['X','Y','Z']), 
-                                        pd.DataFrame(aligned_aw_series, columns=['X','Y','Z']))
+    mapping_model = train_mapping_model(pd.DataFrame(aligned_vicon_series, columns=['accelX','accelY','accelZ']), 
+                                        pd.DataFrame(aligned_aw_series, columns=['accelX','accelY','accelZ']))
+    
+    # 保存模型
+    model_save_path = 'mapping_model.joblib'
+    joblib.dump(mapping_model, model_save_path)
+    print(f"映射模型已保存到: {model_save_path}")
+    
+    exit()
+    
 
     # --- 8. 映射模型应用示例 ---
     print("\n--- 8. 映射模型应用示例 ---")
-    # 假设你有一个新的 Vicon 加速度数据点（来自未来的某个动作）
-    # 在应用模型之前，这个新的 Vicon 数据也应该经过预处理（降采样，滤波）
     # 因为Vicon是高精度设备，我们假设它是“源”或“输入”，Apple Watch是“目标”或“输出”
+    # 加载mapping_model
+    mapping_model = joblib.load('mapping_model.joblib')
     
     # 从 aligned_vicon_series 中取一些点进行预测演示
-    sample_vicon_input = aligned_vicon_series[10:20] # 取一小段进行演示
+    sample_vicon_input = load_calib_lab('/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/Calibration Data/Lab/LabChopped/chopped_right_M2TestingReading02.csv')
+    sample_vicon_input = preprocess_acceleration_data(sample_vicon_input, LAB_SAMPLING_RATE, AW_SAMPLING_RATE, CUTOFF_FREQ)
+    # normalize the sample input using the scaler
+    scaler = joblib.load('scaler.joblib')
+    sample_vicon_input = scaler.transform(sample_vicon_input[['accelX', 'accelY', 'accelZ']])
+    sample_vicon_input = pd.DataFrame(sample_vicon_input, columns=['accelX', 'accelY', 'accelZ'])
     predicted_aw_accel = mapping_model.predict(sample_vicon_input)
 
-    print(f"示例 Vicon 输入 (10个点):\n{sample_vicon_input}")
-    print(f"预测的 Apple Watch 加速度 (10个点):\n{predicted_aw_accel}")
+    print(f"Vicon 输入:\n{sample_vicon_input}")
+    print(f"预测的 Apple Watch 加速度:\n{predicted_aw_accel}")
     
     # 与真实的 Apple Watch 对齐数据进行比较
-    true_aw_accel = aligned_aw_series[10:20]
-    print(f"真实的 Apple Watch 加速度 (10个点):\n{true_aw_accel}")
+    true_aw_accel = load_aw_file('/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/Calibration Data/AppleWatch/AW_Chopped/chopped_M3-S0078.csv')
+    print(f"真实的 Apple Watch 加速度:\n{true_aw_accel}")
 
     # 评估预测准确性
     mse_sample = mean_squared_error(true_aw_accel, predicted_aw_accel)
     print(f"示例预测的均方误差 (MSE): {mse_sample:.4f}")
 
-    print("\n--- 流程完成 ---")
+    # print("\n--- 流程完成 ---")
