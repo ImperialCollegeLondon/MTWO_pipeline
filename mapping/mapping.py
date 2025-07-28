@@ -1,15 +1,13 @@
 import os
 import sys
-script_path = os.path.abspath(__file__)
-script_dir = os.path.dirname(script_path)
-parent_dir = os.path.join(script_dir, os.pardir)
-sys.path.insert(0, parent_dir)
+sys.path.insert(0, r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline")
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import joblib
 import datetime
+import pickle
 from loguru import logger
 from dataTransformer.filter import filter
 from config import getLogger
@@ -19,20 +17,40 @@ from dtw import dtw
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.svm import SVR
 from scipy.spatial.transform import Rotation as R_scipy
 logger = getLogger('INFO')
 
 # Set plot style
-plt.style.use('seaborn-v0_8')
-sns.set_palette("husl")
+# plt.style.use('seaborn-v0_8')
+# sns.set_palette("husl")
+# plt.rcParams['font.family'] = 'SimHei'
+
+def low_pass_filter(data, cutoff_freq=5, sampling_rate=20, order=4):
+    """
+    Apply a low-pass Butterworth filter to the data.
+    
+    Parameters:
+    - data: Input data to be filtered.
+    - cutoff_freq: Cutoff frequency for the low-pass filter (Hz).
+    - sampling_rate: Sampling rate of the data (Hz).
+    - order: Order of the Butterworth filter.
+    
+    Returns:
+    - Filtered data.
+    """
+    b, a = butter(order, cutoff_freq / (0.5 * sampling_rate), btype='low')
+    filtered_data = filtfilt(b, a, data)
+    return filtered_data
 
 def load_lab_file(lab_file_path: str, side: str = 'right') -> pd.DataFrame:
     '''
+    Load Filtered Lab data from a joblib file.
     @param lab_file_path: Path to the lab data file (.joblib)
     @param side: 'left' or 'right', specifies which leg's data to load
     @return: DataFrame containing acceleration data with keys 'accelX', 'accelY', 'accelZ', and 'accel'
     '''
-    logger.info(f"Loading lab data from: {lab_file_path}")
+    logger.debug(f"Loading lab data from: {lab_file_path}")
     
     if not os.path.exists(lab_file_path):
         raise FileNotFoundError(f"Lab file not found: {lab_file_path}")
@@ -40,7 +58,7 @@ def load_lab_file(lab_file_path: str, side: str = 'right') -> pd.DataFrame:
     lab_data = joblib.load(lab_file_path)
     if 'left' in lab_data and 'right' in lab_data:
         data = lab_data[side]
-        logger.warning(f"Using {side} leg data from lab file")
+        logger.info(f"Using {side} leg data from lab file")
     else:
         logger.warning("Lab file does not contain left/right data, using the first one in the structure.")
         data = list(lab_data.values())[0] # 选第一个
@@ -52,11 +70,11 @@ def load_lab_file(lab_file_path: str, side: str = 'right') -> pd.DataFrame:
 
     assert len(accel_x) == len(accel_y) == len(accel_z), "Acceleration data arrays must have the same length."
     assert len(accel_x) > 0, "Acceleration data cannot be empty."
-    
-    logger.info("Applying Butterworth filter to lab data...")
-    accel_x_filtered = filter(np.array(accel_x), sampling_rate=LAB_SAMPLING_RATE)
-    accel_y_filtered = filter(np.array(accel_y), sampling_rate=LAB_SAMPLING_RATE)
-    accel_z_filtered = filter(np.array(accel_z), sampling_rate=LAB_SAMPLING_RATE)
+
+    logger.info(f"Applying low-pass filter to lab data with {len(accel_x)} samples.")
+    accel_x_filtered = low_pass_filter(np.array(accel_x), sampling_rate=LAB_SAMPLING_RATE)
+    accel_y_filtered = low_pass_filter(np.array(accel_y), sampling_rate=LAB_SAMPLING_RATE)
+    accel_z_filtered = low_pass_filter(np.array(accel_z), sampling_rate=LAB_SAMPLING_RATE)
 
     accel_data = {
         'timestamp': np.arange(len(accel_x_filtered)) / LAB_SAMPLING_RATE,
@@ -73,10 +91,11 @@ def load_lab_file(lab_file_path: str, side: str = 'right') -> pd.DataFrame:
 
 def load_aw_file(aw_file_path: str) -> pd.DataFrame:
     ''' 
+    Load Filtered Apple Watch data from a CSV file.
     @param aw_file_path: Path to the Apple Watch data file (.csv)
     @return: DataFrame containing acceleration data with columns 'accelX', 'accelY', 'accelZ', and 'accel'
     '''
-    logger.info(f"Loading Apple Watch data from: {aw_file_path}")
+    logger.debug(f"Loading Apple Watch data from: {aw_file_path}")
     
     if not os.path.exists(aw_file_path):
         raise FileNotFoundError(f"Apple Watch file not found: {aw_file_path}")
@@ -93,13 +112,13 @@ def load_aw_file(aw_file_path: str) -> pd.DataFrame:
     aw_subset["RelativeTime"] = (aw_subset["Timestamp"] - start_timestamp).dt.total_seconds()
     
     # Apply Butterworth filter
-    logger.info("Applying Butterworth filter to Apple Watch data...")
-    accel_x_filtered = filter(aw_subset["X"].values, order=4, cutoff_freq=5, sampling_rate=AW_SAMPLING_RATE)
-    accel_y_filtered = filter(aw_subset["Y"].values, order=4, cutoff_freq=5, sampling_rate=AW_SAMPLING_RATE)
-    accel_z_filtered = filter(aw_subset["Z"].values, order=4, cutoff_freq=5, sampling_rate=AW_SAMPLING_RATE)
+    logger.info(f"Applying low-pass filter to Apple Watch data with {len(aw_subset)} samples.")
+    accel_x_filtered = low_pass_filter(aw_subset["X"].values, sampling_rate=AW_SAMPLING_RATE)
+    accel_y_filtered = low_pass_filter(aw_subset["Y"].values, sampling_rate=AW_SAMPLING_RATE)
+    accel_z_filtered = low_pass_filter(aw_subset["Z"].values, sampling_rate=AW_SAMPLING_RATE)
     accel_magnitude_filtered = np.sqrt(accel_x_filtered**2 + accel_y_filtered**2 + accel_z_filtered**2)
-    
-    accel_data = {
+
+    accel_data = { 
         'timestamp': aw_subset["RelativeTime"].values,
         'accelX': accel_x_filtered,
         'accelY': accel_y_filtered,
@@ -109,37 +128,271 @@ def load_aw_file(aw_file_path: str) -> pd.DataFrame:
 
     return pd.DataFrame(accel_data)
 
-def load_calib_lab(csv_path: str) -> pd.DataFrame:
+def load_csv_data(csv_path: str, data_type: str) -> pd.DataFrame:
     """
     Load calibration data from a CSV file.
     
     @param csv_path: Path to the CSV file containing calibration data.
+    @param data_type: Type of data, either 'aw' for Apple Watch or 'lab' for Vicon Lab.
     @return: DataFrame with columns 'accelX', 'accelY', 'accelZ', and 'accel'.
     """
-    logger.info(f"Loading calibration data from: {csv_path}")
-    
     if not os.path.exists(csv_path):
         raise FileNotFoundError(f"Calibration CSV file not found: {csv_path}")
+    if data_type.lower() not in ['aw', 'lab']:
+        raise ValueError("data_type must be either 'aw' or 'lab'.")
     
-    df = pd.read_csv(csv_path)
+    data = pd.read_csv(csv_path)
+
+    # determine timestamp
+    timestamp_col = None
+    for col in data.columns:
+        if 'timestamp' in col.lower() or 'time' in col.lower():
+            timestamp_col = col
+            break
+    if not timestamp_col:
+        sampling_rate = AW_SAMPLING_RATE if data_type.lower()=='aw' else LAB_SAMPLING_RATE
+        data['Timestamp'] = pd.Series(range(len(data))) / sampling_rate
+        timestamp_col = 'Timestamp'
+    # determine acceleration for each axis
+    for col in data.columns:
+        col_lower = col.lower()
+        if 'accelx' in col_lower or 'accelerationx' in col_lower:
+            accel_x_col = col
+        elif 'accely' in col_lower or 'accelerationy' in col_lower:
+            accel_y_col = col
+        elif 'accelz' in col_lower or 'accelerationz' in col_lower:
+            accel_z_col = col
+
+
+    df = data[[timestamp_col, accel_x_col, accel_y_col, accel_z_col]].copy()
+    df.columns = ["Timestamp", "AccelX", "AccelY", "AccelZ"]
+    
     df['Accel'] = np.sqrt(df['AccelX']**2 + df['AccelY']**2 + df['AccelZ']**2)
 
-    # csv中没有timestamp，需要手动添加
-    df['timestamp'] = np.arange(len(df)) / LAB_SAMPLING_RATE
-
     return pd.DataFrame({
-        'timestamp': df['timestamp'].values,
+        'timestamp': df['Timestamp'].values,
         'accelX': df['AccelX'].values,
         'accelY': df['AccelY'].values,
         'accelZ': df['AccelZ'].values,
         'accel': df['Accel'].values
     })
 
-def visualise(data, show=True):
+
+def load_paired_training_data(pickle_path: str) -> list:
+    """
+    Load paired training data from pickle file generated by build_training_set.py
+    
+    @param pickle_path: Path to the pickle file containing paired training samples
+    @return: List of dictionaries containing paired training samples
+    """
+    if not os.path.exists(pickle_path):
+        raise FileNotFoundError(f"Paired training data file not found: {pickle_path}")
+    
+    with open(pickle_path, 'rb') as f:
+        training_samples = pickle.load(f)
+    
+    logger.info(f"Loaded {len(training_samples)} paired training samples from {pickle_path}")
+    return training_samples
+
+
+def convert_sample_to_dataframes(sample: dict) -> tuple:
+    """
+    Convert a single paired sample to AW and Vicon DataFrames
+    
+    @param sample: Dictionary containing paired sample data
+    @return: Tuple of (aw_df, vicon_df)
+    """
+    aw_df = pd.DataFrame({
+        'timestamp': sample['timestamp'],
+        'accelX': sample['aw_accelX'],
+        'accelY': sample['aw_accelY'],
+        'accelZ': sample['aw_accelZ']
+    })
+    
+    vicon_df = pd.DataFrame({
+        'timestamp': sample['timestamp'],
+        'accelX': sample['vicon_accelX'],
+        'accelY': sample['vicon_accelY'],
+        'accelZ': sample['vicon_accelZ']
+    })
+    
+    return aw_df, vicon_df
+
+
+def process_paired_samples_with_alignment(training_samples: list, alignment_method: str = 'rotation_matrix') -> tuple:
+    """
+    Process all paired samples with coordinate system alignment
+    
+    @param training_samples: List of paired training samples
+    @param alignment_method: Method for alignment ('rotation_matrix', 'procrustes', or 'none')
+    @return: Tuple of (aligned_aw_data_list, aligned_vicon_data_list, alignment_info)
+    """
+    aligned_aw_data = []
+    aligned_vicon_data = []
+    alignment_info = {
+        'method': alignment_method,
+        'rotation_matrices': [],
+        'sample_stats': []
+    }
+    
+    logger.info(f"Processing {len(training_samples)} paired samples with alignment method: {alignment_method}")
+    
+    for i, sample in enumerate(training_samples):
+        try:
+            # Convert sample to DataFrames
+            aw_df, vicon_df = convert_sample_to_dataframes(sample)
+            
+            # Apply coordinate system alignment
+            if alignment_method == 'rotation_matrix':
+                # Calculate rotation matrix based on mean gravity vectors
+                # rotation_matrix = calculate_rotation_matrix_from_sample(vicon_df, aw_df)
+                rotation_matrix = np.array([[ 0.58377147,  0.28237329,  0.76123334],
+                                            [ 0.36897715,  0.74289845, -0.55853179],
+                                            [-0.72323352,  0.60693263,  0.32949362]])
+
+                aligned_vicon_df = apply_rotation_matrix(vicon_df, rotation_matrix)
+                aligned_aw_df = aw_df.copy()  # AW data remains unchanged
+                alignment_info['rotation_matrices'].append(rotation_matrix)
+                
+            elif alignment_method == 'procrustes':
+                # Use Procrustes analysis for alignment
+                aligned_vicon_df, rotation_matrix = align_coordinate_systems_procrustes(vicon_df, aw_df)
+                aligned_aw_df = aw_df.copy()
+                
+                alignment_info['rotation_matrices'].append(rotation_matrix)
+                
+            elif alignment_method == 'none':
+                # No alignment, use original data
+                aligned_vicon_df = vicon_df.copy()
+                aligned_aw_df = aw_df.copy()
+                alignment_info['rotation_matrices'].append(np.eye(3))
+            
+            else:
+                raise ValueError(f"Unknown alignment method: {alignment_method}")
+            
+            aligned_aw_data.append(aligned_aw_df)
+            aligned_vicon_data.append(aligned_vicon_df)
+            
+            # Record sample statistics
+            sample_stats = {
+                'sample_id': sample['sample_id'],
+                'filename_aw': sample['filename_aw'],
+                'filename_vicon': sample['filename_vicon'],
+                'length': len(aligned_aw_df),
+                'aw_mean_accel': np.mean([aligned_aw_df['accelX'].mean(), 
+                                        aligned_aw_df['accelY'].mean(), 
+                                        aligned_aw_df['accelZ'].mean()]),
+                'vicon_mean_accel': np.mean([aligned_vicon_df['accelX'].mean(), 
+                                           aligned_vicon_df['accelY'].mean(), 
+                                           aligned_vicon_df['accelZ'].mean()])
+            }
+            alignment_info['sample_stats'].append(sample_stats)
+            
+            logger.debug(f"Processed sample {i+1}/{len(training_samples)}: {sample['filename_aw']}")
+            
+        except Exception as e:
+            logger.error(f"Error processing sample {i+1} ({sample.get('filename_aw', 'unknown')}): {str(e)}")
+            continue
+    
+    logger.info(f"Successfully processed {len(aligned_aw_data)} samples with {alignment_method} alignment")
+    return aligned_aw_data, aligned_vicon_data, alignment_info
+
+
+def calculate_rotation_matrix_from_sample(vicon_df: pd.DataFrame, aw_df: pd.DataFrame) -> np.ndarray:
+    """
+    Calculate rotation matrix from a single paired sample using mean acceleration vectors
+    
+    @param vicon_df: Vicon data DataFrame
+    @param aw_df: Apple Watch data DataFrame
+    @return: 3x3 rotation matrix
+    """
+    vicon_accel = vicon_df[['accelX', 'accelY', 'accelZ']].values
+    aw_accel = aw_df[['accelX', 'accelY', 'accelZ']].values
+    
+    # Calculate mean acceleration vectors (representing gravity direction)
+    vicon_vec = np.mean(vicon_accel, axis=0)
+    aw_vec = np.mean(aw_accel, axis=0)
+    
+    # Normalize vectors
+    vicon_vec = vicon_vec / np.linalg.norm(vicon_vec)
+    aw_vec = aw_vec / np.linalg.norm(aw_vec)
+    
+    # Calculate rotation matrix using scipy
+    rot_obj, rmsd = R_scipy.align_vectors([vicon_vec], [aw_vec])
+    rotation_matrix = rot_obj.as_matrix()
+    
+    return rotation_matrix
+
+
+def train_mapping_model_from_paired_data(training_samples: list, alignment_method: str = 'rotation_matrix') -> tuple:
+    """
+    Train mapping model from paired training data with coordinate alignment
+    
+    @param training_samples: List of paired training samples
+    @param alignment_method: Method for coordinate system alignment
+    @return: Tuple of (trained_model, alignment_info, training_metrics)
+    """
+    logger.info("Starting mapping model training from paired data...")
+    
+    # Process samples with alignment
+    aligned_aw_data, aligned_vicon_data, alignment_info = process_paired_samples_with_alignment(
+        training_samples, alignment_method
+    )
+    
+    if not aligned_aw_data or not aligned_vicon_data:
+        raise ValueError("No successfully aligned data found for training")
+    
+    # Combine all aligned data for training
+    all_vicon_features = []
+    all_aw_targets = []
+    
+    for vicon_df, aw_df in zip(aligned_vicon_data, aligned_aw_data):
+        vicon_features = vicon_df[['accelX', 'accelY', 'accelZ']].values
+        aw_targets = aw_df[['accelX', 'accelY', 'accelZ']].values
+        
+        all_vicon_features.append(vicon_features)
+        all_aw_targets.append(aw_targets)
+    
+    # Stack all data
+    X = np.vstack(all_vicon_features)  # Vicon data as input
+    y = np.vstack(all_aw_targets)      # AW data as target
+    
+    logger.info(f"Training data shape: X={X.shape}, y={y.shape}")
+    
+    # Train SVR models for each axis
+    svr_models = []
+    y_pred = np.zeros_like(y)
+    for i in range(y.shape[1]):
+        svr = SVR(kernel='rbf')
+        svr.fit(X, y[:, i])
+        svr_models.append(svr)
+        y_pred[:, i] = svr.predict(X)
+    
+    # Evaluate the model
+    rmse = np.sqrt(mean_squared_error(y, y_pred))
+    r2 = r2_score(y, y_pred)
+    
+    training_metrics = {
+        'rmse': rmse,
+        'r2_score': r2,
+        'n_samples': X.shape[0],
+        'n_features': X.shape[1],
+        'n_targets': y.shape[1]
+    }
+    
+    logger.info(f"Mapping model training completed:")
+    logger.info(f"  RMSE: {rmse:.4f}")
+    logger.info(f"  R² Score: {r2:.4f}")
+    logger.info(f"  Training samples: {X.shape[0]}")
+    
+    # 返回模型列表而不是单一模型
+    return svr_models, alignment_info, training_metrics
+
+def visualise(data, show=True, title="Acceleration Data"):
     plt.plot(data['timestamp'], data['accelX'], label='X-axis')
     plt.plot(data['timestamp'], data['accelY'], label='Y-axis')
     plt.plot(data['timestamp'], data['accelZ'], label='Z-axis')
-    plt.title("Acceleration Data")
+    plt.title(title)
     plt.xlabel("Time (s)")
     plt.ylabel("Acceleration (m/s^2)")
     plt.legend()
@@ -154,7 +407,7 @@ CUTOFF_FREQ = 5 # Hz, Low-pass filter cutoff frequency
 # ---------------------------------------
 
 # --- 1. Data Preprocessing ---
-def preprocess_acceleration_data(df: pd.DataFrame, original_sampling_rate: int, target_sampling_rate: int, cutoff_freq: float) -> pd.DataFrame:
+def preprocess_acceleration_data(df: pd.DataFrame, original_sampling_rate: int, target_sampling_rate: int, cutoff_freq: float, filtered=False) -> pd.DataFrame:
     """
     Preprocesses the acceleration data by downsampling and applying a high-pass filter.
 
@@ -182,16 +435,16 @@ def preprocess_acceleration_data(df: pd.DataFrame, original_sampling_rate: int, 
     # (a). Set Timestamp column as TimedeltaIndex
     # df['Timestamp'] = pd.to_timedelta(df['Timestamp'], unit='s')
     # df = df.set_index('Timestamp')
-
     # (b). Calculate resampling frequency
     # resample_rule = f"{1000 / target_sampling_rate:.0f}ms"
-
     # (c). Use resample to downsample and aggregate using mean
     # resampled_df = df.resample(resample_rule).mean().dropna()
-
     # (d). Reset index to make Timestamp a column again
     # resampled_df = resampled_df.reset_index()
-
+    
+    if not filtered:
+        return resampled_df
+    
     # 1.2 Highpass Filter
     nyquist_freq = 0.5 * target_sampling_rate
     normal_cutoff = cutoff_freq / nyquist_freq
@@ -200,23 +453,25 @@ def preprocess_acceleration_data(df: pd.DataFrame, original_sampling_rate: int, 
     filtered_df = resampled_df.copy()
     for col in ['accelX', 'accelY', 'accelZ']:
         filtered_df[col] = filtfilt(b, a, resampled_df[col].values)
-        
     return filtered_df
+        
 
-def normalize_data(df: pd.DataFrame) -> tuple:
+def normalize_data(df: pd.DataFrame, type=None) -> tuple:
     """
     Applies Z-score normalization to the 'accelX', 'accelY', and 'accelZ' columns.
 
     @param df: DataFrame with columns 'accelX', 'accelY', 'accelZ'
-    @return: Normalized DataFrame and the scaler used for normalization
+    @param type: Optional type for saving the scaler, e.g., 'aw' or 'lab'. If not specified, the scaler will not be saved.
+    @return: Tuple of (normalized DataFrame, scaler used for normalization)
     """
     scaler = StandardScaler()
     normalized_data = scaler.fit_transform(df[['accelX', 'accelY', 'accelZ']])
     normalized_df = df.copy()
     normalized_df[['accelX', 'accelY', 'accelZ']] = normalized_data
-    # Save the scaler for later use
-    joblib.dump(scaler, 'scaler.joblib')
-    return normalized_df, scaler # Return the scaler to apply the same normalization to new data
+    if type:
+        joblib.dump(scaler, rf'./mapping/cache/scaler_{type}.joblib') # Save the scaler for later use
+    return normalized_df, scaler
+
 
 # --- 2. Coordinate System Alignment Functions ---
 def align_coordinate_systems_procrustes(source_df: pd.DataFrame, target_df: pd.DataFrame) -> tuple:
@@ -271,37 +526,41 @@ def align_coordinate_systems_procrustes(source_df: pd.DataFrame, target_df: pd.D
 
 def calculate_rotation_matrix_from_flat_pose(vicon_flat_df, aw_flat_df):
     """
-    根据平躺姿态数据计算从Apple Watch到Vicon的旋转矩阵。
+    根据平躺姿态数据计算从Vicon到Apple Watch的旋转矩阵。
     假设在平躺姿态下，两个设备都静止，且各自的Z轴都近似指向（或反向指向）重力方向。
     更通用的方法是，两个设备的Y轴（通常是设备的前向）都指向某个共同的固定方向（例如受试者头部）。
     
     这里我们使用重力向量作为参考：
-    - Vicon的平均重力向量 (v_ref)
+    - Vicon的平均重力向量 (vicon_vec)
     - Apple Watch的平均重力向量 (aw_vec)
-    我们将计算一个旋转矩阵，使得 aw_vec 旋转后与 v_ref 方向一致。
+    我们将计算一个旋转矩阵，使得 vicon_vec 旋转后与 aw_vec 方向一致。
     
     更精确的校准会使用多于一个姿态，但平躺是最简单的单姿态校准。
     
-    返回一个3x3的旋转矩阵 R，使得 `R @ aw_accel` 能够对齐到 vicon_accel 的坐标系。
+    返回一个3x3的旋转矩阵 R，使得 `R @ vicon_accel` 能够对齐到 aw_accel 的坐标系。
     """
-    # 确保数据经过预处理且干净
     vicon_accel_flat = vicon_flat_df[['accelX', 'accelY', 'accelZ']].values
     aw_accel_flat = aw_flat_df[['accelX', 'accelY', 'accelZ']].values
 
     # 计算平均加速度向量 (代表重力方向在各自坐标系下的投影)
-    v_ref_vec = np.mean(vicon_accel_flat, axis=0)
-    aw_current_vec = np.mean(aw_accel_flat, axis=0)
+    vicon_vec = np.mean(vicon_accel_flat, axis=0)
+    aw_vec = np.mean(aw_accel_flat, axis=0)
 
     # 归一化向量 (只关心方向)
-    v_ref_vec = v_ref_vec / np.linalg.norm(v_ref_vec)
-    aw_current_vec = aw_current_vec / np.linalg.norm(aw_current_vec)
+    vicon_vec = vicon_vec / np.linalg.norm(vicon_vec)
+    aw_vec = aw_vec / np.linalg.norm(aw_vec)
 
-    # 计算旋转矩阵（将 aw_current_vec 旋转到 v_ref_vec）
+    print()
+    print("Vicon source vector:", vicon_vec)
+    print("Apple Watch target vector:", aw_vec)
+    print()
+
+    # 计算旋转矩阵（将 vicon_vec 旋转到 aw_vec）
     # 使用 scipy.spatial.transform.Rotation.align_vectors
     # 它能找到将一组向量旋转到另一组向量的最佳旋转
-    rot_obj, _ = R_scipy.align_vectors([v_ref_vec], [aw_current_vec])
+    rot_obj, rmsd = R_scipy.align_vectors([vicon_vec], [aw_vec])
     rotation_matrix = rot_obj.as_matrix()
-    
+    print(f"[Rotation Matrix] RMSD (Root Mean Square Deviation): {rmsd:.4f}")
     return rotation_matrix
 
 def apply_rotation_matrix(df, rotation_matrix):
@@ -366,26 +625,26 @@ def initial_time_alignment(ref_df: pd.DataFrame, other_df: pd.DataFrame, column:
 def align_with_dtw(series1: np.ndarray, series2: np.ndarray):
     """
     使用DTW对齐两个时间序列。
-    输入为NumPy数组 (X, Y, Z)。
+    @param series1: 第一个时间序列
+    @param series2: 第二个时间序列
     @return: DTW对齐结果，包含扭曲路径和距离。使用方式：alignment.index1 和 alignment.index2
     """
-    dist_method = lambda x, y: np.linalg.norm(x - y) # 欧氏距离作为距离度量
-    alignment = dtw(series1, series2, dist_method)
-    
-    # alignment.index1 和 alignment.index2 提供了扭曲路径
-    # 这些索引可以用来重新采样或对齐两个序列
+    alignment = dtw(x=series1, y=series2, 
+                    dist_method="euclidean",
+                    step_pattern="symmetric2")
     return alignment
 
 # --- 4. 映射模型训练函数 ---
 def train_mapping_model(aligned_vicon_accel: pd.DataFrame, aligned_aw_accel: pd.DataFrame) -> LinearRegression:
     """
     训练一个线性回归模型，将Vicon加速度映射到Apple Watch加速度。
+    输入为Vicon数据，输出为Apple Watch数据。
     """
     # 将输入数据转换为 (n_samples, n_features) 形状
-    X = aligned_vicon_accel[['accelX', 'accelY', 'accelZ']].values
-    y = aligned_aw_accel[['accelX', 'accelY', 'accelZ']].values # 目标是Apple Watch的XYZ
+    X = aligned_vicon_accel[['accelX', 'accelY', 'accelZ']].values  # 输入是Vicon数据
+    y = aligned_aw_accel[['accelX', 'accelY', 'accelZ']].values     # 目标是Apple Watch的XYZ
 
-    # 可以针对每个轴训练一个模型，或者训练一个多输出模型
+    # 训练多输出线性回归模型
     model = LinearRegression()
     model.fit(X, y)
     
@@ -394,7 +653,7 @@ def train_mapping_model(aligned_vicon_accel: pd.DataFrame, aligned_aw_accel: pd.
     rmse = np.sqrt(mean_squared_error(y, y_pred))
     r2 = r2_score(y, y_pred)
     
-    print(f"Mapping Model Training Result:")
+    print(f"Mapping Model Training Result (Vicon -> Apple Watch):")
     print(f"RMSE: {rmse:.4f}")
     print(f"R^2 Score: {r2:.4f}")
     
@@ -402,18 +661,231 @@ def train_mapping_model(aligned_vicon_accel: pd.DataFrame, aligned_aw_accel: pd.
 
 
 if __name__ == "__main__":
-    '''
-    # --- 0. 加载平躺姿态数据 ---
+    # ============================================================================
+    # 新的训练流程：使用配对训练数据
+    # ============================================================================
+    
+    print("=== 使用配对训练数据进行映射模型训练 ===")
+    
+    # --- 1. 加载配对训练数据 ---
+    paired_data_path = "paired_training_data/paired_training_data.pkl"
+    
+    try:
+        training_samples = load_paired_training_data(paired_data_path)
+        print(f"成功加载 {len(training_samples)} 个配对训练样本")
+        
+        # 显示样本信息
+        print("\n配对样本概览:")
+        for i, sample in enumerate(training_samples[:5]):  # 显示前5个样本
+            print(f"  样本 {sample['sample_id']:2d}: {sample['filename_aw']:25s} <-> {sample['filename_vicon']:25s} "
+                  f"({sample['length']:4d} 数据点, {sample['duration']:.1f}秒)")
+        if len(training_samples) > 5:
+            print(f"  ... 还有 {len(training_samples) - 5} 个样本")
+    
+    except FileNotFoundError:
+        print(f"错误: 找不到配对训练数据文件 {paired_data_path}")
+        print("请先运行 build_training_set.py 生成配对训练数据")
+        exit(1)
+    
+    # --- 2. 选择对齐方法并训练模型 ---
+    alignment_methods = ['rotation_matrix', 'procrustes', 'none']
+    
+    for method in alignment_methods:
+        print(f"\n--- 使用 {method} 对齐方法训练模型 ---")
+        
+        try:
+            # 训练模型
+            model, alignment_info, metrics = train_mapping_model_from_paired_data(
+                training_samples, alignment_method=method
+            )
+            
+            # 保存模型和相关信息
+            model_dir = f"mapping_models_{method}"
+            os.makedirs(model_dir, exist_ok=True)
+            
+            # 保存训练好的模型
+            model_path = os.path.join(model_dir, 'mapping_model.joblib')
+            joblib.dump(model, model_path)
+            
+            # 保存对齐信息
+            alignment_path = os.path.join(model_dir, 'alignment_info.pkl')
+            with open(alignment_path, 'wb') as f:
+                pickle.dump(alignment_info, f)
+            
+            # 保存训练指标
+            metrics_path = os.path.join(model_dir, 'training_metrics.pkl')
+            with open(metrics_path, 'wb') as f:
+                pickle.dump(metrics, f)
+            
+            print(f"模型和相关文件已保存到 {model_dir}/ 目录")
+            print(f"  - 模型文件: {model_path}")
+            print(f"  - 对齐信息: {alignment_path}")
+            print(f"  - 训练指标: {metrics_path}")
+            
+            # 显示训练结果
+            print(f"\n{method} 方法训练结果:")
+            print(f"  RMSE: {metrics['rmse']:.4f}")
+            print(f"  R² Score: {metrics['r2_score']:.4f}")
+            print(f"  训练样本数: {metrics['n_samples']}")
+            
+        except Exception as e:
+            print(f"使用 {method} 方法训练时出错: {str(e)}")
+            continue
+    
+    # --- 3. 模型比较和可视化 ---
+    print(f"\n--- 模型性能比较 ---")
+    
+    model_results = {}
+    
+    for method in alignment_methods:
+        metrics_path = f"mapping_models_{method}/training_metrics.pkl"
+        if os.path.exists(metrics_path):
+            with open(metrics_path, 'rb') as f:
+                metrics = pickle.load(f)
+            model_results[method] = metrics
+    
+    if model_results:
+        print("方法对比:")
+        print(f"{'方法':<15} {'RMSE':<10} {'R² Score':<10} {'样本数':<10}")
+        print("-" * 50)
+        
+        best_method = None
+        best_r2 = -float('inf')
+        
+        for method, metrics in model_results.items():
+            print(f"{method:<15} {metrics['rmse']:<10.4f} {metrics['r2_score']:<10.4f} {metrics['n_samples']:<10}")
+            if metrics['r2_score'] > best_r2:
+                best_r2 = metrics['r2_score']
+                best_method = method
+        
+        print(f"\n最佳方法: {best_method} (R² = {best_r2:.4f})")
+        
+        # 创建性能比较图
+        methods = list(model_results.keys())
+        rmse_values = [model_results[m]['rmse'] for m in methods]
+        r2_values = [model_results[m]['r2_score'] for m in methods]
+        
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+        
+        # RMSE 比较
+        ax1.bar(methods, rmse_values, color='skyblue', alpha=0.7)
+        ax1.set_title('Model RMSE Comparison')
+        ax1.set_ylabel('RMSE')
+        ax1.set_xlabel('Alignment Method')
+        for i, v in enumerate(rmse_values):
+            ax1.text(i, v + 0.001, f'{v:.4f}', ha='center', va='bottom')
+        
+        # R² Score 比较
+        ax2.bar(methods, r2_values, color='lightcoral', alpha=0.7)
+        ax2.set_title('Model R² Score Comparison')
+        ax2.set_ylabel('R² Score')
+        ax2.set_xlabel('Alignment Method')
+        ax2.set_ylim(0, 1)
+        for i, v in enumerate(r2_values):
+            ax2.text(i, v + 0.01, f'{v:.4f}', ha='center', va='bottom')
+        
+        plt.tight_layout()
+        plt.savefig('model_performance_comparison.png', dpi=300, bbox_inches='tight')
+        plt.show()
+        
+        print(f"性能比较图已保存为 model_performance_comparison.png")
+    
+    # --- 4. 测试最佳模型 ---
+    if best_method and len(training_samples) > 0:
+        print(f"\n--- 测试最佳模型 ({best_method}) ---")
+        
+        # 加载最佳模型
+        best_model_path = f"mapping_models_{best_method}/mapping_model.joblib"
+        best_model = joblib.load(best_model_path)
+        
+        # 使用第一个训练样本进行测试演示
+        test_sample = training_samples[0]
+        aw_df, vicon_df = convert_sample_to_dataframes(test_sample)
+        
+        # 应用相同的对齐方法
+        if best_method == 'rotation_matrix':
+            rotation_matrix = calculate_rotation_matrix_from_sample(vicon_df, aw_df)
+            aligned_vicon_df = apply_rotation_matrix(vicon_df, rotation_matrix)
+        elif best_method == 'procrustes':
+            aligned_vicon_df, _ = align_coordinate_systems_procrustes(vicon_df, aw_df)
+        else:
+            aligned_vicon_df = vicon_df.copy()
+        
+        # 进行预测
+        vicon_input = aligned_vicon_df[['accelX', 'accelY', 'accelZ']].values
+        
+        # 检查模型类型并进行相应的预测
+        if isinstance(best_model, list):
+            # SVR 模型列表，需要为每个轴分别预测
+            aw_pred = np.zeros((vicon_input.shape[0], 3))
+            for i, svr_model in enumerate(best_model):
+                aw_pred[:, i] = svr_model.predict(vicon_input)
+        else:
+            # 单一模型（如 LinearRegression）
+            aw_pred = best_model.predict(vicon_input)
+        
+        aw_true = aw_df[['accelX', 'accelY', 'accelZ']].values
+        
+        # 计算测试误差
+        test_rmse = np.sqrt(mean_squared_error(aw_true, aw_pred))
+        test_r2 = r2_score(aw_true, aw_pred)
+        
+        print(f"测试样本: {test_sample['filename_aw']}")
+        print(f"测试 RMSE: {test_rmse:.4f}")
+        print(f"测试 R² Score: {test_r2:.4f}")
+        
+        # 可视化预测结果
+        fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+        axes = axes.flatten()
+        
+        axis_labels = ['X', 'Y', 'Z', 'Magnitude']
+        
+        for i in range(3):
+            axes[i].plot(aw_true[:, i], label=f'Real AW {axis_labels[i]}', alpha=0.8)
+            axes[i].plot(aw_pred[:, i], label=f'Converted AW {axis_labels[i]}', linestyle='--', alpha=0.8)
+            axes[i].set_title(f'{axis_labels[i]} Axis Acceleration Prediction Comparison')
+            axes[i].set_xlabel('Time Step')
+            axes[i].set_ylabel('Acceleration')
+            axes[i].legend()
+            axes[i].grid(True, alpha=0.3)
+        
+        # 合成加速度对比
+        true_mag = np.linalg.norm(aw_true, axis=1)
+        pred_mag = np.linalg.norm(aw_pred, axis=1)
+        axes[3].plot(true_mag, label='Real Combined Acceleration', alpha=0.8)
+        axes[3].plot(pred_mag, label='Converted Combined Acceleration', linestyle='--', alpha=0.8)
+        axes[3].set_title('Combined Acceleration Prediction Comparison')
+        axes[3].set_xlabel('Time Step')
+        axes[3].set_ylabel('Acceleration')
+        axes[3].legend()
+        axes[3].grid(True, alpha=0.3)
+        
+        plt.tight_layout()
+        plt.savefig(f'prediction_test_{best_method}.png', dpi=300, bbox_inches='tight')
+        plt.show()
+        
+        print(f"预测结果可视化已保存为 prediction_test_{best_method}.png")
+    
+    print("\n=== 配对数据训练流程完成 ===")
+    
+    
+    # ============================================================================
+    # 原有的训练流程（注释掉，但保留作为参考）
+    # ============================================================================
+    exit()  # 退出，不执行原有流程
+    
+    r"""     
     print("--- 0. 加载平躺姿态数据 ---")
-    root_dir = '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/lying_data/'
+    # root_dir = '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/lying_data/'
+    root_dir = r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\"
     flat_vicon_filepath = root_dir + 'L05 Lying01.c3d.ontrackclassifier.joblib'
     vicon_flat_data_raw = load_lab_file(flat_vicon_filepath, side='right')
     flat_aw_filepath = root_dir + 'GERF-L-D524-M3-S0041.csv' # self collected Apple Watch data, with the same lying pose as vicon.
     aw_flat_data_raw = load_aw_file(flat_aw_filepath)
 
     # 可视化平躺姿态数据，并根据可视化结果粗略截取apple watch数据，使得两者的时间长度大体一致
-    # visualise(vicon_flat_data_raw)
-    # visualise(aw_flat_data_raw)
+    # visualise(vicon_flat_data_raw, title="Vicon Flat Pose Data")
+    # visualise(aw_flat_data_raw, title="Apple Watch Flat Pose Data")
     # exit()
 
     # 手动截取
@@ -426,42 +898,44 @@ if __name__ == "__main__":
     aw_flat_data_raw = aw_flat_data_raw[(aw_flat_data_raw['timestamp'] >= 122) & (aw_flat_data_raw['timestamp'] <= 159)]
     aw_flat_data_raw['timestamp'] -= aw_flat_data_raw['timestamp'].min() # 将aw的时间戳转换为相对时间（从0开始）
 
-    # 对平躺姿态数据进行预处理（降采样到目标采样率，并滤波）
+    # 对平躺姿态数据进行预处理（降采样到目标采样率）；因为load data的时候已经过滤过了所以filtered=False
     vicon_flat_processed = preprocess_acceleration_data(
-        vicon_flat_data_raw, LAB_SAMPLING_RATE, AW_SAMPLING_RATE, CUTOFF_FREQ
+        vicon_flat_data_raw, LAB_SAMPLING_RATE, AW_SAMPLING_RATE, CUTOFF_FREQ, filtered=False
     )
     aw_flat_processed = preprocess_acceleration_data(
-        aw_flat_data_raw, AW_SAMPLING_RATE, AW_SAMPLING_RATE, CUTOFF_FREQ
+        aw_flat_data_raw, AW_SAMPLING_RATE, AW_SAMPLING_RATE, CUTOFF_FREQ, filtered=False
     )
 
     # plt.subplot(2, 1, 1)
-    # visualise(vicon_flat_processed, show=False)
+    # visualise(vicon_flat_processed, show=False, title="Vicon Flat Pose Processed Data")
     # plt.subplot(2, 1, 2)
-    # visualise(aw_flat_processed, show=True)
+    # plt.tight_layout()
+    # visualise(aw_flat_processed, title="Apple Watch Flat Pose Processed Data")
 
-    # --- 1. 计算坐标系旋转矩阵 (基于平躺姿态) ---
-    # Calculate the rotation matrix to align Apple Watch to Vicon
+
     print("\n--- 1. 计算坐标系旋转矩阵 ---")
-    # 假设 Apple Watch 是源设备，Vicon 是目标设备
-    rotation_matrix_aw_to_vicon = calculate_rotation_matrix_from_flat_pose(
+    # Vicon 是源设备，Apple Watch 是目标设备
+    rotation_matrix_vicon_to_aw = calculate_rotation_matrix_from_flat_pose(
         vicon_flat_processed, aw_flat_processed
     )
-    print("旋转矩阵计算完成:", rotation_matrix_aw_to_vicon)
+    print("旋转矩阵计算完成 (Vicon -> Apple Watch):", rotation_matrix_vicon_to_aw)
 
     exit()
-    '''
+    """
+    
     # --- 1. 定义坐标系旋转矩阵 ---
     # 这里的旋转矩阵已经由上面的代码基于平躺姿态数据计算得到
-    rotation_matrix_aw_to_vicon = np.array([[ 0.92497707, -0.34169976,  0.16630901],
-                                            [ 0.25977493,  0.24911404, -0.93298402],
-                                            [ 0.27737051,  0.90619174,  0.31918981]])
+    rotation_matrix_vicon_to_aw = np.array([[ 0.58377147,  0.28237329,  0.76123334],
+                                            [ 0.36897715,  0.74289845, -0.55853179],
+                                            [-0.72323352,  0.60693263,  0.32949362]])
 
     
     # --- 2. 加载运动数据 ---
-    calib_data_dir = '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/Calibration Data/'
+    # calib_data_dir = '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/Calibration Data/'
+    calib_data_dir = r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\\"
     motion_vicon_filepath = os.path.join(calib_data_dir, 'Lab/LabChopped/chopped_right_M2TestingDrinking03.csv')
     motion_aw_filepath = os.path.join(calib_data_dir, 'AppleWatch/AW_Chopped/chopped_M2-S0079.csv')
-    vicon_motion_data_raw = load_calib_lab(motion_vicon_filepath)
+    vicon_motion_data_raw = load_csv_data(motion_vicon_filepath, data_type='lab')
     aw_motion_data_raw = load_aw_file(motion_aw_filepath)
 
     print(f"Vicon 运动数据点数: {len(vicon_motion_data_raw)}")
@@ -476,19 +950,19 @@ if __name__ == "__main__":
     )
     
     # 对预处理后的数据进行归一化 (可选，但在某些情况下对DTW和映射有帮助)
-    vicon_motion_normalized, vicon_scaler = normalize_data(vicon_motion_processed)
-    aw_motion_normalized, aw_scaler = normalize_data(aw_motion_processed)
-    
-    print(f"Vicon 处理后数据点数 ({AW_SAMPLING_RATE}Hz): {len(vicon_motion_processed)}")
-    print(f"Apple Watch 处理后数据点数 ({AW_SAMPLING_RATE}Hz): {len(aw_motion_processed)}")
+    vicon_motion_normalized, vicon_scaler = normalize_data(vicon_motion_processed, type='vicon')
+    aw_motion_normalized, aw_scaler = normalize_data(aw_motion_processed, type='aw')
+
+    print(f"Vicon 归一化后数据点数 ({AW_SAMPLING_RATE}Hz): {len(vicon_motion_normalized)}")
+    print(f"Apple Watch 归一化后数据点数 ({AW_SAMPLING_RATE}Hz): {len(aw_motion_normalized)}")
 
     # --- 4. 应用坐标系旋转 ---
-    # 将 Apple Watch 运动数据旋转到 Vicon 的坐标系
-    aw_motion_rotated = apply_rotation_matrix(aw_motion_normalized, rotation_matrix_aw_to_vicon)
-    vicon_motion_rotated = vicon_motion_normalized.copy()  # Vicon数据不需要旋转
+    # 将 Vicon 运动数据旋转到 Apple Watch 的坐标系
+    vicon_motion_rotated = apply_rotation_matrix(vicon_motion_normalized, rotation_matrix_vicon_to_aw)
+    aw_motion_rotated = aw_motion_normalized.copy()  # Apple Watch数据不需要旋转
     
     # 如果需要，进行左右手镜像处理 (例如，Vicon在右手，AW在左手)
-    # aw_motion_rotated = mirror_data_for_hand(aw_motion_rotated, reference_hand='right', current_hand='left')
+    # vicon_motion_rotated = mirror_data_for_hand(vicon_motion_rotated, hand_type='right')
 
 
     # --- 5. 初始时间对齐 (粗略对齐) ---
@@ -517,21 +991,21 @@ if __name__ == "__main__":
     fig, axs = plt.subplots(2, 2, figsize=(14, 10))
     axis_labels = ['X', 'Y', 'Z']
     for i, ax in enumerate(axs.flat[:3]):
-        ax.plot(aligned_vicon_series[:, i], label=f'Vicon {axis_labels[i]}-axis (DTW Aligned)')
+        ax.plot(aligned_vicon_series[:, i], label=f'Vicon {axis_labels[i]}-axis (DTW Aligned, Rotated)')
         ax.plot(aligned_aw_series[:, i], label=f'Apple Watch {axis_labels[i]}-axis (DTW Aligned)', linestyle='--')
         ax.set_title(f"{axis_labels[i]}-axis Acceleration after DTW Alignment")
         ax.set_xlabel("Aligned Sample Index")
-        ax.set_ylabel("Acceleration (g)")
+        ax.set_ylabel("Acceleration (normalized)")
         ax.legend()
         ax.grid(True)
     # 合成加速度
     vicon_magnitude = np.linalg.norm(aligned_vicon_series, axis=1)
     aw_magnitude = np.linalg.norm(aligned_aw_series, axis=1)
-    axs[1, 1].plot(vicon_magnitude, label='Vicon Magnitude (DTW Aligned)')
+    axs[1, 1].plot(vicon_magnitude, label='Vicon Magnitude (DTW Aligned, Rotated)')
     axs[1, 1].plot(aw_magnitude, label='Apple Watch Magnitude (DTW Aligned)', linestyle='--')
     axs[1, 1].set_title("Magnitude Acceleration after DTW Alignment")
     axs[1, 1].set_xlabel("Aligned Sample Index")
-    axs[1, 1].set_ylabel("Acceleration (g)")
+    axs[1, 1].set_ylabel("Acceleration (normalized)")
     axs[1, 1].legend()
     axs[1, 1].grid(True)
     plt.tight_layout()
@@ -544,9 +1018,9 @@ if __name__ == "__main__":
                                         pd.DataFrame(aligned_aw_series, columns=['accelX','accelY','accelZ']))
     
     # 保存模型
-    model_save_path = 'mapping_model.joblib'
+    model_save_path = './mapping/cache/mapping_model_vicon_to_aw.joblib'
     joblib.dump(mapping_model, model_save_path)
-    print(f"映射模型已保存到: {model_save_path}")
+    print(f"映射模型已保存到: {model_save_path} (Vicon -> Apple Watch)")
     
     exit()
     

@@ -163,17 +163,17 @@ def print_data_summary(data):
         print("Error printing data summary. Please check the data format and content.")
 
 def main():
-    path = '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/Calibration Data/AppleWatch/AW_Chopped/chopped_M2-S0079.csv'
+    # path = '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/Calibration Data/AppleWatch/AW_Chopped/chopped_M2-S0079.csv'
     # path = '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/Calibration Data/Lab/LabChopped/chopped_right_M2TestingDrinking03.csv'
+    path = r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\AppleWatch\AW_Chopped\chopped_M2-S0079.csv"
     start_time = None
     end_time = 275
     parser = argparse.ArgumentParser(description='Visualization Tool')
     parser.add_argument('--file', default=path)
     parser.add_argument('--start_time', type=float, help='Start time for cropping (seconds)')
     parser.add_argument('--end_time', type=float, help='End time for cropping (seconds)')
-    parser.add_argument('--save_dir', type=str, default='/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/my_data/visualization', 
-                       help='Directory to save visualizations')
-    
+    # parser.add_argument('--save_dir', type=str, default='/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/my_data/visualization')
+    parser.add_argument('--save_dir', type=str, default=r'E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\my_data\visualization')
     args = parser.parse_args()
     
     if not args.file:

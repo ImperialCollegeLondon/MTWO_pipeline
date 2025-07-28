@@ -1,0 +1,378 @@
+=== LSTM映射模型训练 ===
+2025-07-28 00:39:40 | INFO | mapping:load_paired_training_data:194 - Loaded 7 paired training samples from paired_training_data/paired_training_data.pkl
+成功加载 7 个配对训练样本
+
+配对样本概览:
+  样本  0: chopped_M1-S0077.csv      <-> chopped_left_M2TestingWalking01.csv ( 148 数据点, 7.3秒)
+  样本  1: chopped_M3-S0077.csv      <-> chopped_left_M2TestingReading01.csv ( 214 数据点, 10.7秒)
+  样本  2: chopped_M1-S0078.csv      <-> chopped_left_M2TestingWalking02.csv ( 161 数据点, 7.9秒)
+  样本  3: chopped_M2-S0078.csv      <-> chopped_left_M2TestingDrinking02.csv ( 125 数据点, 6.2秒)
+  样本  4: chopped_M3-S0078.csv      <-> chopped_left_M2TestingReading02.csv ( 312 数据点, 15.5秒)
+  ... 还有 2 个样本
+
+LSTM模型参数:
+  sequence_length: 50
+  lstm_units: 64
+  dropout_rate: 0.2
+  epochs: 100
+  batch_size: 32
+
+--- 使用 rotation_matrix 对齐方法训练LSTM模型 ---
+2025-07-28 00:39:40 | INFO | __main__:train_lstm_mapping_model:409 - Starting LSTM mapping model training from paired data...
+2025-07-28 00:39:40 | INFO | __main__:process_paired_samples_with_alignment_lstm:335 - Processing 7 paired samples for LSTM with alignment method: rotation_matrix
+2025-07-28 00:39:40 | INFO | __main__:process_paired_samples_with_alignment_lstm:390 - Successfully processed 7 samples with rotation_matrix alignment for LSTM
+2025-07-28 00:39:40 | INFO | __main__:prepare_data:74 - Preparing data for LSTM training...
+2025-07-28 00:39:40 | INFO | __main__:prepare_data:98 - Combined data shape: X=(1650, 3), y=(1650, 3)
+2025-07-28 00:39:40 | INFO | __main__:prepare_data:111 - Sequence data shape: X=(1600, 50, 3), y=(1600, 3)
+2025-07-28 00:39:40 | INFO | __main__:train:157 - Building and training LSTM model...
+2025-07-28 00:39:40.994781: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-07-28 00:39:40.996474: I tensorflow/core/common_runtime/process_util.cc:146] Creating new thread pool with default inter op setting: 2. Tune using inter_op_parallelism_threads for best performance.
+2025-07-28 00:39:41 | INFO | __main__:train:164 - LSTM Model Architecture:
+Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #
+=================================================================
+ lstm (LSTM)                 (None, 50, 64)            17408
+
+ dropout (Dropout)           (None, 50, 64)            0
+
+ lstm_1 (LSTM)               (None, 50, 64)            33024
+
+ dropout_1 (Dropout)         (None, 50, 64)            0
+
+ lstm_2 (LSTM)               (None, 64)                33024
+
+ dropout_2 (Dropout)         (None, 64)                0
+
+ dense (Dense)               (None, 32)                2080
+
+ dropout_3 (Dropout)         (None, 32)                0
+
+ dense_1 (Dense)             (None, 3)                 99
+
+=================================================================
+Total params: 85,635
+Trainable params: 85,635
+Non-trainable params: 0
+_________________________________________________________________
+Epoch 1/100
+40/40 [==============================] - 6s 66ms/step - loss: 0.0607 - mae: 0.1583 - val_loss: 0.0076 - val_mae: 0.0724 - lr: 0.0010
+Epoch 2/100
+40/40 [==============================] - 2s 44ms/step - loss: 0.0546 - mae: 0.1395 - val_loss: 0.0046 - val_mae: 0.0514 - lr: 0.0010
+Epoch 3/100
+40/40 [==============================] - 2s 46ms/step - loss: 0.0481 - mae: 0.1308 - val_loss: 0.0055 - val_mae: 0.0592 - lr: 0.0010
+Epoch 4/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0434 - mae: 0.1252 - val_loss: 0.0049 - val_mae: 0.0537 - lr: 0.0010
+Epoch 5/100
+40/40 [==============================] - 2s 40ms/step - loss: 0.0376 - mae: 0.1196 - val_loss: 0.0050 - val_mae: 0.0546 - lr: 0.0010
+Epoch 6/100
+40/40 [==============================] - 2s 40ms/step - loss: 0.0368 - mae: 0.1169 - val_loss: 0.0053 - val_mae: 0.0568 - lr: 0.0010
+Epoch 7/100
+40/40 [==============================] - 2s 39ms/step - loss: 0.0340 - mae: 0.1124 - val_loss: 0.0050 - val_mae: 0.0534 - lr: 0.0010
+Epoch 8/100
+40/40 [==============================] - 2s 39ms/step - loss: 0.0334 - mae: 0.1117 - val_loss: 0.0083 - val_mae: 0.0745 - lr: 0.0010
+Epoch 9/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0303 - mae: 0.1071 - val_loss: 0.0055 - val_mae: 0.0581 - lr: 0.0010
+Epoch 10/100
+40/40 [==============================] - 2s 40ms/step - loss: 0.0296 - mae: 0.1047 - val_loss: 0.0048 - val_mae: 0.0526 - lr: 0.0010
+Epoch 11/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0273 - mae: 0.1006 - val_loss: 0.0056 - val_mae: 0.0590 - lr: 0.0010
+Epoch 12/100
+39/40 [============================>.] - ETA: 0s - loss: 0.0292 - mae: 0.1038
+Epoch 12: ReduceLROnPlateau reducing learning rate to 0.0005000000237487257.
+40/40 [==============================] - 2s 41ms/step - loss: 0.0289 - mae: 0.1032 - val_loss: 0.0079 - val_mae: 0.0714 - lr: 0.0010
+Epoch 13/100
+40/40 [==============================] - 2s 42ms/step - loss: 0.0253 - mae: 0.0964 - val_loss: 0.0050 - val_mae: 0.0542 - lr: 5.0000e-04
+Epoch 14/100
+40/40 [==============================] - 2s 42ms/step - loss: 0.0246 - mae: 0.0959 - val_loss: 0.0055 - val_mae: 0.0579 - lr: 5.0000e-04
+Epoch 15/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0244 - mae: 0.0947 - val_loss: 0.0060 - val_mae: 0.0615 - lr: 5.0000e-04
+Epoch 16/100
+40/40 [==============================] - 2s 42ms/step - loss: 0.0230 - mae: 0.0934 - val_loss: 0.0071 - val_mae: 0.0686 - lr: 5.0000e-04
+Epoch 17/100
+40/40 [==============================] - 2s 42ms/step - loss: 0.0229 - mae: 0.0919 - val_loss: 0.0056 - val_mae: 0.0589 - lr: 5.0000e-04
+Epoch 18/100
+40/40 [==============================] - 2s 43ms/step - loss: 0.0232 - mae: 0.0930 - val_loss: 0.0048 - val_mae: 0.0529 - lr: 5.0000e-04
+Epoch 19/100
+40/40 [==============================] - 2s 44ms/step - loss: 0.0219 - mae: 0.0898 - val_loss: 0.0047 - val_mae: 0.0519 - lr: 5.0000e-04
+Epoch 20/100
+40/40 [==============================] - 2s 42ms/step - loss: 0.0216 - mae: 0.0899 - val_loss: 0.0057 - val_mae: 0.0594 - lr: 5.0000e-04
+Epoch 21/100
+40/40 [==============================] - 2s 45ms/step - loss: 0.0220 - mae: 0.0907 - val_loss: 0.0049 - val_mae: 0.0533 - lr: 5.0000e-04
+Epoch 22/100
+39/40 [============================>.] - ETA: 0s - loss: 0.0239 - mae: 0.0931Restoring model weights from the end of the best epoch: 2.
+
+Epoch 22: ReduceLROnPlateau reducing learning rate to 0.0002500000118743628.
+40/40 [==============================] - 2s 43ms/step - loss: 0.0236 - mae: 0.0926 - val_loss: 0.0049 - val_mae: 0.0536 - lr: 5.0000e-04
+Epoch 22: early stopping
+2025-07-28 00:40:23 | INFO | __main__:train:194 - LSTM model training completed!
+50/50 [==============================] - 2s 15ms/step
+2025-07-28 00:40:25 | INFO | __main__:train_lstm_mapping_model:439 - LSTM mapping model training completed:
+2025-07-28 00:40:25 | INFO | __main__:train_lstm_mapping_model:440 -   RMSE: 0.3065
+2025-07-28 00:40:25 | INFO | __main__:train_lstm_mapping_model:441 -   R² Score: -0.8864
+2025-07-28 00:40:25 | INFO | __main__:train_lstm_mapping_model:442 -   MAE: 0.2674
+2025-07-28 00:40:25 | INFO | __main__:train_lstm_mapping_model:443 -   Training sequences: 1600
+2025-07-28 00:40:25 | INFO | __main__:save_model:289 - LSTM model saved to lstm_mapping_models_rotation_matrix
+LSTM模型已保存到 lstm_mapping_models_rotation_matrix/ 目录
+rotation_matrix 方法LSTM训练结果:
+  RMSE: 0.3065
+  R² Score: -0.8864
+  MAE: 0.2674
+  训练序列数: 1600
+2025-07-28 00:40:25 | INFO | __main__:visualize_lstm_training_history:479 - Training history plot saved to lstm_mapping_models_rotation_matrix\training_history.png
+
+--- 使用 procrustes 对齐方法训练LSTM模型 ---
+2025-07-28 00:40:41 | INFO | __main__:train_lstm_mapping_model:409 - Starting LSTM mapping model training from paired data...
+2025-07-28 00:40:41 | INFO | __main__:process_paired_samples_with_alignment_lstm:335 - Processing 7 paired samples for LSTM with alignment method: procrustes     
+2025-07-28 00:40:41 | INFO | __main__:process_paired_samples_with_alignment_lstm:390 - Successfully processed 7 samples with procrustes alignment for LSTM
+2025-07-28 00:40:41 | INFO | __main__:prepare_data:74 - Preparing data for LSTM training...
+2025-07-28 00:40:41 | INFO | __main__:prepare_data:98 - Combined data shape: X=(1650, 3), y=(1650, 3)
+2025-07-28 00:40:41 | INFO | __main__:prepare_data:111 - Sequence data shape: X=(1600, 50, 3), y=(1600, 3)
+2025-07-28 00:40:41 | INFO | __main__:train:157 - Building and training LSTM model...
+2025-07-28 00:40:42 | INFO | __main__:train:164 - LSTM Model Architecture:
+Model: "sequential_1"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #
+=================================================================
+ lstm_3 (LSTM)               (None, 50, 64)            17408
+
+ dropout_4 (Dropout)         (None, 50, 64)            0
+
+ lstm_4 (LSTM)               (None, 50, 64)            33024
+
+ dropout_5 (Dropout)         (None, 50, 64)            0
+
+ lstm_5 (LSTM)               (None, 64)                33024
+
+ dropout_6 (Dropout)         (None, 64)                0
+
+ dense_2 (Dense)             (None, 32)                2080
+
+ dropout_7 (Dropout)         (None, 32)                0
+
+ dense_3 (Dense)             (None, 3)                 99
+
+=================================================================
+Total params: 85,635
+Trainable params: 85,635
+Non-trainable params: 0
+_________________________________________________________________
+Epoch 1/100
+40/40 [==============================] - 6s 65ms/step - loss: 0.0659 - mae: 0.1730 - val_loss: 0.0117 - val_mae: 0.0912 - lr: 0.0010
+Epoch 2/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0592 - mae: 0.1517 - val_loss: 0.0059 - val_mae: 0.0605 - lr: 0.0010
+Epoch 3/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0572 - mae: 0.1454 - val_loss: 0.0068 - val_mae: 0.0655 - lr: 0.0010
+Epoch 4/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0553 - mae: 0.1404 - val_loss: 0.0085 - val_mae: 0.0771 - lr: 0.0010
+Epoch 5/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0557 - mae: 0.1414 - val_loss: 0.0049 - val_mae: 0.0518 - lr: 0.0010
+Epoch 6/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0536 - mae: 0.1356 - val_loss: 0.0064 - val_mae: 0.0629 - lr: 0.0010
+Epoch 7/100
+40/40 [==============================] - 2s 42ms/step - loss: 0.0531 - mae: 0.1328 - val_loss: 0.0044 - val_mae: 0.0489 - lr: 0.0010
+Epoch 8/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0529 - mae: 0.1342 - val_loss: 0.0059 - val_mae: 0.0613 - lr: 0.0010
+Epoch 9/100
+40/40 [==============================] - 2s 43ms/step - loss: 0.0498 - mae: 0.1312 - val_loss: 0.0046 - val_mae: 0.0496 - lr: 0.0010
+Epoch 10/100
+40/40 [==============================] - 2s 42ms/step - loss: 0.0459 - mae: 0.1261 - val_loss: 0.0052 - val_mae: 0.0561 - lr: 0.0010
+Epoch 11/100
+40/40 [==============================] - 2s 42ms/step - loss: 0.0427 - mae: 0.1212 - val_loss: 0.0046 - val_mae: 0.0502 - lr: 0.0010
+Epoch 12/100
+40/40 [==============================] - 2s 42ms/step - loss: 0.0362 - mae: 0.1148 - val_loss: 0.0049 - val_mae: 0.0532 - lr: 0.0010
+Epoch 13/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0287 - mae: 0.1050 - val_loss: 0.0047 - val_mae: 0.0517 - lr: 0.0010
+Epoch 14/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0271 - mae: 0.1006 - val_loss: 0.0048 - val_mae: 0.0519 - lr: 0.0010
+Epoch 15/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0263 - mae: 0.1012 - val_loss: 0.0054 - val_mae: 0.0565 - lr: 0.0010
+Epoch 16/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0272 - mae: 0.1007 - val_loss: 0.0046 - val_mae: 0.0506 - lr: 0.0010
+Epoch 17/100
+39/40 [============================>.] - ETA: 0s - loss: 0.0238 - mae: 0.0952
+Epoch 17: ReduceLROnPlateau reducing learning rate to 0.0005000000237487257.
+40/40 [==============================] - 2s 41ms/step - loss: 0.0237 - mae: 0.0951 - val_loss: 0.0046 - val_mae: 0.0514 - lr: 0.0010
+Epoch 18/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0222 - mae: 0.0904 - val_loss: 0.0051 - val_mae: 0.0546 - lr: 5.0000e-04
+Epoch 19/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0214 - mae: 0.0888 - val_loss: 0.0049 - val_mae: 0.0528 - lr: 5.0000e-04
+Epoch 20/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0216 - mae: 0.0894 - val_loss: 0.0049 - val_mae: 0.0537 - lr: 5.0000e-04
+Epoch 21/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0219 - mae: 0.0892 - val_loss: 0.0049 - val_mae: 0.0538 - lr: 5.0000e-04
+Epoch 22/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0211 - mae: 0.0878 - val_loss: 0.0049 - val_mae: 0.0540 - lr: 5.0000e-04
+Epoch 23/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0216 - mae: 0.0875 - val_loss: 0.0048 - val_mae: 0.0533 - lr: 5.0000e-04
+Epoch 24/100
+40/40 [==============================] - 2s 42ms/step - loss: 0.0217 - mae: 0.0881 - val_loss: 0.0047 - val_mae: 0.0519 - lr: 5.0000e-04
+Epoch 25/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0207 - mae: 0.0877 - val_loss: 0.0052 - val_mae: 0.0557 - lr: 5.0000e-04
+Epoch 26/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0220 - mae: 0.0889 - val_loss: 0.0049 - val_mae: 0.0527 - lr: 5.0000e-04
+Epoch 27/100
+39/40 [============================>.] - ETA: 0s - loss: 0.0203 - mae: 0.0857Restoring model weights from the end of the best epoch: 7.
+
+Epoch 27: ReduceLROnPlateau reducing learning rate to 0.0002500000118743628.
+40/40 [==============================] - 2s 42ms/step - loss: 0.0202 - mae: 0.0855 - val_loss: 0.0049 - val_mae: 0.0537 - lr: 5.0000e-04
+Epoch 27: early stopping
+2025-07-28 00:41:31 | INFO | __main__:train:194 - LSTM model training completed!
+50/50 [==============================] - 2s 15ms/step
+2025-07-28 00:41:32 | INFO | __main__:train_lstm_mapping_model:439 - LSTM mapping model training completed:
+2025-07-28 00:41:32 | INFO | __main__:train_lstm_mapping_model:440 -   RMSE: 0.3020
+2025-07-28 00:41:32 | INFO | __main__:train_lstm_mapping_model:441 -   R² Score: -0.8280
+2025-07-28 00:41:32 | INFO | __main__:train_lstm_mapping_model:442 -   MAE: 0.2623
+2025-07-28 00:41:32 | INFO | __main__:train_lstm_mapping_model:443 -   Training sequences: 1600
+2025-07-28 00:41:33 | INFO | __main__:save_model:289 - LSTM model saved to lstm_mapping_models_procrustes
+LSTM模型已保存到 lstm_mapping_models_procrustes/ 目录
+procrustes 方法LSTM训练结果:
+  RMSE: 0.3020
+  R² Score: -0.8280
+  MAE: 0.2623
+  训练序列数: 1600
+2025-07-28 00:41:33 | INFO | __main__:visualize_lstm_training_history:479 - Training history plot saved to lstm_mapping_models_procrustes\training_history.png
+
+--- 使用 none 对齐方法训练LSTM模型 ---
+2025-07-28 00:42:28 | INFO | __main__:train_lstm_mapping_model:409 - Starting LSTM mapping model training from paired data...
+2025-07-28 00:42:28 | INFO | __main__:process_paired_samples_with_alignment_lstm:335 - Processing 7 paired samples for LSTM with alignment method: none
+2025-07-28 00:42:28 | INFO | __main__:process_paired_samples_with_alignment_lstm:390 - Successfully processed 7 samples with none alignment for LSTM
+2025-07-28 00:42:28 | INFO | __main__:prepare_data:74 - Preparing data for LSTM training...
+2025-07-28 00:42:28 | INFO | __main__:prepare_data:98 - Combined data shape: X=(1650, 3), y=(1650, 3)
+2025-07-28 00:42:28 | INFO | __main__:prepare_data:111 - Sequence data shape: X=(1600, 50, 3), y=(1600, 3)
+2025-07-28 00:42:28 | INFO | __main__:train:157 - Building and training LSTM model...
+2025-07-28 00:42:29 | INFO | __main__:train:164 - LSTM Model Architecture:
+Model: "sequential_2"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #
+=================================================================
+ lstm_6 (LSTM)               (None, 50, 64)            17408
+
+ dropout_8 (Dropout)         (None, 50, 64)            0
+
+ lstm_7 (LSTM)               (None, 50, 64)            33024
+
+ dropout_9 (Dropout)         (None, 50, 64)            0
+
+ lstm_8 (LSTM)               (None, 64)                33024
+
+ dropout_10 (Dropout)        (None, 64)                0
+
+ dense_4 (Dense)             (None, 32)                2080
+
+ dropout_11 (Dropout)        (None, 32)                0
+
+ dense_5 (Dense)             (None, 3)                 99
+
+=================================================================
+Total params: 85,635
+Trainable params: 85,635
+Non-trainable params: 0
+_________________________________________________________________
+Epoch 1/100
+40/40 [==============================] - 6s 64ms/step - loss: 0.0623 - mae: 0.1672 - val_loss: 0.0069 - val_mae: 0.0666 - lr: 0.0010
+Epoch 2/100
+40/40 [==============================] - 2s 39ms/step - loss: 0.0556 - mae: 0.1439 - val_loss: 0.0047 - val_mae: 0.0521 - lr: 0.0010
+Epoch 3/100
+40/40 [==============================] - 2s 40ms/step - loss: 0.0539 - mae: 0.1400 - val_loss: 0.0050 - val_mae: 0.0551 - lr: 0.0010
+Epoch 4/100
+40/40 [==============================] - 2s 40ms/step - loss: 0.0462 - mae: 0.1305 - val_loss: 0.0047 - val_mae: 0.0525 - lr: 0.0010
+Epoch 5/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0377 - mae: 0.1195 - val_loss: 0.0044 - val_mae: 0.0487 - lr: 0.0010
+Epoch 6/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0360 - mae: 0.1169 - val_loss: 0.0046 - val_mae: 0.0523 - lr: 0.0010
+Epoch 7/100
+40/40 [==============================] - 2s 40ms/step - loss: 0.0333 - mae: 0.1123 - val_loss: 0.0046 - val_mae: 0.0511 - lr: 0.0010
+Epoch 8/100
+40/40 [==============================] - 2s 40ms/step - loss: 0.0302 - mae: 0.1079 - val_loss: 0.0049 - val_mae: 0.0528 - lr: 0.0010
+Epoch 9/100
+40/40 [==============================] - 2s 40ms/step - loss: 0.0302 - mae: 0.1068 - val_loss: 0.0061 - val_mae: 0.0625 - lr: 0.0010
+Epoch 10/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0283 - mae: 0.1029 - val_loss: 0.0047 - val_mae: 0.0507 - lr: 0.0010
+Epoch 11/100
+40/40 [==============================] - 2s 42ms/step - loss: 0.0252 - mae: 0.0986 - val_loss: 0.0046 - val_mae: 0.0507 - lr: 0.0010
+Epoch 12/100
+40/40 [==============================] - 2s 42ms/step - loss: 0.0257 - mae: 0.0992 - val_loss: 0.0043 - val_mae: 0.0488 - lr: 0.0010
+Epoch 13/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0245 - mae: 0.0959 - val_loss: 0.0045 - val_mae: 0.0500 - lr: 0.0010
+Epoch 14/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0253 - mae: 0.0959 - val_loss: 0.0046 - val_mae: 0.0510 - lr: 0.0010
+Epoch 15/100
+39/40 [============================>.] - ETA: 0s - loss: 0.0252 - mae: 0.0962
+Epoch 15: ReduceLROnPlateau reducing learning rate to 0.0005000000237487257.
+40/40 [==============================] - 2s 42ms/step - loss: 0.0250 - mae: 0.0956 - val_loss: 0.0044 - val_mae: 0.0495 - lr: 0.0010
+Epoch 16/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0230 - mae: 0.0919 - val_loss: 0.0047 - val_mae: 0.0514 - lr: 5.0000e-04
+Epoch 17/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0234 - mae: 0.0934 - val_loss: 0.0044 - val_mae: 0.0493 - lr: 5.0000e-04
+Epoch 18/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0234 - mae: 0.0919 - val_loss: 0.0045 - val_mae: 0.0497 - lr: 5.0000e-04
+Epoch 19/100
+40/40 [==============================] - 2s 42ms/step - loss: 0.0216 - mae: 0.0895 - val_loss: 0.0045 - val_mae: 0.0504 - lr: 5.0000e-04
+Epoch 20/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0208 - mae: 0.0884 - val_loss: 0.0044 - val_mae: 0.0490 - lr: 5.0000e-04
+Epoch 21/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0216 - mae: 0.0880 - val_loss: 0.0044 - val_mae: 0.0496 - lr: 5.0000e-04
+Epoch 22/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0216 - mae: 0.0896 - val_loss: 0.0044 - val_mae: 0.0493 - lr: 5.0000e-04
+Epoch 23/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0218 - mae: 0.0892 - val_loss: 0.0045 - val_mae: 0.0503 - lr: 5.0000e-04
+Epoch 24/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0207 - mae: 0.0872 - val_loss: 0.0044 - val_mae: 0.0489 - lr: 5.0000e-04
+Epoch 25/100
+39/40 [============================>.] - ETA: 0s - loss: 0.0209 - mae: 0.0874
+Epoch 25: ReduceLROnPlateau reducing learning rate to 0.0002500000118743628.
+40/40 [==============================] - 2s 41ms/step - loss: 0.0206 - mae: 0.0870 - val_loss: 0.0044 - val_mae: 0.0495 - lr: 5.0000e-04
+Epoch 26/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0208 - mae: 0.0866 - val_loss: 0.0044 - val_mae: 0.0492 - lr: 2.5000e-04
+Epoch 27/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0198 - mae: 0.0859 - val_loss: 0.0044 - val_mae: 0.0497 - lr: 2.5000e-04
+Epoch 28/100
+40/40 [==============================] - 2s 42ms/step - loss: 0.0205 - mae: 0.0865 - val_loss: 0.0045 - val_mae: 0.0506 - lr: 2.5000e-04
+Epoch 29/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0198 - mae: 0.0839 - val_loss: 0.0045 - val_mae: 0.0504 - lr: 2.5000e-04
+Epoch 30/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0196 - mae: 0.0846 - val_loss: 0.0045 - val_mae: 0.0502 - lr: 2.5000e-04
+Epoch 31/100
+40/40 [==============================] - 2s 41ms/step - loss: 0.0188 - mae: 0.0826 - val_loss: 0.0046 - val_mae: 0.0506 - lr: 2.5000e-04
+Epoch 32/100
+39/40 [============================>.] - ETA: 0s - loss: 0.0199 - mae: 0.0839Restoring model weights from the end of the best epoch: 12.
+40/40 [==============================] - 2s 41ms/step - loss: 0.0197 - mae: 0.0838 - val_loss: 0.0045 - val_mae: 0.0501 - lr: 2.5000e-04
+Epoch 32: early stopping
+2025-07-28 00:43:25 | INFO | __main__:train:194 - LSTM model training completed!
+50/50 [==============================] - 2s 15ms/step
+2025-07-28 00:43:27 | INFO | __main__:train_lstm_mapping_model:439 - LSTM mapping model training completed:
+2025-07-28 00:43:27 | INFO | __main__:train_lstm_mapping_model:440 -   RMSE: 0.2691
+2025-07-28 00:43:27 | INFO | __main__:train_lstm_mapping_model:441 -   R² Score: -0.4813
+2025-07-28 00:43:27 | INFO | __main__:train_lstm_mapping_model:442 -   MAE: 0.2431
+2025-07-28 00:43:27 | INFO | __main__:train_lstm_mapping_model:443 -   Training sequences: 1600
+2025-07-28 00:43:27 | INFO | __main__:save_model:289 - LSTM model saved to lstm_mapping_models_none
+LSTM模型已保存到 lstm_mapping_models_none/ 目录
+none 方法LSTM训练结果:
+  RMSE: 0.2691
+  R² Score: -0.4813
+  MAE: 0.2431
+  训练序列数: 1600
+2025-07-28 00:43:28 | INFO | __main__:visualize_lstm_training_history:479 - Training history plot saved to lstm_mapping_models_none\training_history.png
+
+--- LSTM模型性能比较 ---
+方法              RMSE       R² Score   MAE        序列数
+------------------------------------------------------------
+rotation_matrix 0.3065     -0.8864    0.2674     1600
+procrustes      0.3020     -0.8280    0.2623     1600
+none            0.2691     -0.4813    0.2431     1600
+
+最佳LSTM方法: none (R² = -0.4813)
+LSTM性能比较图已保存为 lstm_model_performance_comparison.png
+
+--- 测试最佳LSTM模型 (none) ---
+4/4 [==============================] - 1s 13ms/step
+测试样本: chopped_M1-S0077.csv
+测试 RMSE: 0.1224
+测试 R² Score: 0.7031
+测试 MAE: 0.0929
+预测序列长度: 98
+LSTM预测结果可视化已保存为 lstm_prediction_test_none.png
+
+=== LSTM映射模型训练完成 ===

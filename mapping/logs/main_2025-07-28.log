@@ -1,0 +1,162 @@
+2025-07-28 00:23:03 | INFO     | __main__:load_paired_training_data:194 - Loaded 7 paired training samples from paired_training_data/paired_training_data.pkl
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:335 - Starting mapping model training from paired data...
+2025-07-28 00:23:03 | INFO     | __main__:process_paired_samples_with_alignment:238 - Processing 7 paired samples with alignment method: rotation_matrix
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-28 00:23:03 | INFO     | __main__:process_paired_samples_with_alignment:297 - Successfully processed 7 samples with rotation_matrix alignment
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:360 - Training data shape: X=(1650, 3), y=(1650, 3)
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:383 - Mapping model training completed:
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:384 -   RMSE: 0.1239
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:385 -   R² Score: 0.2898
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:386 -   Training samples: 1650
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:335 - Starting mapping model training from paired data...
+2025-07-28 00:23:03 | INFO     | __main__:process_paired_samples_with_alignment:238 - Processing 7 paired samples with alignment method: procrustes
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-28 00:23:03 | INFO     | __main__:process_paired_samples_with_alignment:297 - Successfully processed 7 samples with procrustes alignment
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:360 - Training data shape: X=(1650, 3), y=(1650, 3)
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:383 - Mapping model training completed:
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:384 -   RMSE: 0.1164
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:385 -   R² Score: 0.3747
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:386 -   Training samples: 1650
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:335 - Starting mapping model training from paired data...
+2025-07-28 00:23:03 | INFO     | __main__:process_paired_samples_with_alignment:238 - Processing 7 paired samples with alignment method: none
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-28 00:23:03 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-28 00:23:03 | INFO     | __main__:process_paired_samples_with_alignment:297 - Successfully processed 7 samples with none alignment
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:360 - Training data shape: X=(1650, 3), y=(1650, 3)
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:383 - Mapping model training completed:
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:384 -   RMSE: 0.1205
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:385 -   R² Score: 0.3251
+2025-07-28 00:23:03 | INFO     | __main__:train_mapping_model_from_paired_data:386 -   Training samples: 1650
+2025-07-28 00:32:29 | INFO     | __main__:load_paired_training_data:194 - Loaded 7 paired training samples from paired_training_data/paired_training_data.pkl
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:335 - Starting mapping model training from paired data...
+2025-07-28 00:32:29 | INFO     | __main__:process_paired_samples_with_alignment:238 - Processing 7 paired samples with alignment method: rotation_matrix
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-28 00:32:29 | INFO     | __main__:process_paired_samples_with_alignment:297 - Successfully processed 7 samples with rotation_matrix alignment
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:360 - Training data shape: X=(1650, 3), y=(1650, 3)
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:383 - Mapping model training completed:
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:384 -   RMSE: 0.1239
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:385 -   R² Score: 0.2898
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:386 -   Training samples: 1650
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:335 - Starting mapping model training from paired data...
+2025-07-28 00:32:29 | INFO     | __main__:process_paired_samples_with_alignment:238 - Processing 7 paired samples with alignment method: procrustes
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-28 00:32:29 | INFO     | __main__:process_paired_samples_with_alignment:297 - Successfully processed 7 samples with procrustes alignment
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:360 - Training data shape: X=(1650, 3), y=(1650, 3)
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:383 - Mapping model training completed:
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:384 -   RMSE: 0.1164
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:385 -   R² Score: 0.3747
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:386 -   Training samples: 1650
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:335 - Starting mapping model training from paired data...
+2025-07-28 00:32:29 | INFO     | __main__:process_paired_samples_with_alignment:238 - Processing 7 paired samples with alignment method: none
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-28 00:32:29 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-28 00:32:29 | INFO     | __main__:process_paired_samples_with_alignment:297 - Successfully processed 7 samples with none alignment
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:360 - Training data shape: X=(1650, 3), y=(1650, 3)
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:383 - Mapping model training completed:
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:384 -   RMSE: 0.1205
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:385 -   R² Score: 0.3251
+2025-07-28 00:32:29 | INFO     | __main__:train_mapping_model_from_paired_data:386 -   Training samples: 1650
+2025-07-28 00:39:40 | INFO     | mapping:load_paired_training_data:194 - Loaded 7 paired training samples from paired_training_data/paired_training_data.pkl
+2025-07-28 00:39:40 | INFO     | __main__:train_lstm_mapping_model:409 - Starting LSTM mapping model training from paired data...
+2025-07-28 00:39:40 | INFO     | __main__:process_paired_samples_with_alignment_lstm:335 - Processing 7 paired samples for LSTM with alignment method: rotation_matrix
+2025-07-28 00:39:40 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-28 00:39:40 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-28 00:39:40 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-28 00:39:40 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-28 00:39:40 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-28 00:39:40 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-28 00:39:40 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-28 00:39:40 | INFO     | __main__:process_paired_samples_with_alignment_lstm:390 - Successfully processed 7 samples with rotation_matrix alignment for LSTM
+2025-07-28 00:39:40 | INFO     | __main__:prepare_data:74 - Preparing data for LSTM training...
+2025-07-28 00:39:40 | INFO     | __main__:prepare_data:98 - Combined data shape: X=(1650, 3), y=(1650, 3)
+2025-07-28 00:39:40 | INFO     | __main__:prepare_data:111 - Sequence data shape: X=(1600, 50, 3), y=(1600, 3)
+2025-07-28 00:39:40 | INFO     | __main__:train:157 - Building and training LSTM model...
+2025-07-28 00:39:41 | INFO     | __main__:train:164 - LSTM Model Architecture:
+2025-07-28 00:40:23 | INFO     | __main__:train:194 - LSTM model training completed!
+2025-07-28 00:40:25 | INFO     | __main__:train_lstm_mapping_model:439 - LSTM mapping model training completed:
+2025-07-28 00:40:25 | INFO     | __main__:train_lstm_mapping_model:440 -   RMSE: 0.3065
+2025-07-28 00:40:25 | INFO     | __main__:train_lstm_mapping_model:441 -   R² Score: -0.8864
+2025-07-28 00:40:25 | INFO     | __main__:train_lstm_mapping_model:442 -   MAE: 0.2674
+2025-07-28 00:40:25 | INFO     | __main__:train_lstm_mapping_model:443 -   Training sequences: 1600
+2025-07-28 00:40:25 | INFO     | __main__:save_model:289 - LSTM model saved to lstm_mapping_models_rotation_matrix
+2025-07-28 00:40:25 | INFO     | __main__:visualize_lstm_training_history:479 - Training history plot saved to lstm_mapping_models_rotation_matrix\training_history.png
+2025-07-28 00:40:41 | INFO     | __main__:train_lstm_mapping_model:409 - Starting LSTM mapping model training from paired data...
+2025-07-28 00:40:41 | INFO     | __main__:process_paired_samples_with_alignment_lstm:335 - Processing 7 paired samples for LSTM with alignment method: procrustes
+2025-07-28 00:40:41 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-28 00:40:41 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-28 00:40:41 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-28 00:40:41 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-28 00:40:41 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-28 00:40:41 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-28 00:40:41 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-28 00:40:41 | INFO     | __main__:process_paired_samples_with_alignment_lstm:390 - Successfully processed 7 samples with procrustes alignment for LSTM
+2025-07-28 00:40:41 | INFO     | __main__:prepare_data:74 - Preparing data for LSTM training...
+2025-07-28 00:40:41 | INFO     | __main__:prepare_data:98 - Combined data shape: X=(1650, 3), y=(1650, 3)
+2025-07-28 00:40:41 | INFO     | __main__:prepare_data:111 - Sequence data shape: X=(1600, 50, 3), y=(1600, 3)
+2025-07-28 00:40:41 | INFO     | __main__:train:157 - Building and training LSTM model...
+2025-07-28 00:40:42 | INFO     | __main__:train:164 - LSTM Model Architecture:
+2025-07-28 00:41:31 | INFO     | __main__:train:194 - LSTM model training completed!
+2025-07-28 00:41:32 | INFO     | __main__:train_lstm_mapping_model:439 - LSTM mapping model training completed:
+2025-07-28 00:41:32 | INFO     | __main__:train_lstm_mapping_model:440 -   RMSE: 0.3020
+2025-07-28 00:41:32 | INFO     | __main__:train_lstm_mapping_model:441 -   R² Score: -0.8280
+2025-07-28 00:41:32 | INFO     | __main__:train_lstm_mapping_model:442 -   MAE: 0.2623
+2025-07-28 00:41:32 | INFO     | __main__:train_lstm_mapping_model:443 -   Training sequences: 1600
+2025-07-28 00:41:33 | INFO     | __main__:save_model:289 - LSTM model saved to lstm_mapping_models_procrustes
+2025-07-28 00:41:33 | INFO     | __main__:visualize_lstm_training_history:479 - Training history plot saved to lstm_mapping_models_procrustes\training_history.png
+2025-07-28 00:42:28 | INFO     | __main__:train_lstm_mapping_model:409 - Starting LSTM mapping model training from paired data...
+2025-07-28 00:42:28 | INFO     | __main__:process_paired_samples_with_alignment_lstm:335 - Processing 7 paired samples for LSTM with alignment method: none
+2025-07-28 00:42:28 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-28 00:42:28 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-28 00:42:28 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-28 00:42:28 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-28 00:42:28 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-28 00:42:28 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-28 00:42:28 | DEBUG    | __main__:process_paired_samples_with_alignment_lstm:384 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-28 00:42:28 | INFO     | __main__:process_paired_samples_with_alignment_lstm:390 - Successfully processed 7 samples with none alignment for LSTM
+2025-07-28 00:42:28 | INFO     | __main__:prepare_data:74 - Preparing data for LSTM training...
+2025-07-28 00:42:28 | INFO     | __main__:prepare_data:98 - Combined data shape: X=(1650, 3), y=(1650, 3)
+2025-07-28 00:42:28 | INFO     | __main__:prepare_data:111 - Sequence data shape: X=(1600, 50, 3), y=(1600, 3)
+2025-07-28 00:42:28 | INFO     | __main__:train:157 - Building and training LSTM model...
+2025-07-28 00:42:29 | INFO     | __main__:train:164 - LSTM Model Architecture:
+2025-07-28 00:43:25 | INFO     | __main__:train:194 - LSTM model training completed!
+2025-07-28 00:43:27 | INFO     | __main__:train_lstm_mapping_model:439 - LSTM mapping model training completed:
+2025-07-28 00:43:27 | INFO     | __main__:train_lstm_mapping_model:440 -   RMSE: 0.2691
+2025-07-28 00:43:27 | INFO     | __main__:train_lstm_mapping_model:441 -   R² Score: -0.4813
+2025-07-28 00:43:27 | INFO     | __main__:train_lstm_mapping_model:442 -   MAE: 0.2431
+2025-07-28 00:43:27 | INFO     | __main__:train_lstm_mapping_model:443 -   Training sequences: 1600
+2025-07-28 00:43:27 | INFO     | __main__:save_model:289 - LSTM model saved to lstm_mapping_models_none
+2025-07-28 00:43:28 | INFO     | __main__:visualize_lstm_training_history:479 - Training history plot saved to lstm_mapping_models_none\training_history.png

@@ -1,0 +1,490 @@
+2025-07-27 10:40:54 | INFO     | __main__:load_lab_file:36 - Loading lab data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\L05 Lying01.c3d.ontrackclassifier.joblib
+2025-07-27 10:41:06 | WARNING  | __main__:load_lab_file:44 - Using right leg data from lab file
+2025-07-27 10:41:06 | INFO     | __main__:load_aw_file:80 - Loading Apple Watch data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\GERF-L-D524-M3-S0041.csv
+2025-07-27 12:33:39 | INFO     | __main__:load_aw_file:94 - Loading Apple Watch data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\\AppleWatch/AW_Chopped/chopped_M2-S0079.csv
+2025-07-27 12:33:39 | INFO     | __main__:load_aw_file:111 - Applying Butterworth filter to Apple Watch data...
+2025-07-27 12:34:13 | INFO     | __main__:load_aw_file:94 - Loading Apple Watch data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\\AppleWatch/AW_Chopped/chopped_M2-S0079.csv
+2025-07-27 12:34:13 | INFO     | __main__:load_aw_file:111 - Applying Butterworth filter to Apple Watch data...
+2025-07-27 12:34:40 | INFO     | __main__:load_aw_file:94 - Loading Apple Watch data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\\AppleWatch/AW_Chopped/chopped_M2-S0079.csv
+2025-07-27 12:34:40 | INFO     | __main__:load_aw_file:111 - Applying Butterworth filter to Apple Watch data...
+2025-07-27 12:43:38 | INFO     | __main__:load_aw_file:94 - Loading Apple Watch data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\\AppleWatch/AW_Chopped/chopped_M2-S0079.csv
+2025-07-27 12:43:38 | INFO     | __main__:load_aw_file:111 - Applying Butterworth filter to Apple Watch data...
+2025-07-27 13:35:08 | INFO     | __main__:load_lab_file:50 - Loading lab data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\L05 Lying01.c3d.ontrackclassifier.joblib
+2025-07-27 13:35:09 | WARNING  | __main__:load_lab_file:58 - Using right leg data from lab file
+2025-07-27 13:35:09 | INFO     | __main__:load_aw_file:94 - Loading Apple Watch data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\GERF-L-D524-M3-S0041.csv
+2025-07-27 13:35:09 | INFO     | __main__:load_aw_file:111 - Applying Butterworth filter to Apple Watch data...
+2025-07-27 14:00:08 | INFO     | __main__:load_lab_file:50 - Loading lab data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\L05 Lying01.c3d.ontrackclassifier.joblib
+2025-07-27 14:00:09 | WARNING  | __main__:load_lab_file:58 - Using right leg data from lab file
+2025-07-27 14:00:09 | INFO     | __main__:load_aw_file:94 - Loading Apple Watch data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\GERF-L-D524-M3-S0041.csv
+2025-07-27 14:00:09 | INFO     | __main__:load_aw_file:111 - Applying Butterworth filter to Apple Watch data...
+2025-07-27 14:01:32 | INFO     | __main__:load_lab_file:50 - Loading lab data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\L05 Lying01.c3d.ontrackclassifier.joblib
+2025-07-27 14:01:34 | WARNING  | __main__:load_lab_file:58 - Using right leg data from lab file
+2025-07-27 14:01:34 | INFO     | __main__:load_aw_file:94 - Loading Apple Watch data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\GERF-L-D524-M3-S0041.csv
+2025-07-27 14:01:34 | INFO     | __main__:load_aw_file:111 - Applying Butterworth filter to Apple Watch data...
+2025-07-27 14:02:16 | INFO     | __main__:load_lab_file:50 - Loading lab data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\L05 Lying01.c3d.ontrackclassifier.joblib
+2025-07-27 14:02:17 | WARNING  | __main__:load_lab_file:58 - Using right leg data from lab file
+2025-07-27 14:02:17 | INFO     | __main__:load_aw_file:94 - Loading Apple Watch data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\GERF-L-D524-M3-S0041.csv
+2025-07-27 14:02:17 | INFO     | __main__:load_aw_file:111 - Applying Butterworth filter to Apple Watch data...
+2025-07-27 14:03:31 | INFO     | __main__:load_lab_file:50 - Loading lab data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\L05 Lying01.c3d.ontrackclassifier.joblib
+2025-07-27 14:03:33 | WARNING  | __main__:load_lab_file:58 - Using right leg data from lab file
+2025-07-27 14:03:33 | INFO     | __main__:load_aw_file:94 - Loading Apple Watch data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\GERF-L-D524-M3-S0041.csv
+2025-07-27 14:03:33 | INFO     | __main__:load_aw_file:111 - Applying Butterworth filter to Apple Watch data...
+2025-07-27 14:04:03 | INFO     | __main__:load_lab_file:50 - Loading lab data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\L05 Lying01.c3d.ontrackclassifier.joblib
+2025-07-27 14:04:04 | WARNING  | __main__:load_lab_file:58 - Using right leg data from lab file
+2025-07-27 14:04:04 | INFO     | __main__:load_aw_file:94 - Loading Apple Watch data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\GERF-L-D524-M3-S0041.csv
+2025-07-27 14:04:04 | INFO     | __main__:load_aw_file:111 - Applying Butterworth filter to Apple Watch data...
+2025-07-27 14:09:11 | INFO     | __main__:load_lab_file:50 - Loading lab data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\L05 Lying01.c3d.ontrackclassifier.joblib
+2025-07-27 14:09:13 | WARNING  | __main__:load_lab_file:58 - Using right leg data from lab file
+2025-07-27 14:09:13 | INFO     | __main__:load_aw_file:94 - Loading Apple Watch data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\GERF-L-D524-M3-S0041.csv
+2025-07-27 14:09:13 | INFO     | __main__:load_aw_file:111 - Applying Butterworth filter to Apple Watch data...
+2025-07-27 14:12:51 | DEBUG    | __main__:load_lab_file:50 - Loading lab data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\L05 Lying01.c3d.ontrackclassifier.joblib
+2025-07-27 14:12:52 | INFO     | __main__:load_lab_file:58 - Using right leg data from lab file
+2025-07-27 14:12:52 | INFO     | __main__:load_lab_file:71 - Applying low-pass filter to lab data with 61220 samples.
+2025-07-27 14:12:52 | DEBUG    | __main__:load_aw_file:95 - Loading Apple Watch data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\GERF-L-D524-M3-S0041.csv
+2025-07-27 14:12:52 | INFO     | __main__:load_aw_file:112 - Applying low-pass filter to Apple Watch data with 3281 samples.
+2025-07-27 14:15:50 | DEBUG    | __main__:load_lab_file:50 - Loading lab data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\L05 Lying01.c3d.ontrackclassifier.joblib
+2025-07-27 14:15:51 | INFO     | __main__:load_lab_file:58 - Using right leg data from lab file
+2025-07-27 14:15:51 | INFO     | __main__:load_lab_file:71 - Applying low-pass filter to lab data with 61220 samples.
+2025-07-27 14:15:51 | DEBUG    | __main__:load_aw_file:95 - Loading Apple Watch data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\GERF-L-D524-M3-S0041.csv
+2025-07-27 14:15:51 | INFO     | __main__:load_aw_file:112 - Applying low-pass filter to Apple Watch data with 3281 samples.
+2025-07-27 14:18:37 | DEBUG    | __main__:load_lab_file:50 - Loading lab data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\L05 Lying01.c3d.ontrackclassifier.joblib
+2025-07-27 14:18:38 | INFO     | __main__:load_lab_file:58 - Using right leg data from lab file
+2025-07-27 14:18:38 | INFO     | __main__:load_lab_file:71 - Applying low-pass filter to lab data with 61220 samples.
+2025-07-27 14:18:38 | DEBUG    | __main__:load_aw_file:95 - Loading Apple Watch data from: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\GERF-L-D524-M3-S0041.csv
+2025-07-27 14:18:38 | INFO     | __main__:load_aw_file:112 - Applying low-pass filter to Apple Watch data with 3281 samples.
+2025-07-27 17:03:57 | INFO     | __main__:build_training_set:294 - Starting to build paired training set...
+2025-07-27 17:03:57 | INFO     | __main__:build_training_set:300 - Found 8 AW files and 18 Vicon files
+2025-07-27 17:03:57 | INFO     | __main__:match_files_by_name:126 - Matched: chopped_M1-S0077.csv <-> chopped_left_M2TestingWalking01.csv
+2025-07-27 17:03:57 | WARNING  | __main__:match_files_by_name:128 - No matching pair found for key: M2-S0077, value: Drinking01
+2025-07-27 17:03:57 | INFO     | __main__:match_files_by_name:126 - Matched: chopped_M3-S0077.csv <-> chopped_left_M2TestingReading01.csv
+2025-07-27 17:03:57 | INFO     | __main__:match_files_by_name:126 - Matched: chopped_M1-S0078.csv <-> chopped_left_M2TestingWalking02.csv
+2025-07-27 17:03:57 | INFO     | __main__:match_files_by_name:126 - Matched: chopped_M2-S0078.csv <-> chopped_left_M2TestingDrinking02.csv
+2025-07-27 17:03:57 | INFO     | __main__:match_files_by_name:126 - Matched: chopped_M3-S0078.csv <-> chopped_left_M2TestingReading02.csv
+2025-07-27 17:03:57 | INFO     | __main__:match_files_by_name:126 - Matched: chopped_M2-S0079.csv <-> chopped_left_M2TestingDrinking03.csv
+2025-07-27 17:03:57 | INFO     | __main__:match_files_by_name:126 - Matched: chopped_M3-S0079.csv <-> chopped_left_M2TestingReading03.csv
+2025-07-27 17:03:57 | INFO     | __main__:build_training_set:309 - Successfully matched 7 file pairs
+2025-07-27 17:03:57 | INFO     | __main__:create_paired_training_samples:187 - Processing pair 1: chopped_M1-S0077.csv (148 rows) <-> chopped_left_M2TestingWalking01.csv (2952 rows)
+2025-07-27 17:03:57 | WARNING  | __main__:sync_and_resample_data:146 - No overlapping time interval found between AW and Vicon data
+2025-07-27 17:03:57 | WARNING  | __main__:create_paired_training_samples:193 - Skipping pair 1 due to synchronization failure
+2025-07-27 17:03:57 | INFO     | __main__:create_paired_training_samples:187 - Processing pair 2: chopped_M3-S0077.csv (214 rows) <-> chopped_left_M2TestingReading01.csv (4385 rows)
+2025-07-27 17:03:57 | WARNING  | __main__:sync_and_resample_data:146 - No overlapping time interval found between AW and Vicon data
+2025-07-27 17:03:57 | WARNING  | __main__:create_paired_training_samples:193 - Skipping pair 2 due to synchronization failure
+2025-07-27 17:03:57 | INFO     | __main__:create_paired_training_samples:187 - Processing pair 3: chopped_M1-S0078.csv (161 rows) <-> chopped_left_M2TestingWalking02.csv (3156 rows)
+2025-07-27 17:03:57 | WARNING  | __main__:sync_and_resample_data:146 - No overlapping time interval found between AW and Vicon data
+2025-07-27 17:03:57 | WARNING  | __main__:create_paired_training_samples:193 - Skipping pair 3 due to synchronization failure
+2025-07-27 17:03:57 | INFO     | __main__:create_paired_training_samples:187 - Processing pair 4: chopped_M2-S0078.csv (125 rows) <-> chopped_left_M2TestingDrinking02.csv (2750 rows)
+2025-07-27 17:03:57 | WARNING  | __main__:sync_and_resample_data:146 - No overlapping time interval found between AW and Vicon data
+2025-07-27 17:03:57 | WARNING  | __main__:create_paired_training_samples:193 - Skipping pair 4 due to synchronization failure
+2025-07-27 17:03:57 | INFO     | __main__:create_paired_training_samples:187 - Processing pair 5: chopped_M3-S0078.csv (312 rows) <-> chopped_left_M2TestingReading02.csv (7252 rows)
+2025-07-27 17:03:57 | WARNING  | __main__:sync_and_resample_data:146 - No overlapping time interval found between AW and Vicon data
+2025-07-27 17:03:57 | WARNING  | __main__:create_paired_training_samples:193 - Skipping pair 5 due to synchronization failure
+2025-07-27 17:03:57 | INFO     | __main__:create_paired_training_samples:187 - Processing pair 6: chopped_M2-S0079.csv (277 rows) <-> chopped_left_M2TestingDrinking03.csv (3135 rows)
+2025-07-27 17:03:57 | WARNING  | __main__:sync_and_resample_data:146 - No overlapping time interval found between AW and Vicon data
+2025-07-27 17:03:57 | WARNING  | __main__:create_paired_training_samples:193 - Skipping pair 6 due to synchronization failure
+2025-07-27 17:03:57 | INFO     | __main__:create_paired_training_samples:187 - Processing pair 7: chopped_M3-S0079.csv (413 rows) <-> chopped_left_M2TestingReading03.csv (8809 rows)
+2025-07-27 17:03:57 | WARNING  | __main__:sync_and_resample_data:146 - No overlapping time interval found between AW and Vicon data
+2025-07-27 17:03:57 | WARNING  | __main__:create_paired_training_samples:193 - Skipping pair 7 due to synchronization failure
+2025-07-27 17:03:57 | INFO     | __main__:create_paired_training_samples:219 - Successfully created 0 paired training samples
+2025-07-27 17:03:57 | ERROR    | __main__:build_training_set:315 - No training samples were created!
+2025-07-27 17:06:26 | INFO     | __main__:build_training_set:294 - Starting to build paired training set...
+2025-07-27 17:06:26 | INFO     | __main__:build_training_set:300 - Found 8 AW files and 18 Vicon files
+2025-07-27 17:06:26 | WARNING  | __main__:match_files_by_name:127 - No matching pair found for key: M2-S0077, value: Drinking01
+2025-07-27 17:06:26 | SUCCESS  | __main__:build_training_set:309 - Successfully matched 7 file pairs
+2025-07-27 17:06:27 | INFO     | __main__:create_paired_training_samples:186 - Processing pair 1: chopped_M1-S0077.csv (148 rows) <-> chopped_left_M2TestingWalking01.csv (2952 rows)
+2025-07-27 17:06:27 | INFO     | __main__:create_paired_training_samples:213 - Created paired sample 1: 148 synchronized data points
+2025-07-27 17:06:27 | INFO     | __main__:create_paired_training_samples:186 - Processing pair 2: chopped_M3-S0077.csv (214 rows) <-> chopped_left_M2TestingReading01.csv (4385 rows)
+2025-07-27 17:06:27 | INFO     | __main__:create_paired_training_samples:213 - Created paired sample 2: 214 synchronized data points
+2025-07-27 17:06:27 | INFO     | __main__:create_paired_training_samples:186 - Processing pair 3: chopped_M1-S0078.csv (161 rows) <-> chopped_left_M2TestingWalking02.csv (3156 rows)
+2025-07-27 17:06:27 | INFO     | __main__:create_paired_training_samples:213 - Created paired sample 3: 161 synchronized data points
+2025-07-27 17:06:27 | INFO     | __main__:create_paired_training_samples:186 - Processing pair 4: chopped_M2-S0078.csv (125 rows) <-> chopped_left_M2TestingDrinking02.csv (2750 rows)
+2025-07-27 17:06:27 | INFO     | __main__:create_paired_training_samples:213 - Created paired sample 4: 125 synchronized data points
+2025-07-27 17:06:27 | INFO     | __main__:create_paired_training_samples:186 - Processing pair 5: chopped_M3-S0078.csv (312 rows) <-> chopped_left_M2TestingReading02.csv (7252 rows)
+2025-07-27 17:06:27 | INFO     | __main__:create_paired_training_samples:213 - Created paired sample 5: 312 synchronized data points
+2025-07-27 17:06:27 | INFO     | __main__:create_paired_training_samples:186 - Processing pair 6: chopped_M2-S0079.csv (277 rows) <-> chopped_left_M2TestingDrinking03.csv (3135 rows)
+2025-07-27 17:06:27 | INFO     | __main__:create_paired_training_samples:213 - Created paired sample 6: 277 synchronized data points
+2025-07-27 17:06:27 | INFO     | __main__:create_paired_training_samples:186 - Processing pair 7: chopped_M3-S0079.csv (413 rows) <-> chopped_left_M2TestingReading03.csv (8809 rows)
+2025-07-27 17:06:27 | INFO     | __main__:create_paired_training_samples:213 - Created paired sample 7: 413 synchronized data points
+2025-07-27 17:06:27 | SUCCESS  | __main__:create_paired_training_samples:219 - Successfully created 7 paired training samples
+2025-07-27 17:06:27 | INFO     | __main__:save_paired_training_data:242 - Saved paired training data as pickle: paired_training_data\paired_training_data.pkl
+2025-07-27 21:30:08 | INFO     | __main__:build_training_set:306 - Starting to build paired training set...
+2025-07-27 21:30:08 | INFO     | __main__:build_training_set:312 - Found 8 AW files and 18 Vicon files
+2025-07-27 21:30:08 | WARNING  | __main__:match_files_by_name:127 - No matching pair found for key: M2-S0077, value: Drinking01
+2025-07-27 21:30:08 | SUCCESS  | __main__:build_training_set:321 - Successfully matched 7 file pairs
+2025-07-27 21:30:08 | INFO     | __main__:create_paired_training_samples:186 - Processing pair 1: chopped_M1-S0077.csv (148 rows) <-> chopped_left_M2TestingWalking01.csv (2952 rows)
+2025-07-27 21:30:08 | INFO     | __main__:create_paired_training_samples:213 - Created paired sample 1: 148 synchronized data points
+2025-07-27 21:30:08 | INFO     | __main__:create_paired_training_samples:186 - Processing pair 2: chopped_M3-S0077.csv (214 rows) <-> chopped_left_M2TestingReading01.csv (4385 rows)
+2025-07-27 21:30:08 | INFO     | __main__:create_paired_training_samples:213 - Created paired sample 2: 214 synchronized data points
+2025-07-27 21:30:08 | INFO     | __main__:create_paired_training_samples:186 - Processing pair 3: chopped_M1-S0078.csv (161 rows) <-> chopped_left_M2TestingWalking02.csv (3156 rows)
+2025-07-27 21:30:08 | INFO     | __main__:create_paired_training_samples:213 - Created paired sample 3: 161 synchronized data points
+2025-07-27 21:30:08 | INFO     | __main__:create_paired_training_samples:186 - Processing pair 4: chopped_M2-S0078.csv (125 rows) <-> chopped_left_M2TestingDrinking02.csv (2750 rows)
+2025-07-27 21:30:08 | INFO     | __main__:create_paired_training_samples:213 - Created paired sample 4: 125 synchronized data points
+2025-07-27 21:30:08 | INFO     | __main__:create_paired_training_samples:186 - Processing pair 5: chopped_M3-S0078.csv (312 rows) <-> chopped_left_M2TestingReading02.csv (7252 rows)
+2025-07-27 21:30:08 | INFO     | __main__:create_paired_training_samples:213 - Created paired sample 5: 312 synchronized data points
+2025-07-27 21:30:08 | INFO     | __main__:create_paired_training_samples:186 - Processing pair 6: chopped_M2-S0079.csv (277 rows) <-> chopped_left_M2TestingDrinking03.csv (3135 rows)
+2025-07-27 21:30:08 | INFO     | __main__:create_paired_training_samples:213 - Created paired sample 6: 277 synchronized data points
+2025-07-27 21:30:08 | INFO     | __main__:create_paired_training_samples:186 - Processing pair 7: chopped_M3-S0079.csv (413 rows) <-> chopped_left_M2TestingReading03.csv (8809 rows)
+2025-07-27 21:30:08 | INFO     | __main__:create_paired_training_samples:213 - Created paired sample 7: 413 synchronized data points
+2025-07-27 21:30:08 | SUCCESS  | __main__:create_paired_training_samples:219 - Successfully created 7 paired training samples
+2025-07-27 21:30:08 | INFO     | __main__:save_paired_training_data:242 - Saved paired training data as pickle: paired_training_data\paired_training_data.pkl
+2025-07-27 21:50:59 | INFO     | __main__:build_training_set:288 - Starting to build paired training set...
+2025-07-27 21:50:59 | INFO     | __main__:build_training_set:294 - Found 8 AW files and 18 Vicon files
+2025-07-27 21:50:59 | WARNING  | __main__:match_files_by_name:128 - No matching pair found for key: M2-S0077, value: Drinking01
+2025-07-27 21:50:59 | SUCCESS  | __main__:build_training_set:303 - Successfully matched 7 file pairs
+2025-07-27 21:50:59 | INFO     | __main__:create_paired_training_samples:169 - Processing pair 1: chopped_M1-S0077.csv (148 rows) <-> chopped_left_M2TestingWalking01.csv (2952 rows)
+2025-07-27 21:50:59 | ERROR    | __main__:create_paired_training_samples:198 - Error processing pair 1 (E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\AppleWatch\AW_Chopped\chopped_M1-S0077.csv, E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\Lab\LabChopped\chopped_left_M2TestingWalking01.csv): Length of values (148) does not match length of index (2952)
+2025-07-27 21:50:59 | INFO     | __main__:create_paired_training_samples:169 - Processing pair 2: chopped_M3-S0077.csv (214 rows) <-> chopped_left_M2TestingReading01.csv (4385 rows)
+2025-07-27 21:50:59 | ERROR    | __main__:create_paired_training_samples:198 - Error processing pair 2 (E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\AppleWatch\AW_Chopped\chopped_M3-S0077.csv, E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\Lab\LabChopped\chopped_left_M2TestingReading01.csv): Length of values (214) does not match length of index (4385)
+2025-07-27 21:50:59 | INFO     | __main__:create_paired_training_samples:169 - Processing pair 3: chopped_M1-S0078.csv (161 rows) <-> chopped_left_M2TestingWalking02.csv (3156 rows)
+2025-07-27 21:50:59 | ERROR    | __main__:create_paired_training_samples:198 - Error processing pair 3 (E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\AppleWatch\AW_Chopped\chopped_M1-S0078.csv, E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\Lab\LabChopped\chopped_left_M2TestingWalking02.csv): Length of values (161) does not match length of index (3156)
+2025-07-27 21:50:59 | INFO     | __main__:create_paired_training_samples:169 - Processing pair 4: chopped_M2-S0078.csv (125 rows) <-> chopped_left_M2TestingDrinking02.csv (2750 rows)
+2025-07-27 21:50:59 | ERROR    | __main__:create_paired_training_samples:198 - Error processing pair 4 (E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\AppleWatch\AW_Chopped\chopped_M2-S0078.csv, E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\Lab\LabChopped\chopped_left_M2TestingDrinking02.csv): Length of values (125) does not match length of index (2750)
+2025-07-27 21:50:59 | INFO     | __main__:create_paired_training_samples:169 - Processing pair 5: chopped_M3-S0078.csv (312 rows) <-> chopped_left_M2TestingReading02.csv (7252 rows)
+2025-07-27 21:50:59 | ERROR    | __main__:create_paired_training_samples:198 - Error processing pair 5 (E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\AppleWatch\AW_Chopped\chopped_M3-S0078.csv, E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\Lab\LabChopped\chopped_left_M2TestingReading02.csv): Length of values (312) does not match length of index (7252)
+2025-07-27 21:50:59 | INFO     | __main__:create_paired_training_samples:169 - Processing pair 6: chopped_M2-S0079.csv (277 rows) <-> chopped_left_M2TestingDrinking03.csv (3135 rows)
+2025-07-27 21:50:59 | ERROR    | __main__:create_paired_training_samples:198 - Error processing pair 6 (E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\AppleWatch\AW_Chopped\chopped_M2-S0079.csv, E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\Lab\LabChopped\chopped_left_M2TestingDrinking03.csv): Length of values (277) does not match length of index (3135)
+2025-07-27 21:50:59 | INFO     | __main__:create_paired_training_samples:169 - Processing pair 7: chopped_M3-S0079.csv (413 rows) <-> chopped_left_M2TestingReading03.csv (8809 rows)
+2025-07-27 21:50:59 | ERROR    | __main__:create_paired_training_samples:198 - Error processing pair 7 (E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\AppleWatch\AW_Chopped\chopped_M3-S0079.csv, E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\Lab\LabChopped\chopped_left_M2TestingReading03.csv): Length of values (413) does not match length of index (8809)
+2025-07-27 21:50:59 | SUCCESS  | __main__:create_paired_training_samples:201 - Successfully created 0 paired training samples
+2025-07-27 21:50:59 | ERROR    | __main__:build_training_set:309 - No training samples were created!
+2025-07-27 22:02:23 | INFO     | __main__:build_training_set:290 - Starting to build paired training set...
+2025-07-27 22:02:23 | INFO     | __main__:build_training_set:296 - Found 8 AW files and 18 Vicon files
+2025-07-27 22:02:23 | WARNING  | __main__:match_files_by_name:129 - No matching pair found for key: M2-S0077, value: Drinking01
+2025-07-27 22:02:23 | SUCCESS  | __main__:build_training_set:305 - Successfully matched 7 file pairs
+2025-07-27 22:02:23 | INFO     | __main__:create_paired_training_samples:170 - Processing pair 1: chopped_M1-S0077.csv (148 rows) <-> chopped_left_M2TestingWalking01.csv (2952 rows)
+2025-07-27 22:02:23 | ERROR    | __main__:create_paired_training_samples:199 - Error processing pair 1 (chopped_M1-S0077.csv, chopped_left_M2TestingWalking01.csv): Length of values (148) does not match length of index (2952)
+2025-07-27 22:02:23 | ERROR    | __main__:create_paired_training_samples:200 - Traceback (most recent call last):
+  File "e:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\build_training_set.py", line 173, in create_paired_training_samples
+    aw_sync, vicon_sync = sync_and_resample_data(aw_data, vicon_data)
+  File "e:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\build_training_set.py", line 150, in sync_and_resample_data
+    vicon_data[col] = resample(vicon_data[col], target_length)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 4311, in __setitem__
+    self._set_item(key, value)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 4524, in _set_item
+    value, refs = self._sanitize_column(value)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 5266, in _sanitize_column
+    com.require_length_match(value, self.index)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\common.py", line 573, in require_length_match
+    raise ValueError(
+ValueError: Length of values (148) does not match length of index (2952)
+
+2025-07-27 22:02:24 | INFO     | __main__:create_paired_training_samples:170 - Processing pair 2: chopped_M3-S0077.csv (214 rows) <-> chopped_left_M2TestingReading01.csv (4385 rows)
+2025-07-27 22:02:24 | ERROR    | __main__:create_paired_training_samples:199 - Error processing pair 2 (chopped_M3-S0077.csv, chopped_left_M2TestingReading01.csv): Length of values (214) does not match length of index (4385)
+2025-07-27 22:02:24 | ERROR    | __main__:create_paired_training_samples:200 - Traceback (most recent call last):
+  File "e:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\build_training_set.py", line 173, in create_paired_training_samples
+    aw_sync, vicon_sync = sync_and_resample_data(aw_data, vicon_data)
+  File "e:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\build_training_set.py", line 150, in sync_and_resample_data
+    vicon_data[col] = resample(vicon_data[col], target_length)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 4311, in __setitem__
+    self._set_item(key, value)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 4524, in _set_item
+    value, refs = self._sanitize_column(value)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 5266, in _sanitize_column
+    com.require_length_match(value, self.index)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\common.py", line 573, in require_length_match
+    raise ValueError(
+ValueError: Length of values (214) does not match length of index (4385)
+
+2025-07-27 22:02:24 | INFO     | __main__:create_paired_training_samples:170 - Processing pair 3: chopped_M1-S0078.csv (161 rows) <-> chopped_left_M2TestingWalking02.csv (3156 rows)
+2025-07-27 22:02:24 | ERROR    | __main__:create_paired_training_samples:199 - Error processing pair 3 (chopped_M1-S0078.csv, chopped_left_M2TestingWalking02.csv): Length of values (161) does not match length of index (3156)
+2025-07-27 22:02:24 | ERROR    | __main__:create_paired_training_samples:200 - Traceback (most recent call last):
+  File "e:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\build_training_set.py", line 173, in create_paired_training_samples
+    aw_sync, vicon_sync = sync_and_resample_data(aw_data, vicon_data)
+  File "e:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\build_training_set.py", line 150, in sync_and_resample_data
+    vicon_data[col] = resample(vicon_data[col], target_length)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 4311, in __setitem__
+    self._set_item(key, value)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 4524, in _set_item
+    value, refs = self._sanitize_column(value)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 5266, in _sanitize_column
+    com.require_length_match(value, self.index)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\common.py", line 573, in require_length_match
+    raise ValueError(
+ValueError: Length of values (161) does not match length of index (3156)
+
+2025-07-27 22:02:24 | INFO     | __main__:create_paired_training_samples:170 - Processing pair 4: chopped_M2-S0078.csv (125 rows) <-> chopped_left_M2TestingDrinking02.csv (2750 rows)
+2025-07-27 22:02:24 | ERROR    | __main__:create_paired_training_samples:199 - Error processing pair 4 (chopped_M2-S0078.csv, chopped_left_M2TestingDrinking02.csv): Length of values (125) does not match length of index (2750)
+2025-07-27 22:02:24 | ERROR    | __main__:create_paired_training_samples:200 - Traceback (most recent call last):
+  File "e:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\build_training_set.py", line 173, in create_paired_training_samples
+    aw_sync, vicon_sync = sync_and_resample_data(aw_data, vicon_data)
+  File "e:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\build_training_set.py", line 150, in sync_and_resample_data
+    vicon_data[col] = resample(vicon_data[col], target_length)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 4311, in __setitem__
+    self._set_item(key, value)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 4524, in _set_item
+    value, refs = self._sanitize_column(value)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 5266, in _sanitize_column
+    com.require_length_match(value, self.index)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\common.py", line 573, in require_length_match
+    raise ValueError(
+ValueError: Length of values (125) does not match length of index (2750)
+
+2025-07-27 22:02:24 | INFO     | __main__:create_paired_training_samples:170 - Processing pair 5: chopped_M3-S0078.csv (312 rows) <-> chopped_left_M2TestingReading02.csv (7252 rows)
+2025-07-27 22:02:24 | ERROR    | __main__:create_paired_training_samples:199 - Error processing pair 5 (chopped_M3-S0078.csv, chopped_left_M2TestingReading02.csv): Length of values (312) does not match length of index (7252)
+2025-07-27 22:02:24 | ERROR    | __main__:create_paired_training_samples:200 - Traceback (most recent call last):
+  File "e:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\build_training_set.py", line 173, in create_paired_training_samples
+    aw_sync, vicon_sync = sync_and_resample_data(aw_data, vicon_data)
+  File "e:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\build_training_set.py", line 150, in sync_and_resample_data
+    vicon_data[col] = resample(vicon_data[col], target_length)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 4311, in __setitem__
+    self._set_item(key, value)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 4524, in _set_item
+    value, refs = self._sanitize_column(value)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 5266, in _sanitize_column
+    com.require_length_match(value, self.index)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\common.py", line 573, in require_length_match
+    raise ValueError(
+ValueError: Length of values (312) does not match length of index (7252)
+
+2025-07-27 22:02:24 | INFO     | __main__:create_paired_training_samples:170 - Processing pair 6: chopped_M2-S0079.csv (277 rows) <-> chopped_left_M2TestingDrinking03.csv (3135 rows)
+2025-07-27 22:02:24 | ERROR    | __main__:create_paired_training_samples:199 - Error processing pair 6 (chopped_M2-S0079.csv, chopped_left_M2TestingDrinking03.csv): Length of values (277) does not match length of index (3135)
+2025-07-27 22:02:24 | ERROR    | __main__:create_paired_training_samples:200 - Traceback (most recent call last):
+  File "e:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\build_training_set.py", line 173, in create_paired_training_samples
+    aw_sync, vicon_sync = sync_and_resample_data(aw_data, vicon_data)
+  File "e:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\build_training_set.py", line 150, in sync_and_resample_data
+    vicon_data[col] = resample(vicon_data[col], target_length)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 4311, in __setitem__
+    self._set_item(key, value)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 4524, in _set_item
+    value, refs = self._sanitize_column(value)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 5266, in _sanitize_column
+    com.require_length_match(value, self.index)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\common.py", line 573, in require_length_match
+    raise ValueError(
+ValueError: Length of values (277) does not match length of index (3135)
+
+2025-07-27 22:02:24 | INFO     | __main__:create_paired_training_samples:170 - Processing pair 7: chopped_M3-S0079.csv (413 rows) <-> chopped_left_M2TestingReading03.csv (8809 rows)
+2025-07-27 22:02:24 | ERROR    | __main__:create_paired_training_samples:199 - Error processing pair 7 (chopped_M3-S0079.csv, chopped_left_M2TestingReading03.csv): Length of values (413) does not match length of index (8809)
+2025-07-27 22:02:24 | ERROR    | __main__:create_paired_training_samples:200 - Traceback (most recent call last):
+  File "e:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\build_training_set.py", line 173, in create_paired_training_samples
+    aw_sync, vicon_sync = sync_and_resample_data(aw_data, vicon_data)
+  File "e:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\build_training_set.py", line 150, in sync_and_resample_data
+    vicon_data[col] = resample(vicon_data[col], target_length)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 4311, in __setitem__
+    self._set_item(key, value)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 4524, in _set_item
+    value, refs = self._sanitize_column(value)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\frame.py", line 5266, in _sanitize_column
+    com.require_length_match(value, self.index)
+  File "E:\anaconda3\envs\mtwo\lib\site-packages\pandas\core\common.py", line 573, in require_length_match
+    raise ValueError(
+ValueError: Length of values (413) does not match length of index (8809)
+
+2025-07-27 22:02:24 | SUCCESS  | __main__:create_paired_training_samples:203 - Successfully created 0 paired training samples
+2025-07-27 22:02:24 | ERROR    | __main__:build_training_set:311 - No training samples were created!
+2025-07-27 23:00:05 | INFO     | __main__:build_training_set:294 - Starting to build paired training set...
+2025-07-27 23:00:05 | INFO     | __main__:build_training_set:300 - Found 8 AW files and 18 Vicon files
+2025-07-27 23:00:05 | WARNING  | __main__:match_files_by_name:129 - No matching pair found for key: M2-S0077, value: Drinking01
+2025-07-27 23:00:05 | SUCCESS  | __main__:build_training_set:309 - Successfully matched 7 file pairs
+2025-07-27 23:00:05 | INFO     | __main__:create_paired_training_samples:174 - Processing pair 1: chopped_M1-S0077.csv (148 rows) <-> chopped_left_M2TestingWalking01.csv (2952 rows)
+2025-07-27 23:00:05 | INFO     | __main__:create_paired_training_samples:200 - Created paired sample 1: 148 synchronized data points
+2025-07-27 23:00:05 | INFO     | __main__:create_paired_training_samples:174 - Processing pair 2: chopped_M3-S0077.csv (214 rows) <-> chopped_left_M2TestingReading01.csv (4385 rows)
+2025-07-27 23:00:05 | INFO     | __main__:create_paired_training_samples:200 - Created paired sample 2: 214 synchronized data points
+2025-07-27 23:00:05 | INFO     | __main__:create_paired_training_samples:174 - Processing pair 3: chopped_M1-S0078.csv (161 rows) <-> chopped_left_M2TestingWalking02.csv (3156 rows)
+2025-07-27 23:00:05 | INFO     | __main__:create_paired_training_samples:200 - Created paired sample 3: 161 synchronized data points
+2025-07-27 23:00:05 | INFO     | __main__:create_paired_training_samples:174 - Processing pair 4: chopped_M2-S0078.csv (125 rows) <-> chopped_left_M2TestingDrinking02.csv (2750 rows)
+2025-07-27 23:00:05 | INFO     | __main__:create_paired_training_samples:200 - Created paired sample 4: 125 synchronized data points
+2025-07-27 23:00:05 | INFO     | __main__:create_paired_training_samples:174 - Processing pair 5: chopped_M3-S0078.csv (312 rows) <-> chopped_left_M2TestingReading02.csv (7252 rows)
+2025-07-27 23:00:05 | INFO     | __main__:create_paired_training_samples:200 - Created paired sample 5: 312 synchronized data points
+2025-07-27 23:00:05 | INFO     | __main__:create_paired_training_samples:174 - Processing pair 6: chopped_M2-S0079.csv (277 rows) <-> chopped_left_M2TestingDrinking03.csv (3135 rows)
+2025-07-27 23:00:05 | INFO     | __main__:create_paired_training_samples:200 - Created paired sample 6: 277 synchronized data points
+2025-07-27 23:00:05 | INFO     | __main__:create_paired_training_samples:174 - Processing pair 7: chopped_M3-S0079.csv (413 rows) <-> chopped_left_M2TestingReading03.csv (8809 rows)
+2025-07-27 23:00:05 | INFO     | __main__:create_paired_training_samples:200 - Created paired sample 7: 413 synchronized data points
+2025-07-27 23:00:05 | SUCCESS  | __main__:create_paired_training_samples:207 - Successfully created 7 paired training samples
+2025-07-27 23:00:05 | INFO     | __main__:save_paired_training_data:230 - Saved paired training data as pickle: paired_training_data\paired_training_data.pkl
+2025-07-27 23:00:21 | INFO     | __main__:build_training_set:282 - Starting to build paired training set...
+2025-07-27 23:00:21 | INFO     | __main__:build_training_set:288 - Found 8 AW files and 18 Vicon files
+2025-07-27 23:00:21 | WARNING  | __main__:match_files_by_name:129 - No matching pair found for key: M2-S0077, value: Drinking01
+2025-07-27 23:00:21 | SUCCESS  | __main__:build_training_set:297 - Successfully matched 7 file pairs
+2025-07-27 23:00:21 | INFO     | __main__:create_paired_training_samples:174 - Processing pair 1: chopped_M1-S0077.csv (148 rows) <-> chopped_left_M2TestingWalking01.csv (2952 rows)
+2025-07-27 23:00:21 | INFO     | __main__:create_paired_training_samples:200 - Created paired sample 1: 148 synchronized data points
+2025-07-27 23:00:21 | INFO     | __main__:create_paired_training_samples:174 - Processing pair 2: chopped_M3-S0077.csv (214 rows) <-> chopped_left_M2TestingReading01.csv (4385 rows)
+2025-07-27 23:00:21 | INFO     | __main__:create_paired_training_samples:200 - Created paired sample 2: 214 synchronized data points
+2025-07-27 23:00:21 | INFO     | __main__:create_paired_training_samples:174 - Processing pair 3: chopped_M1-S0078.csv (161 rows) <-> chopped_left_M2TestingWalking02.csv (3156 rows)
+2025-07-27 23:00:21 | INFO     | __main__:create_paired_training_samples:200 - Created paired sample 3: 161 synchronized data points
+2025-07-27 23:00:21 | INFO     | __main__:create_paired_training_samples:174 - Processing pair 4: chopped_M2-S0078.csv (125 rows) <-> chopped_left_M2TestingDrinking02.csv (2750 rows)
+2025-07-27 23:00:21 | INFO     | __main__:create_paired_training_samples:200 - Created paired sample 4: 125 synchronized data points
+2025-07-27 23:00:21 | INFO     | __main__:create_paired_training_samples:174 - Processing pair 5: chopped_M3-S0078.csv (312 rows) <-> chopped_left_M2TestingReading02.csv (7252 rows)
+2025-07-27 23:00:21 | INFO     | __main__:create_paired_training_samples:200 - Created paired sample 5: 312 synchronized data points
+2025-07-27 23:00:21 | INFO     | __main__:create_paired_training_samples:174 - Processing pair 6: chopped_M2-S0079.csv (277 rows) <-> chopped_left_M2TestingDrinking03.csv (3135 rows)
+2025-07-27 23:00:21 | INFO     | __main__:create_paired_training_samples:200 - Created paired sample 6: 277 synchronized data points
+2025-07-27 23:00:21 | INFO     | __main__:create_paired_training_samples:174 - Processing pair 7: chopped_M3-S0079.csv (413 rows) <-> chopped_left_M2TestingReading03.csv (8809 rows)
+2025-07-27 23:00:21 | INFO     | __main__:create_paired_training_samples:200 - Created paired sample 7: 413 synchronized data points
+2025-07-27 23:00:21 | SUCCESS  | __main__:create_paired_training_samples:207 - Successfully created 7 paired training samples
+2025-07-27 23:00:21 | INFO     | __main__:save_paired_training_data:230 - Saved paired training data as pickle: paired_training_data\paired_training_data.pkl
+2025-07-27 23:00:21 | INFO     | __main__:save_paired_training_data:253 - Saved 7 individual CSV files in: paired_training_data\paired_csv_samples
+2025-07-27 23:00:21 | INFO     | __main__:save_paired_training_data:269 - Saved training samples summary: paired_training_data\training_samples_summary.csv
+2025-07-27 23:00:21 | INFO     | __main__:build_training_set:309 - Paired training set building completed!
+2025-07-27 23:22:23 | INFO     | __main__:load_paired_training_data:192 - Loaded 7 paired training samples from paired_training_data/paired_training_data.pkl
+2025-07-27 23:22:23 | INFO     | __main__:train_mapping_model_from_paired_data:334 - Starting mapping model training from paired data...
+2025-07-27 23:22:23 | INFO     | __main__:process_paired_samples_with_alignment:236 - Processing 7 paired samples with alignment method: rotation_matrix
+2025-07-27 23:22:23 | ERROR    | __main__:process_paired_samples_with_alignment:293 - Error processing sample 1 (chopped_M1-S0077.csv): local variable 'aligned_aw_df' referenced before assignment
+2025-07-27 23:22:23 | ERROR    | __main__:process_paired_samples_with_alignment:293 - Error processing sample 2 (chopped_M3-S0077.csv): local variable 'aligned_aw_df' referenced before assignment
+2025-07-27 23:22:23 | ERROR    | __main__:process_paired_samples_with_alignment:293 - Error processing sample 3 (chopped_M1-S0078.csv): local variable 'aligned_aw_df' referenced before assignment
+2025-07-27 23:22:23 | ERROR    | __main__:process_paired_samples_with_alignment:293 - Error processing sample 4 (chopped_M2-S0078.csv): local variable 'aligned_aw_df' referenced before assignment
+2025-07-27 23:22:23 | ERROR    | __main__:process_paired_samples_with_alignment:293 - Error processing sample 5 (chopped_M3-S0078.csv): local variable 'aligned_aw_df' referenced before assignment
+2025-07-27 23:22:23 | ERROR    | __main__:process_paired_samples_with_alignment:293 - Error processing sample 6 (chopped_M2-S0079.csv): local variable 'aligned_aw_df' referenced before assignment
+2025-07-27 23:22:23 | ERROR    | __main__:process_paired_samples_with_alignment:293 - Error processing sample 7 (chopped_M3-S0079.csv): local variable 'aligned_aw_df' referenced before assignment
+2025-07-27 23:22:23 | INFO     | __main__:process_paired_samples_with_alignment:296 - Successfully processed 0 samples with rotation_matrix alignment
+2025-07-27 23:22:23 | INFO     | __main__:train_mapping_model_from_paired_data:334 - Starting mapping model training from paired data...
+2025-07-27 23:22:23 | INFO     | __main__:process_paired_samples_with_alignment:236 - Processing 7 paired samples with alignment method: procrustes
+2025-07-27 23:22:23 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-27 23:22:23 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-27 23:22:23 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-27 23:22:23 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-27 23:22:23 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-27 23:22:23 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-27 23:22:23 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-27 23:22:23 | INFO     | __main__:process_paired_samples_with_alignment:296 - Successfully processed 7 samples with procrustes alignment
+2025-07-27 23:22:23 | INFO     | __main__:train_mapping_model_from_paired_data:359 - Training data shape: X=(1650, 3), y=(1650, 3)
+2025-07-27 23:22:23 | INFO     | __main__:train_mapping_model_from_paired_data:378 - Mapping model training completed:
+2025-07-27 23:22:23 | INFO     | __main__:train_mapping_model_from_paired_data:379 -   RMSE: 0.1435
+2025-07-27 23:22:23 | INFO     | __main__:train_mapping_model_from_paired_data:380 -   R² Score: 0.0400
+2025-07-27 23:22:23 | INFO     | __main__:train_mapping_model_from_paired_data:381 -   Training samples: 1650
+2025-07-27 23:22:23 | INFO     | __main__:train_mapping_model_from_paired_data:334 - Starting mapping model training from paired data...
+2025-07-27 23:22:23 | INFO     | __main__:process_paired_samples_with_alignment:236 - Processing 7 paired samples with alignment method: none
+2025-07-27 23:22:23 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-27 23:22:23 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-27 23:22:23 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-27 23:22:23 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-27 23:22:23 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-27 23:22:23 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-27 23:22:23 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-27 23:22:23 | INFO     | __main__:process_paired_samples_with_alignment:296 - Successfully processed 7 samples with none alignment
+2025-07-27 23:22:23 | INFO     | __main__:train_mapping_model_from_paired_data:359 - Training data shape: X=(1650, 3), y=(1650, 3)
+2025-07-27 23:22:23 | INFO     | __main__:train_mapping_model_from_paired_data:378 - Mapping model training completed:
+2025-07-27 23:22:23 | INFO     | __main__:train_mapping_model_from_paired_data:379 -   RMSE: 0.1340
+2025-07-27 23:22:23 | INFO     | __main__:train_mapping_model_from_paired_data:380 -   R² Score: 0.1759
+2025-07-27 23:22:23 | INFO     | __main__:train_mapping_model_from_paired_data:381 -   Training samples: 1650
+2025-07-27 23:44:43 | INFO     | __main__:load_paired_training_data:193 - Loaded 7 paired training samples from paired_training_data/paired_training_data.pkl
+2025-07-27 23:44:43 | INFO     | __main__:train_mapping_model_from_paired_data:335 - Starting mapping model training from paired data...
+2025-07-27 23:44:43 | INFO     | __main__:process_paired_samples_with_alignment:237 - Processing 7 paired samples with alignment method: rotation_matrix
+2025-07-27 23:44:43 | ERROR    | __main__:process_paired_samples_with_alignment:294 - Error processing sample 1 (chopped_M1-S0077.csv): local variable 'aligned_aw_df' referenced before assignment
+2025-07-27 23:44:43 | ERROR    | __main__:process_paired_samples_with_alignment:294 - Error processing sample 2 (chopped_M3-S0077.csv): local variable 'aligned_aw_df' referenced before assignment
+2025-07-27 23:44:43 | ERROR    | __main__:process_paired_samples_with_alignment:294 - Error processing sample 3 (chopped_M1-S0078.csv): local variable 'aligned_aw_df' referenced before assignment
+2025-07-27 23:44:43 | ERROR    | __main__:process_paired_samples_with_alignment:294 - Error processing sample 4 (chopped_M2-S0078.csv): local variable 'aligned_aw_df' referenced before assignment
+2025-07-27 23:44:43 | ERROR    | __main__:process_paired_samples_with_alignment:294 - Error processing sample 5 (chopped_M3-S0078.csv): local variable 'aligned_aw_df' referenced before assignment
+2025-07-27 23:44:43 | ERROR    | __main__:process_paired_samples_with_alignment:294 - Error processing sample 6 (chopped_M2-S0079.csv): local variable 'aligned_aw_df' referenced before assignment
+2025-07-27 23:44:43 | ERROR    | __main__:process_paired_samples_with_alignment:294 - Error processing sample 7 (chopped_M3-S0079.csv): local variable 'aligned_aw_df' referenced before assignment
+2025-07-27 23:44:43 | INFO     | __main__:process_paired_samples_with_alignment:297 - Successfully processed 0 samples with rotation_matrix alignment
+2025-07-27 23:44:43 | INFO     | __main__:train_mapping_model_from_paired_data:335 - Starting mapping model training from paired data...
+2025-07-27 23:44:43 | INFO     | __main__:process_paired_samples_with_alignment:237 - Processing 7 paired samples with alignment method: procrustes
+2025-07-27 23:44:43 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-27 23:44:43 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-27 23:44:43 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-27 23:44:43 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-27 23:44:43 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-27 23:44:43 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-27 23:44:43 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-27 23:44:43 | INFO     | __main__:process_paired_samples_with_alignment:297 - Successfully processed 7 samples with procrustes alignment
+2025-07-27 23:44:43 | INFO     | __main__:train_mapping_model_from_paired_data:360 - Training data shape: X=(1650, 3), y=(1650, 3)
+2025-07-27 23:44:43 | INFO     | __main__:train_mapping_model_from_paired_data:379 - Mapping model training completed:
+2025-07-27 23:44:43 | INFO     | __main__:train_mapping_model_from_paired_data:380 -   RMSE: 0.1435
+2025-07-27 23:44:43 | INFO     | __main__:train_mapping_model_from_paired_data:381 -   R² Score: 0.0400
+2025-07-27 23:44:43 | INFO     | __main__:train_mapping_model_from_paired_data:382 -   Training samples: 1650
+2025-07-27 23:44:43 | INFO     | __main__:train_mapping_model_from_paired_data:335 - Starting mapping model training from paired data...
+2025-07-27 23:44:43 | INFO     | __main__:process_paired_samples_with_alignment:237 - Processing 7 paired samples with alignment method: none
+2025-07-27 23:44:43 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-27 23:44:43 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-27 23:44:43 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-27 23:44:43 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-27 23:44:43 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-27 23:44:43 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-27 23:44:43 | DEBUG    | __main__:process_paired_samples_with_alignment:291 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-27 23:44:43 | INFO     | __main__:process_paired_samples_with_alignment:297 - Successfully processed 7 samples with none alignment
+2025-07-27 23:44:43 | INFO     | __main__:train_mapping_model_from_paired_data:360 - Training data shape: X=(1650, 3), y=(1650, 3)
+2025-07-27 23:44:43 | INFO     | __main__:train_mapping_model_from_paired_data:379 - Mapping model training completed:
+2025-07-27 23:44:43 | INFO     | __main__:train_mapping_model_from_paired_data:380 -   RMSE: 0.1340
+2025-07-27 23:44:43 | INFO     | __main__:train_mapping_model_from_paired_data:381 -   R² Score: 0.1759
+2025-07-27 23:44:43 | INFO     | __main__:train_mapping_model_from_paired_data:382 -   Training samples: 1650
+2025-07-27 23:47:38 | INFO     | __main__:load_paired_training_data:193 - Loaded 7 paired training samples from paired_training_data/paired_training_data.pkl
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:334 - Starting mapping model training from paired data...
+2025-07-27 23:47:38 | INFO     | __main__:process_paired_samples_with_alignment:237 - Processing 7 paired samples with alignment method: rotation_matrix
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-27 23:47:38 | INFO     | __main__:process_paired_samples_with_alignment:296 - Successfully processed 7 samples with rotation_matrix alignment
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:359 - Training data shape: X=(1650, 3), y=(1650, 3)
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:378 - Mapping model training completed:
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:379 -   RMSE: 0.1346
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:380 -   R² Score: 0.1662
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:381 -   Training samples: 1650
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:334 - Starting mapping model training from paired data...
+2025-07-27 23:47:38 | INFO     | __main__:process_paired_samples_with_alignment:237 - Processing 7 paired samples with alignment method: procrustes
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-27 23:47:38 | INFO     | __main__:process_paired_samples_with_alignment:296 - Successfully processed 7 samples with procrustes alignment
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:359 - Training data shape: X=(1650, 3), y=(1650, 3)
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:378 - Mapping model training completed:
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:379 -   RMSE: 0.1435
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:380 -   R² Score: 0.0400
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:381 -   Training samples: 1650
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:334 - Starting mapping model training from paired data...
+2025-07-27 23:47:38 | INFO     | __main__:process_paired_samples_with_alignment:237 - Processing 7 paired samples with alignment method: none
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-27 23:47:38 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-27 23:47:38 | INFO     | __main__:process_paired_samples_with_alignment:296 - Successfully processed 7 samples with none alignment
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:359 - Training data shape: X=(1650, 3), y=(1650, 3)
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:378 - Mapping model training completed:
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:379 -   RMSE: 0.1340
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:380 -   R² Score: 0.1759
+2025-07-27 23:47:38 | INFO     | __main__:train_mapping_model_from_paired_data:381 -   Training samples: 1650
+2025-07-27 23:50:35 | INFO     | __main__:load_paired_training_data:193 - Loaded 7 paired training samples from paired_training_data/paired_training_data.pkl
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:334 - Starting mapping model training from paired data...
+2025-07-27 23:50:35 | INFO     | __main__:process_paired_samples_with_alignment:237 - Processing 7 paired samples with alignment method: rotation_matrix
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-27 23:50:35 | INFO     | __main__:process_paired_samples_with_alignment:296 - Successfully processed 7 samples with rotation_matrix alignment
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:359 - Training data shape: X=(1650, 3), y=(1650, 3)
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:378 - Mapping model training completed:
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:379 -   RMSE: 0.1340
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:380 -   R² Score: 0.1759
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:381 -   Training samples: 1650
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:334 - Starting mapping model training from paired data...
+2025-07-27 23:50:35 | INFO     | __main__:process_paired_samples_with_alignment:237 - Processing 7 paired samples with alignment method: procrustes
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-27 23:50:35 | INFO     | __main__:process_paired_samples_with_alignment:296 - Successfully processed 7 samples with procrustes alignment
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:359 - Training data shape: X=(1650, 3), y=(1650, 3)
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:378 - Mapping model training completed:
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:379 -   RMSE: 0.1435
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:380 -   R² Score: 0.0400
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:381 -   Training samples: 1650
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:334 - Starting mapping model training from paired data...
+2025-07-27 23:50:35 | INFO     | __main__:process_paired_samples_with_alignment:237 - Processing 7 paired samples with alignment method: none
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 1/7: chopped_M1-S0077.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 2/7: chopped_M3-S0077.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 3/7: chopped_M1-S0078.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 4/7: chopped_M2-S0078.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 5/7: chopped_M3-S0078.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 6/7: chopped_M2-S0079.csv
+2025-07-27 23:50:35 | DEBUG    | __main__:process_paired_samples_with_alignment:290 - Processed sample 7/7: chopped_M3-S0079.csv
+2025-07-27 23:50:35 | INFO     | __main__:process_paired_samples_with_alignment:296 - Successfully processed 7 samples with none alignment
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:359 - Training data shape: X=(1650, 3), y=(1650, 3)
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:378 - Mapping model training completed:
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:379 -   RMSE: 0.1340
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:380 -   R² Score: 0.1759
+2025-07-27 23:50:35 | INFO     | __main__:train_mapping_model_from_paired_data:381 -   Training samples: 1650
