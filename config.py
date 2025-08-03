@@ -9,7 +9,7 @@ def getLogger(show_level='INFO'):
     logger.remove()  # Remove default handler
     logger.add( # logger to print logs to console
         sys.stderr, 
-        format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+        format="<green>{time:MM-DD HH:mm:ss}</green> | <level>{level:<7}</level> | <cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
         level=show_level.upper(), # 等级按照顺序从低到高为 DEBUG, INFO, SUCCESS, WARNING, ERROR
         colorize=True
     )

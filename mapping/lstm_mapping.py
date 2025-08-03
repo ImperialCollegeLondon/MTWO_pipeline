@@ -698,7 +698,8 @@ if __name__ == "__main__":
             print(f"\n--- 测试最佳LSTM模型 ({best_method}) ---")
             
             best_lstm_model = lstm_results[best_method]['model']
-            test_sample = training_samples[0]
+            # test_sample = training_samples[0]
+            test_sample = 'chopped_M1-S0077.csv'
             
             results, test_metrics = test_lstm_model_on_sample(
                 best_lstm_model, test_sample, best_method
