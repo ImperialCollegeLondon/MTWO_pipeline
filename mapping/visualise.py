@@ -15,7 +15,7 @@ def load_csv_data(csv_path: str, data_type: str) -> pd.DataFrame:
     @return: DataFrame with columns 'accelX', 'accelY', 'accelZ', and 'accel'.
     """
     if not os.path.exists(csv_path):
-        raise FileNotFoundError(f"Calibration CSV file not found: {csv_path}")
+        raise FileNotFoundError(f"Please check path: {csv_path}")
     if data_type.lower() not in ['aw', 'lab']:
         raise ValueError("data_type must be either 'aw' or 'lab'.")
     
@@ -146,14 +146,14 @@ def plot_chopped(data, chopped_range, save_path=None):
     plt.show()
 
 if __name__ == "__main__":
-    # aw_dir = r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\AppleWatch\AW_Chopped"
-    # csv_path = os.path.join(aw_dir, "chopped_M1-S0077.csv")
+    """ 
     csv_path = r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\AppleWatch\M1-S0077.csv"
     aw = load_csv_data(csv_path, 'aw')
 
-    # vicon_dir = r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\Lab\LabChopped"
-    # csv_path = os.path.join(vicon_dir, "chopped_left_M2TestingWalking01.csv")
     csv_path = r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\Lab\LabCal\chopped_right_M2TestingWalking01.csv"
     vicon = load_csv_data(csv_path, 'lab')
 
     compare(aw, vicon)
+    """
+    data = load_csv_data(r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\my_data\GERF-R-D820-M2-S0012.csv", 'aw')
+    plot_original(data)

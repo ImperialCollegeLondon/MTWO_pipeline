@@ -251,10 +251,55 @@ def display_category_metrics_table(category_results, model_name_list, is_overall
     else:
         logger.warning("No data to display for this category!")
 
+def visualize_results(results, mode='MTWO'):
+    """Visualize the results of the predictions"""
+    import matplotlib.pyplot as plt
+
+    # Get model names from the Counter objects
+    model_dics = testInit.test_config.model_dics if mode == 'MTWO' else testInit.test_config.model_dics_mo
+    model_names = list(model_dics.keys())
+    
+    # Extract overall metrics for each model
+    overall_results = results['overall']
+    tp_values = [overall_results['tp'][model] for model in model_names]
+    fp_values = [overall_results['fp'][model] for model in model_names]
+    fn_values = [overall_results['fn'][model] for model in model_names]
+    total_values = [overall_results['total'][model] for model in model_names]
+    
+    accuracy_values = [tp / total * 100 if total > 0 else 0 for tp, total in zip(tp_values, total_values)]
+    precision_values = [tp / (tp + fp) * 100 if (tp + fp) > 0 else 0 for tp, fp in zip(tp_values, fp_values)]
+    recall_values = [tp / (tp + fn) * 100 if (tp + fn) > 0 else 0 for tp, fn in zip(tp_values, fn_values)]
+    f1_values = [2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0 for precision, recall in zip(precision_values, recall_values)]
+    
+    # Create a DataFrame for visualization
+    import pandas as pd
+    metrics_df = pd.DataFrame({
+        'Model': model_names,
+        'Accuracy': accuracy_values,
+        'Precision': precision_values,
+        'Recall': recall_values,
+        'F1 Score': f1_values
+    })
+    # Set the model names as index
+    metrics_df.set_index('Model', inplace=True)
+    # Plotting
+    plt.figure(figsize=(12, 8))
+    metrics_df.plot(kind='bar', rot=0)
+    plt.title('Model Performance Metrics')
+    plt.ylabel('Percentage (%)')
+    plt.ylim(0, 100)
+    plt.grid(axis='y')
+    plt.legend(loc='upper left')
+    plt.tight_layout()
+    import time
+    plt.savefig(r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\result_compare\test_results.png")
+    plt.show()
+
+
 if __name__ == '__main__':
 
-    mode = 'MO'
-    # mode = 'MTWO'
+    # mode = 'MO'
+    mode = 'MTWO'
 
     data_dir = os.path.join(rootDir, r"Data/my_data/") # Without mapping model (apple watch)
     # data_dir = os.path.join(rootDir, r"Data/my_data/mapped_data") # With mapping model (converted to AX form)
@@ -276,6 +321,7 @@ if __name__ == '__main__':
 
     # 4. Compute and display the accuracy
     display_accuracy(results, mode=mode)
+    visualize_results(results, mode=mode)
 
 
     # 5. Save the results

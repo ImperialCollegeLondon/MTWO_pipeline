@@ -29,11 +29,11 @@ from featureExtractor.extract_features import extract_features
 from dataTransformer import encoder
 from dataTransformer import scaler
 from dataTransformer import PCA
+from dataTransformer.data_mapper import apply_mapping_to_loaded_data
 
 from trainAndEvaluation.train_and_evaluate_all import train_and_evaluate_all
 from trainAndEvaluation.train_and_evaluate_all import save_comparison
 sys.path.insert(0, '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/my_data/compare')
-import transform  # Import the transform module to use its functions
 logger = getLogger()
 
 def array_to_dataframe_list(data_array):
@@ -50,14 +50,43 @@ def train_MTWO():
     logger.info("Step #1 Loading data...")
     # 1. Load Data
     # -- Either load data from custom dataset:
-    movement = load_data(movement_dir, useFilter=True)
-    # transport = load_data(transport_dir, useFilter=True)
-    # walking = load_data(walking_dir, useFilter=True)
-    other = load_data(others_dir, useFilter=True)
+    movement_list = load_data(movement_dir, useFilter=True)
+    # transport_list = load_data(transport_dir, useFilter=True)
+    # walking_list = load_data(walking_dir, useFilter=True)
+    other_list = load_data(others_dir, useFilter=True)
     # -- Or load data from original sources (AX and LAB data):
     # movement, transport, walking, other = load_data_from_original_sources(loadNewTransport=True)
     _, transport, walking, _ = load_data_from_original_sources(loadNewTransport=True)
+    
+    from dataTransformer.sliding_window import splitIntoOverlappingWindows
+    movement_windowed, other_windowed = [], []
+    for df in movement_list:
+        windows = splitIntoOverlappingWindows(df)
+        movement_windowed.extend(windows)
+    for df in other_list:
+        windows = splitIntoOverlappingWindows(df)
+        other_windowed.extend(windows)
+    # Convert to numpy arrays maintaining the 3D structure (samples, time_steps, features)
+    movement = np.array([window.values for window in movement_windowed])
+    other = np.array([window.values for window in other_windowed])
+
     logger.info(f"All data Loaded: Movement: {len(movement)}, Transport: {len(transport)}, Walking: {len(walking)}, Other: {len(other)}")
+
+    # 1.5 Apply Mapping Transformation (Lab to Apple Watch coordinate system)
+    if ENABLE_MAPPING:
+        logger.info("Step #1.5 Applying mapping transformation...")
+        movement, other, transport, walking = apply_mapping_to_loaded_data(
+            movement_data=movement,
+            other_data=other, 
+            transport_data=transport,
+            walking_data=walking,
+            alignment_method=MAPPING_ALIGNMENT_METHOD,
+            model_path=MAPPING_MODEL_PATH,
+            model_type='lstm'
+        )
+        logger.success("Mapping transformation completed.")
+    else:
+        logger.info("Mapping transformation disabled in config.")
 
     # 2. Data Augmentation
     data, labels = augment_data(movement, transport, walking, other)
@@ -105,34 +134,42 @@ def train_MO():
     logger.info(f'M-O training started.')
     logger.info("Step #1 Loading data...")
     # 1. Load Data
-    movement_list = load_data(movement_dir, useFilter=True) # Load data from custom dataset, return: list(pd.Dataframe,)
-    other_list = load_data(others_dir, useFilter=True) # Load data from custom dataset
+    # movement_list = load_data(movement_dir, useFilter=True) # Load data from custom dataset, return: list(pd.Dataframe,)
+    # other_list = load_data(others_dir, useFilter=True) # Load data from custom dataset
 
-    # _, _, _, other = load_data_from_original_sources(loadNewTransport=False) # Load data from original sources (AX and LAB data)
-    # Mapping other from AX to Apple Watch # Convert numpy array to DataFrame list for mapping
-    # other_dataframes = array_to_dataframe_list(other)
-    # other = transform.map_from_custom_data(other_dataframes)
-    # logger.info("Other data mapped from AX format to Apple Watch.")
-    # other = np.array([df[['accelerationX', 'accelerationY', 'accelerationZ']].values for df in other]) # Convert mapped DataFrames back to numpy array format
-
+    movement, _, _, other = load_data_from_original_sources(loadNewTransport=False) # Load data from original sources (AX and LAB data)
 
     # Convert custom data to the same format as original sources data
-    # Apply sliding window to convert DataFrames to windowed arrays
-    from dataTransformer.sliding_window import splitIntoOverlappingWindows
-    movement_windowed, other_windowed = [], []
-    for df in movement_list:
-        windows = splitIntoOverlappingWindows(df)
-        movement_windowed.extend(windows)
-    for df in other_list:
-        windows = splitIntoOverlappingWindows(df)
-        other_windowed.extend(windows)
+    # - Apply sliding window to convert DataFrames to windowed arrays
+    # from dataTransformer.sliding_window import splitIntoOverlappingWindows
+    # movement_windowed, other_windowed = [], []
+    # for df in movement_list:
+    #     windows = splitIntoOverlappingWindows(df)
+    #     movement_windowed.extend(windows)
+    # for df in other_list:
+    #     windows = splitIntoOverlappingWindows(df)
+    #     other_windowed.extend(windows)
     
     # Convert to numpy arrays maintaining the 3D structure (samples, time_steps, features)
-    movement = np.array([window.values for window in movement_windowed])
-    other = np.array([window.values for window in other_windowed])
+    # movement = np.array([window.values for window in movement_windowed])
+    # other = np.array([window.values for window in other_windowed])
 
     logger.success(f"All data Loaded: Movement: {len(movement)}, Other: {len(other)}")
     logger.info(f"Movement shape: {movement.shape}, Other shape: {other.shape}")
+
+    # 1.5 Apply Mapping Transformation (Lab to Apple Watch coordinate system)
+    if ENABLE_MAPPING:
+        logger.info("Step #1.5 Applying mapping transformation...")
+        movement, other, _, _ = apply_mapping_to_loaded_data(
+            movement_data=movement,
+            other_data=other,
+            alignment_method=MAPPING_ALIGNMENT_METHOD,
+            model_path=MAPPING_MODEL_PATH,
+            model_type='lstm'  # Auto-detect LSTM vs traditional models
+        )
+        logger.success("Mapping transformation completed.")
+    else:
+        logger.warning("Mapping transformation disabled in config.")
 
     # 2. Data Augmentation
     logger.info("Step #2 Data Augmenting...")
@@ -177,5 +214,5 @@ def train_MO():
 
 if __name__ == '__main__':
 
-    # train_MTWO()
-    train_MO()
+    train_MTWO()
+    # train_MO()

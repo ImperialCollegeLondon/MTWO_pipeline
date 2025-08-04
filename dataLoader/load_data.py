@@ -70,7 +70,9 @@ def combine(data1:list, data2:list) -> np.array:
         logger.error(f"Data1 shape: {data1.shape}, Data2 shape: {data2.shape}")
         logger.error(f"Data1: {data1[:5]}")  # Log first 5 rows of data1
         logger.error(f"Data2: {data2[:5]}")
-        return None
+        raise
+
+    logger.debug(f"Combined data shape: {combined_data.shape}")
     return combined_data
 
 def df2array(df:pd.DataFrame) -> np.array:

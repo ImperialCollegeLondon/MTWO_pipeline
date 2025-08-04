@@ -1,0 +1,111 @@
+-------------------- [mlp] --------------------
+Model saved to E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\saved_models/ML\mlp.pkl
+Confusion matrix saved to: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\saved_models/ML/training results\cm\confusion_matrix_mlp_MO.png
+
+mlp Performance:
+Accuracy: 92.92%
+AURC: 0.0138
+ROC AUC: 0.9758
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.96      0.90      0.93       603
+           1       0.90      0.96      0.93       611
+
+    accuracy                           0.93      1214
+   macro avg       0.93      0.93      0.93      1214
+weighted avg       0.93      0.93      0.93      1214
+
+-------------------- [lr] --------------------
+Model saved to E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\saved_models/ML\lr.pkl
+Confusion matrix saved to: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\saved_models/ML/training results\cm\confusion_matrix_lr_MO.png
+
+lr Performance:
+Accuracy: 80.72%
+AURC: 0.0844
+ROC AUC: 0.8472
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.89      0.70      0.78       603
+           1       0.76      0.91      0.83       611
+
+    accuracy                           0.81      1214
+   macro avg       0.82      0.81      0.80      1214
+weighted avg       0.82      0.81      0.81      1214
+
+-------------------- [rf] --------------------
+Model saved to E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\saved_models/ML\rf.pkl
+Confusion matrix saved to: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\saved_models/ML/training results\cm\confusion_matrix_rf_MO.png
+
+rf Performance:
+Accuracy: 87.40%
+AURC: 0.0215
+ROC AUC: 0.9699
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.98      0.76      0.86       603
+           1       0.81      0.98      0.89       611
+
+    accuracy                           0.87      1214
+   macro avg       0.89      0.87      0.87      1214
+weighted avg       0.89      0.87      0.87      1214
+
+-------------------- [svm] --------------------
+Model saved to E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\saved_models/ML\svm.pkl
+Confusion matrix saved to: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\saved_models/ML/training results\cm\confusion_matrix_svm_MO.png
+
+svm Performance:
+Accuracy: 83.20%
+AURC: 0.0441
+ROC AUC: 0.9231
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.97      0.68      0.80       603
+           1       0.76      0.98      0.85       611
+
+    accuracy                           0.83      1214
+   macro avg       0.86      0.83      0.83      1214
+weighted avg       0.86      0.83      0.83      1214
+
+-------------------- [knn] --------------------
+Model saved to E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\saved_models/ML\knn.pkl
+Confusion matrix saved to: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\saved_models/ML/training results\cm\confusion_matrix_knn_MO.png
+
+knn Performance:
+Accuracy: 92.26%
+AURC: 0.0206
+ROC AUC: 0.9710
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.96      0.88      0.92       603
+           1       0.89      0.96      0.93       611
+
+    accuracy                           0.92      1214
+   macro avg       0.93      0.92      0.92      1214
+weighted avg       0.93      0.92      0.92      1214
+
+-------------------- [xgboost2] --------------------
+Model saved to E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\saved_models/ML\xgboost2.pkl
+Confusion matrix saved to: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\saved_models/ML/training results\cm\confusion_matrix_xgboost2_MO.png
+
+xgboost2 Performance:
+Accuracy: 93.66%
+AURC: 0.0075
+ROC AUC: 0.9865
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.96      0.91      0.93       603
+           1       0.91      0.96      0.94       611
+
+    accuracy                           0.94      1214
+   macro avg       0.94      0.94      0.94      1214
+weighted avg       0.94      0.94      0.94      1214
+
+Model comparison saved to E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\saved_models/ML/training results\model_comparison.csv
+
+Best model: 'xgboost2' with AURC=0.0075 and Accuracy: 93.66%

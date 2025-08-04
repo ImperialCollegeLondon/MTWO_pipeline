@@ -9,7 +9,7 @@ def getLogger(show_level='INFO'):
     logger.remove()  # Remove default handler
     logger.add( # logger to print logs to console
         sys.stderr, 
-        format="<green>{time:MM-DD HH:mm:ss}</green> | <level>{level:<7}</level> | <cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+        format="<green>{time:MM-DD HH:mm:ss}</green> | <level>{level:<7}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
         level=show_level.upper(), # 等级按照顺序从低到高为 DEBUG, INFO, SUCCESS, WARNING, ERROR
         colorize=True
     )
@@ -40,15 +40,22 @@ SEED = 42 # Random seed for reproducibility
 LAB_SAMPLING_RATE = 1500  # Hz
 AW_SAMPLING_RATE = 20  # Hz, Apple watch sampling rate
 
-
+# ------------------Mapping Configuration------------------
+ENABLE_MAPPING = False  # Enable/disable coordinate system mapping
+MAPPING_ALIGNMENT_METHOD = 'none'  # Alignment method: 'none', 'rotation_matrix', 'procrustes'
+# Path to mapping model (None = auto-detect)
+MAPPING_MODEL_PATH = r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping_models_none"# Path to mapping model (None = auto-detect)
 
 # ------------------Directories-----------------------------
-# Root directory for the project
+# -- Root directory for the project --
 # All the following directories are sub-directories under this root directory
-rootDir = '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project'
+if sys.platform == 'darwin':
+    rootDir = '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project'
+else:
+    rootDir = r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project"
 
 
-# Directory for cache files used to fasten data loading
+# -- Directory for cache files used to fasten data loading --
 # cache_dir = os.path.join(rootDir, r"MTWO/cache")
 cache_dir = os.path.join(rootDir, r"MTWO/old_cache")
 # Directory of scaler, label encoder and PCA model
@@ -57,29 +64,29 @@ scaler_path = os.path.join(cache_dir, "scaler.joblib")
 pca_model_path = os.path.join(cache_dir, 'pca_model.joblib')
 
 
-# Directory of your training data
-# movement_dir = os.path.join(rootDir, r'Data/Movement data')
-movement_dir = '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/calibration_combined_movement'
+# -- Directory of your training data --
+# movement_dir = '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/calibration_combined_movement'
+movement_dir = os.path.join(rootDir, r'Data/Movement data')
 transport_dir = os.path.join(rootDir, r'Data/Transport data') # TODO
 walking_dir= os.path.join(rootDir, r'Data/Walking data') # TODO
 others_dir = os.path.join(rootDir, r'Data/Others data')
 
 
-# Directory of the training data from original data sources
-# Directory of the Axiviity data
+# -- Directory of the training data from original data sources --
+# - Directory of the Axiviity data
 ax_data_dir = os.path.join(rootDir, r"Data/ontrack-activity-classifier/training_data")
-# Directory of the lab data
+# - Directory of the lab data
 # lab_data_dir = os.path.join(rootDir, r"Data/OnTrack")
 lab_data_dir = os.path.join(r"Data/revised_lab_data")  # Revised lab data directory
-# Positions of new Transport data
+# - Positions of new Transport data
 basePath = os.path.join(rootDir, "Data/MTWO_transport_0424")
 ax_newT_xsl = os.path.join(basePath, r"data_transport_index_0424.xlsx")
 ax_newT_csv = os.path.join(basePath, r"data_transport_index_0424.csv")
 
 
-# Directory to save the trained models
+# -- Directory to save the trained models --
 models_dir = os.path.join(rootDir, r"saved_models/ML")
-# Directory to save the training comparison results csv
+# -- Directory to save the training comparison results csv --
 save_dir = os.path.join(rootDir, r'saved_models/ML/training results')
 
 
