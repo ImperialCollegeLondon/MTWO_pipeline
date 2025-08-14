@@ -159,7 +159,7 @@ def chunk(movementSegments, otherSegments, single_file=False):
 
     print(f"[info@load_lab_data.chunk] -> window_size: {window_size}, step_size: {step_size}")
 
-    cacheFileName = f"LAB_ws{WINDOW_SIZE}_new.joblib"
+    cacheFileName = f"LAB_ws{WINDOW_SIZE}.joblib"
     checkpoint_ws = os.path.join(cache_dir, cacheFileName)
     isCached = os.path.exists(checkpoint_ws)
 

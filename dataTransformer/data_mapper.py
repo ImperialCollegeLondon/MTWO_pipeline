@@ -54,39 +54,9 @@ class DataMapper:
             self.load_model(model_path)
         else:
             # Try to find the model in the mapping directory
-            self._find_and_load_default_model()
+            logger.error(f"Model path '{model_path}' does not exist. Attempting to find default model...")
+            exit()
     
-    def _find_and_load_default_model(self):
-        """
-        Try to find and load the default mapping model based on alignment method.
-        """
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        
-        # Try different possible paths for both LSTM and traditional models
-        possible_paths = []
-        
-        # First try LSTM models if tensorflow is available and model_type allows
-        if TENSORFLOW_AVAILABLE and self.model_type in ['auto', 'lstm']:
-            possible_paths.extend([
-                os.path.join(base_dir, "mapping", f"lstm_mapping_models_{self.alignment_method}"),
-                os.path.join(base_dir, "mapping", "lstm_mapping_models_none"),  # Fallback to 'none'
-            ])
-        
-        # Then try traditional models
-        if self.model_type in ['auto', 'traditional']:
-            possible_paths.extend([
-                os.path.join(base_dir, "mapping_model.joblib"),  # Root directory
-                os.path.join(base_dir, "mapping", f"mapping_models_{self.alignment_method}", "mapping_model.joblib"),
-                os.path.join(base_dir, "mapping", "mapping_models_none", "mapping_model.joblib"),  # Fallback to 'none'
-            ])
-        
-        for path in possible_paths:
-            if os.path.exists(path):
-                logger.info(f"Found mapping model at: {path}")
-                self.load_model(path)
-                return
-        
-        logger.warning("No mapping model found. DataMapper will operate in pass-through mode.")
     
     def load_model(self, model_path: str):
         """
@@ -104,11 +74,11 @@ class DataMapper:
                 self._load_traditional_model(model_path)
             else:
                 logger.error(f"Unsupported model path format: {model_path}")
-                self.model = None
+                exit()
                 
         except Exception as e:
             logger.error(f"Failed to load mapping model from {model_path}: {str(e)}")
-            self.model = None
+            exit()
     
     def _load_lstm_model(self, model_dir: str):
         """
@@ -116,8 +86,7 @@ class DataMapper:
         """
         if not TENSORFLOW_AVAILABLE:
             logger.error("TensorFlow is not available, cannot load LSTM model")
-            self.model = None
-            return
+            exit()
         
         # Check if required files exist
         lstm_model_path = os.path.join(model_dir, 'lstm_model.h5')
@@ -127,9 +96,8 @@ class DataMapper:
         
         if not all(os.path.exists(p) for p in [lstm_model_path, scaler_input_path, scaler_output_path, params_path]):
             logger.error(f"Missing required LSTM model files in {model_dir}")
-            self.model = None
-            return
-        
+            exit()
+
         # Load LSTM model components
         import pickle
         

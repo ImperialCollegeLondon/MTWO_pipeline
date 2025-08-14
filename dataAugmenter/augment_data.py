@@ -2,7 +2,6 @@ from collections import Counter
 import numpy as np
 import os
 import sys
-from loguru import logger
 
 # Add the parent directory to the Python path to import config
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -10,15 +9,10 @@ from config import cache_dir
 from dataAugmenter.balance_classes import balance_classes
 import random
 from typing import Dict, Union, Tuple, Optional
+from config import getLogger
 
 # Configure loguru logger
-logger.remove()
-logger.add(
-    sys.stderr, 
-    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
-    level="INFO",
-    colorize=True
-)
+logger = getLogger()
 
 def augment_data(movement, transport, walking, other):
     # Balance classes

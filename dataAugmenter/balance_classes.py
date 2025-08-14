@@ -6,6 +6,9 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from dataAugmenter.TimeSeriesAugmenter import TimeSeriesAugmenter 
 from config import SEED
+from config import getLogger
+
+logger = getLogger()
 
 def balance_classes(X_dict, y_dict, target_count=None):
     """
@@ -20,8 +23,16 @@ def balance_classes(X_dict, y_dict, target_count=None):
         Tuple of (balanced_X, balanced_y)
     """
     # Find the target count (max class size if not specified)
-    if target_count is None:
-        target_count = max(X.shape[0] for X in X_dict.values())
+    try:
+        if target_count is None:
+            target_count = max(X.shape[0] for X in X_dict.values())
+    except AttributeError as e:
+        logger.error(f"Error determining target_count: {e}")
+        logger.debug("X_dict sample:")
+        logger.debug(X_dict[list(X_dict.keys())[0]])
+        logger.debug("y_dict sample:")
+        logger.debug(y_dict[list(y_dict.keys())[0]])
+        exit()
     
     augmenter = TimeSeriesAugmenter(random_state=SEED)
     balanced_data = []

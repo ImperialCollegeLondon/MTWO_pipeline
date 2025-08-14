@@ -18,7 +18,6 @@ import pandas as pd
 from config import *
 from config import getLogger
 
-
 from dataLoader.load_data import load_data
 from dataLoader.load_data import load_data_from_original_sources
 from dataLoader.load_data import df2array
@@ -47,34 +46,36 @@ def train_MTWO():
     random.seed(SEED)  # Set random seed for reproducibility
     mode = 'MTWO'
     logger.info(f'M-T-W-O training started.')
-    logger.info("Step #1 Loading data...")
+    logger.debug("Step #1 Loading data...")
+
     # 1. Load Data
     # -- Either load data from custom dataset:
-    movement_list = load_data(movement_dir, useFilter=True)
+    # movement_list = load_data(movement_dir, useFilter=True)
     # transport_list = load_data(transport_dir, useFilter=True)
     # walking_list = load_data(walking_dir, useFilter=True)
-    other_list = load_data(others_dir, useFilter=True)
+    # other_list = load_data(others_dir, useFilter=True)
     # -- Or load data from original sources (AX and LAB data):
-    # movement, transport, walking, other = load_data_from_original_sources(loadNewTransport=True)
-    _, transport, walking, _ = load_data_from_original_sources(loadNewTransport=True)
+    # _, transport, walking, _ = load_data_from_original_sources(ax=True, loadNewTransport=True)
+    movement, transport, walking, other = load_data_from_original_sources(loadNewTransport=False)
     
-    from dataTransformer.sliding_window import splitIntoOverlappingWindows
-    movement_windowed, other_windowed = [], []
-    for df in movement_list:
-        windows = splitIntoOverlappingWindows(df)
-        movement_windowed.extend(windows)
-    for df in other_list:
-        windows = splitIntoOverlappingWindows(df)
-        other_windowed.extend(windows)
+
+    # from dataTransformer.sliding_window import splitIntoOverlappingWindows
+    # movement_windowed, other_windowed = [], []
+    # for df in movement_list:
+    #     windows = splitIntoOverlappingWindows(df)
+    #     movement_windowed.extend(windows)
+    # for df in other_list:
+    #     windows = splitIntoOverlappingWindows(df)
+    #     other_windowed.extend(windows)
     # Convert to numpy arrays maintaining the 3D structure (samples, time_steps, features)
-    movement = np.array([window.values for window in movement_windowed])
-    other = np.array([window.values for window in other_windowed])
+    # movement = np.array([window.values for window in movement_windowed])
+    # other = np.array([window.values for window in other_windowed])
 
     logger.info(f"All data Loaded: Movement: {len(movement)}, Transport: {len(transport)}, Walking: {len(walking)}, Other: {len(other)}")
 
     # 1.5 Apply Mapping Transformation (Lab to Apple Watch coordinate system)
     if ENABLE_MAPPING:
-        logger.info("Step #1.5 Applying mapping transformation...")
+        logger.debug("Applying mapping transformation...")
         movement, other, transport, walking = apply_mapping_to_loaded_data(
             movement_data=movement,
             other_data=other, 
@@ -89,28 +90,29 @@ def train_MTWO():
         logger.info("Mapping transformation disabled in config.")
 
     # 2. Data Augmentation
+    logger.debug("Step #2 Data Augmentating...")
     data, labels = augment_data(movement, transport, walking, other)
     logger.info(f"Data Augmentation Completed: {len(data)} samples with {len(set(labels))} unique labels.")
 
     # 3. Feature Extraction
-    logger.info("Step #3 Feature Extraction...")
+    logger.debug("Step #3 Feature Extraction...")
     X_features = extract_features(data, labels, mode=mode)
     logger.success(f"Feature Extraction Completed: Extracted {X_features.shape[1]} features from {len(data)} samples.")
 
     # 4. Data processing: encoding and scaling
-    logger.info("Step #4 Data Processing...")
+    logger.debug("Step #4 Data Processing...")
     y_labels = encoder.encode(labels) # encode the labels from str to int
     X_train, X_test, y_train, y_test = train_test_split(X_features, y_labels, test_size=0.2)
     X_train_scaled, X_test_scaled = scaler.scale(X_train, X_test)  # scale the features
     logger.success(f"Data Processing Completed: Training set size: {X_train.shape}, Test set size: {X_test.shape}")
 
     # 5. Dimensionality Reduction
-    logger.info("Step #5 Dimensionality Reduction...")
+    logger.debug("Step #5 Dimensionality Reduction...")
     X_train_pca, X_test_pca = PCA.pca(X_train_scaled, X_test_scaled, n_components=0.95, vis=False)
     logger.success(f"Dimensionality Reduction Completed: Reduced features from {X_train_scaled.shape[1]} to {X_train_pca.shape[1]} dimensions.")
 
     # 6. Train and Evaluate
-    logger.info("Step #6 Training and Evaluation...")
+    logger.debug("Step #6 Training and Evaluation...")
     class_names = ['Movement', 'Transport', 'Walking', 'Others']
     results_dict, (best_model_name, best_accuracy, best_aurc) = train_and_evaluate_all(
         X_train_pca, X_test_pca, y_train, y_test, 
@@ -120,7 +122,7 @@ def train_MTWO():
     logger.success(f"Training and Evaluation Completed. Best Model: {best_model_name} with accuracy {best_accuracy:.2f}.")
     
     # 7. Generate confusion matrix comparison
-    logger.info("Step #7 Generating confusion matrix comparison...")
+    logger.debug("Step #7 Generating confusion matrix comparison...")
     from trainAndEvaluation.confusion_matrix_utils import compare_models_confusion_matrices
     models_to_compare = ['xgboost', 'rf', 'mlp']
     compare_models_confusion_matrices(X_test_pca, y_test, models_to_compare, 
@@ -132,15 +134,14 @@ def train_MO():
     random.seed(SEED)  # Set random seed for reproducibility
     mode = 'MO'
     logger.info(f'M-O training started.')
-    logger.info("Step #1 Loading data...")
+    logger.debug("Step #1 Loading data...")
     # 1. Load Data
+    movement, _, _, other = load_data_from_original_sources(ax=False, lab=True, loadNewTransport=False) # Load data from original sources (AX and LAB data)
+
     # movement_list = load_data(movement_dir, useFilter=True) # Load data from custom dataset, return: list(pd.Dataframe,)
     # other_list = load_data(others_dir, useFilter=True) # Load data from custom dataset
-
-    movement, _, _, other = load_data_from_original_sources(loadNewTransport=False) # Load data from original sources (AX and LAB data)
-
-    # Convert custom data to the same format as original sources data
-    # - Apply sliding window to convert DataFrames to windowed arrays
+    # # Convert custom data to the same format as original sources data
+    # # - Apply sliding window to convert DataFrames to windowed arrays
     # from dataTransformer.sliding_window import splitIntoOverlappingWindows
     # movement_windowed, other_windowed = [], []
     # for df in movement_list:
@@ -150,7 +151,7 @@ def train_MO():
     #     windows = splitIntoOverlappingWindows(df)
     #     other_windowed.extend(windows)
     
-    # Convert to numpy arrays maintaining the 3D structure (samples, time_steps, features)
+    # # Convert to numpy arrays maintaining the 3D structure (samples, time_steps, features)
     # movement = np.array([window.values for window in movement_windowed])
     # other = np.array([window.values for window in other_windowed])
 
@@ -159,7 +160,7 @@ def train_MO():
 
     # 1.5 Apply Mapping Transformation (Lab to Apple Watch coordinate system)
     if ENABLE_MAPPING:
-        logger.info("Step #1.5 Applying mapping transformation...")
+        logger.debug("Step #1.5 Applying mapping transformation...")
         movement, other, _, _ = apply_mapping_to_loaded_data(
             movement_data=movement,
             other_data=other,
@@ -172,29 +173,29 @@ def train_MO():
         logger.warning("Mapping transformation disabled in config.")
 
     # 2. Data Augmentation
-    logger.info("Step #2 Data Augmenting...")
+    logger.debug("Step #2 Data Augmenting...")
     data, labels = augment_data_MO(movement, other)
     logger.info(f"Data Augmentation Completed: {len(data)} samples with {len(set(labels))} unique labels.")
 
     # 3. Feature Extraction
-    logger.info("Step #3 Feature Extraction...")
+    logger.debug("Step #3 Feature Extraction...")
     X_features = extract_features(data, labels, mode=mode)
     logger.info(f"Feature Extraction Completed: Extracted {X_features.shape[1]} features from {len(data)} samples.")
 
     # 4. Data processing: encoding and scaling
-    logger.info("Step #4 Data Processing...")
+    logger.debug("Step #4 Data Processing...")
     y_labels = encoder.encode(labels) # encode the labels from str to int
     X_train, X_test, y_train, y_test = train_test_split(X_features, y_labels, test_size=0.2)
     X_train_scaled, X_test_scaled = scaler.scale(X_train, X_test)  # scale the features
     logger.info(f"Data Processing Completed: Training set size: {X_train.shape}, Test set size: {X_test.shape}")
 
     # 5. Dimensionality Reduction
-    logger.info("Step #5 Dimensionality Reduction...")
+    logger.debug("Step #5 Dimensionality Reduction...")
     X_train_pca, X_test_pca = PCA.pca(X_train_scaled, X_test_scaled, n_components=0.95, vis=False)
     logger.info(f"Dimensionality Reduction Completed: Reduced features from {X_train_scaled.shape[1]} to {X_train_pca.shape[1]} dimensions.")
 
     # 6. Train and Evaluate
-    logger.info("Step #6 Training and Evaluation...")
+    logger.debug("Step #6 Training and Evaluation...")
     class_names = ['Others', 'Movement']
     results_dict, (best_model_name, best_accuracy, best_aurc) = train_and_evaluate_all(
         X_train_pca, X_test_pca, y_train, y_test, 
@@ -204,7 +205,7 @@ def train_MO():
     logger.success(f"Training and Evaluation Completed. Best Model: {best_model_name} with accuracy {best_accuracy:.2f}.")
     
     # 7. Generate confusion matrix comparison
-    logger.info("Step #7 Generating confusion matrix comparison...")
+    logger.debug("Step #7 Generating confusion matrix comparison...")
     from trainAndEvaluation.confusion_matrix_utils import compare_models_confusion_matrices
     models_to_compare = ['xgboost2', 'rf', 'mlp']
     compare_models_confusion_matrices(X_test_pca, y_test, models_to_compare, 
@@ -213,6 +214,7 @@ def train_MO():
     logger.success('MO training completed!')
 
 if __name__ == '__main__':
-
     train_MTWO()
     # train_MO()
+
+    print()

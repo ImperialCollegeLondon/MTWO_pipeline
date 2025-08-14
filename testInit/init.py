@@ -31,9 +31,9 @@ def get_gerf_files(data_dir, pattern_style='gerf'):
         raise FileNotFoundError(f"Directory {data_dir} does not exist.")
     
     if pattern_style == 'gerf':
-        pattern = re.compile(r'^GERF-(L|R)-D\d{3}-M(1|2|3|6)-S\d{4}\.csv$')
+        pattern = re.compile(r'^GERF-(L|R)-[A-Z]\d{3}-M(1|2|3|6)-S\d{4}\.csv$')
     elif pattern_style == 'gerf_mo':
-        pattern = re.compile(r'^GERF-(L|R)-D\d{3}-M(1|3)-S\d{4}\.csv$')
+        pattern = re.compile(r'^GERF-(L|R)-[A-Z]\d{3}-M(1|3)-S\d{4}\.csv$')
     elif pattern_style == 'csv':
         pattern = re.compile(r'.*\.csv$')
     else:

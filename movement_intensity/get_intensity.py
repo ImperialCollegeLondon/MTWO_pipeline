@@ -131,7 +131,9 @@ def analyze_acceleration_statistics(lab_data_dir: str, side: str = 'right') -> d
         'global_min': np.min(all_accelerations),
         'global_max': np.max(all_accelerations),
         'percentile_25': np.percentile(all_accelerations, 25),
+        'percentile_33': np.percentile(all_accelerations, 33),
         'percentile_50': np.percentile(all_accelerations, 50),  # median
+        'percentile_66': np.percentile(all_accelerations, 66),
         'percentile_75': np.percentile(all_accelerations, 75),
         'percentile_90': np.percentile(all_accelerations, 90),
         'percentile_95': np.percentile(all_accelerations, 95),
@@ -156,67 +158,50 @@ def calculate_intensity_thresholds(stats: dict, method: str = 'percentile') -> d
     - method: Method to calculate thresholds ('percentile', 'std', 'hybrid')
     
     Returns:
-    - Dictionary containing thresholds for different intensity levels
+    - thresholds: dict with two boundaries:
+        - 'low': boundary between low and medium
+        - 'high': boundary between medium and high
     """
     if method == 'percentile':
-        # Use percentiles to define intensity levels
+        # Use 33rd and 66th percentiles for three-class boundaries
         thresholds = {
-            'very_low': 0,
-            'low': stats['percentile_25'],
-            'medium': stats['percentile_50'],
-            'high': stats['percentile_75'],
-            'very_high': stats['percentile_90']
+            'low': stats['percentile_33'],
+            'high': stats['percentile_66']
         }
     elif method == 'std':
-        # Use standard deviation based approach
+        # Use mean ± 0.5*std as boundaries
         mean = stats['global_mean']
         std = stats['global_std']
         thresholds = {
-            'very_low': 0,
             'low': mean - 0.5 * std,
-            'medium': mean,
-            'high': mean + 0.5 * std,
-            'very_high': mean + 1.0 * std
+            'high': mean + 0.5 * std
         }
     elif method == 'hybrid':
         # Combine percentile and std approaches
         mean = stats['global_mean']
         std = stats['global_std']
         thresholds = {
-            'very_low': 0,
-            'low': min(stats['percentile_25'], mean - 0.5 * std),
-            'medium': stats['percentile_50'],
-            'high': max(stats['percentile_75'], mean + 0.5 * std),
-            'very_high': stats['percentile_90']
+            'low': min(stats['percentile_33'], mean - 0.5 * std),
+            'high': max(stats['percentile_66'], mean + 0.5 * std)
         }
     else:
         raise ValueError(f"Unknown threshold method: {method}")
     
     # Ensure thresholds are in ascending order
-    threshold_values = [thresholds[key] for key in ['very_low', 'low', 'medium', 'high', 'very_high']]
-    if not all(threshold_values[i] <= threshold_values[i+1] for i in range(len(threshold_values)-1)):
-        logger.warning("Thresholds are not in ascending order, adjusting...")
-        # Simple adjustment to ensure ordering
-        for i in range(1, len(threshold_values)):
-            if threshold_values[i] < threshold_values[i-1]:
-                threshold_values[i] = threshold_values[i-1] + 0.01
-        
-        keys = ['very_low', 'low', 'medium', 'high', 'very_high']
-        thresholds = dict(zip(keys, threshold_values))
-    
-    logger.info(f"Intensity thresholds calculated using {method} method:")
-    for level, threshold in thresholds.items():
-        logger.info(f"  {level}: {threshold:.3f}")
-    
+    if thresholds['high'] < thresholds['low']:
+        # Adjust to maintain ordering
+        thresholds['high'] = thresholds['low'] + 0.01
+
+    logger.info(f"Intensity thresholds (three-class) using {method}: low={thresholds['low']:.3f}, high={thresholds['high']:.3f}")
     return thresholds
 
 def classify_movement_intensity(accel_data: np.ndarray, thresholds: dict, aggregation: str = 'mean') -> tuple:
     """
-    Classify movement intensity based on acceleration data and thresholds.
+    Classify movement intensity into three levels (low, medium, high) based on acceleration data and thresholds.
     
     Parameters:
     - accel_data: Array of acceleration magnitude values
-    - thresholds: Dictionary containing intensity thresholds
+    - thresholds: Dictionary with keys 'low' and 'high'
     - aggregation: Method to aggregate acceleration data ('mean', 'median', 'percentile_90', 'std')
     
     Returns:
@@ -233,27 +218,18 @@ def classify_movement_intensity(accel_data: np.ndarray, thresholds: dict, aggreg
     else:
         raise ValueError(f"Unknown aggregation method: {aggregation}")
     
-    # Classify based on thresholds
+    # Three-class classification
     if agg_value <= thresholds['low']:
-        intensity = 'very_low' if agg_value <= thresholds['very_low'] else 'low'
-    elif agg_value <= thresholds['medium']:
         intensity = 'low'
     elif agg_value <= thresholds['high']:
         intensity = 'medium'
-    elif agg_value <= thresholds['very_high']:
-        intensity = 'high'
     else:
-        intensity = 'very_high'
+        intensity = 'high'
     
-    # Calculate confidence score based on distance from threshold boundaries
-    threshold_values = list(thresholds.values())
-    min_distance = float('inf')
-    for thresh in threshold_values:
-        distance = abs(agg_value - thresh)
-        min_distance = min(min_distance, distance)
-    
-    # Normalize confidence score (higher value means more confident)
-    max_range = thresholds['very_high'] - thresholds['very_low']
+    # Confidence: distance to nearest boundary normalized by overall boundary span
+    boundary_values = [thresholds['low'], thresholds['high']]
+    min_distance = min(abs(agg_value - b) for b in boundary_values)
+    max_range = thresholds['high'] - thresholds['low']
     confidence = min_distance / max_range if max_range > 0 else 1.0
     
     return intensity, agg_value, confidence
@@ -349,11 +325,11 @@ def batch_analyze_movement_intensity(lab_data_dir: str, output_file: str = None,
     
     # Add summary information
     if len(df_results) > 0:
-        logger.info(f"\nBatch Analysis Summary:")
-        logger.info(f"Total files analyzed: {len(df_results)}")
+        logger.success(f"Batch Analysis Summary:")
+        logger.success(f"Total files analyzed: {len(df_results)}")
         intensity_counts = df_results['intensity_level'].value_counts()
         for level, count in intensity_counts.items():
-            logger.info(f"  {level}: {count} files ({count/len(df_results)*100:.1f}%)")
+            logger.success(f"  {level}: {count} files ({count/len(df_results)*100:.1f}%)")
     
     # Save results if requested
     if output_file:

@@ -155,5 +155,5 @@ if __name__ == "__main__":
 
     compare(aw, vicon)
     """
-    data = load_csv_data(r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\my_data\GERF-R-D820-M2-S0012.csv", 'aw')
+    data = load_csv_data(r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\my_data\GERF-R-D820-M3-S0016.csv", 'aw')
     plot_original(data)

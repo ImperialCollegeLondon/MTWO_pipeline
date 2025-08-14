@@ -9,8 +9,8 @@ def getLogger(show_level='INFO'):
     logger.remove()  # Remove default handler
     logger.add( # logger to print logs to console
         sys.stderr, 
-        format="<green>{time:MM-DD HH:mm:ss}</green> | <level>{level:<7}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
-        level=show_level.upper(), # 等级按照顺序从低到高为 DEBUG, INFO, SUCCESS, WARNING, ERROR
+        format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level:<7}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+        level='INFO', # 等级按照顺序从低到高为 DEBUG, INFO, SUCCESS, WARNING, ERROR
         colorize=True
     )
     logger.add( # logger to save logs to a file
@@ -18,7 +18,7 @@ def getLogger(show_level='INFO'):
         rotation="1 day", 
         retention="7 days", 
         format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}",
-        level="DEBUG",
+        level="INFO",
         colorize=False
     )
 
@@ -44,7 +44,10 @@ AW_SAMPLING_RATE = 20  # Hz, Apple watch sampling rate
 ENABLE_MAPPING = False  # Enable/disable coordinate system mapping
 MAPPING_ALIGNMENT_METHOD = 'none'  # Alignment method: 'none', 'rotation_matrix', 'procrustes'
 # Path to mapping model (None = auto-detect)
-MAPPING_MODEL_PATH = r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping_models_none"# Path to mapping model (None = auto-detect)
+if sys.platform == 'darwin':
+    MAPPING_MODEL_PATH = "/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/MTWO_pipeline/mapping/results/LSTM/lstm_mapping_models_none"
+else:
+    MAPPING_MODEL_PATH = r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\results\LSTM\lstm_mapping_models_none"# Path to mapping model (None = auto-detect)
 
 # ------------------Directories-----------------------------
 # -- Root directory for the project --

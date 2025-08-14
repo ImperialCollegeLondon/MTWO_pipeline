@@ -15,6 +15,9 @@ from tqdm import tqdm
 from collections import Counter
 import datetime
 from tabulate import tabulate
+from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Add the current directory to the Python path to import config
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -22,7 +25,7 @@ from featureExtractor.features import compute_features, compute_features_MO
 
 from config import getLogger
 # Initialize logger
-logger = getLogger()
+logger = getLogger('info')
 
 import testInit.init
 import testInit.test_config
@@ -104,10 +107,18 @@ def predict_all(file_list, data_dir, mode='MTWO'):
         'others': {'tp': Counter(), 'fp': Counter(), 'fn': Counter(), 'total': Counter()}
     }
 
+    # 添加混淆矩阵存储
+    confusion_matrices = {}
+
     model_name_list = list(model_dics.keys())
     # model_name_list = ['xgboost']
     for model_name in tqdm(model_name_list, desc="Evaluation Progress", leave=False):
         Error_file_cnt = 0
+        
+        # 为每个模型收集所有预测和真实标签
+        all_predictions = []
+        all_ground_truths = []
+        
         for file_name in tqdm(file_list, desc=f"Current model = {model_name}", leave=False, colour="green"):
             file_basename = os.path.join(os.path.splitext(file_name)[0], model_name)
             # try:
@@ -127,6 +138,10 @@ def predict_all(file_list, data_dir, mode='MTWO'):
             # ground_truth = 'M'  # Test the new GERF data, all ground truth is 'M'
 
             preds = prediction_results['prediction'].values
+            
+            # 收集预测和真实标签用于混淆矩阵
+            all_predictions.extend(preds)
+            all_ground_truths.extend([ground_truth] * len(preds))
             
             # Calculate metrics for overall
             tp_overall = np.sum(preds == ground_truth)
@@ -162,7 +177,17 @@ def predict_all(file_list, data_dir, mode='MTWO'):
             #     logger.error(f"{file_basename} with model {model_name} failed: {e}")
             #     Error_file_cnt += 1
             #     continue
+        # 计算该模型的混淆矩阵
+        if all_predictions and all_ground_truths:
+            confusion_matrices[model_name] = {
+                'predictions': all_predictions,
+                'ground_truths': all_ground_truths
+            }
+        
         # print(f"{model_name} completed with {Error_file_cnt} errors.")
+    
+    # 将混淆矩阵添加到结果中
+    results['confusion_matrices'] = confusion_matrices
     return results
 
 def calculate_metrics(tp, fp, fn, total):
@@ -291,10 +316,65 @@ def visualize_results(results, mode='MTWO'):
     plt.grid(axis='y')
     plt.legend(loc='upper left')
     plt.tight_layout()
-    import time
-    plt.savefig(r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\result_compare\test_results.png")
-    plt.show()
+    # plt.savefig(rf"test_results.png")
 
+def save_confusion_matrices(results, mode='MTWO'):
+    """计算、显示并保存混淆矩阵"""
+    if 'confusion_matrices' not in results:
+        logger.warning("No confusion matrix data found in results")
+        return
+    
+    # 确保保存目录存在
+    save_dir = os.path.join(rootDir, "result_compare")
+    os.makedirs(save_dir, exist_ok=True)
+    
+    # 定义类别标签
+    if mode == 'MTWO':
+        labels = ['M', 'T', 'W', 'O']
+        label_names = ['Movement', 'Transport', 'Walking', 'Others']
+    else:
+        labels = ['M', 'O'] 
+        label_names = ['Movement', 'Others']
+    
+    confusion_data = results['confusion_matrices']
+    
+    # 为每个模型生成混淆矩阵
+    for model_name, data in confusion_data.items():
+        predictions = data['predictions']
+        ground_truths = data['ground_truths']
+        
+        # 计算混淆矩阵
+        cm = confusion_matrix(ground_truths, predictions, labels=labels)
+        
+        # 创建可视化
+        plt.figure(figsize=(8, 6))
+        sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
+                    xticklabels=label_names, yticklabels=label_names)
+        plt.title(f'Confusion Matrix - {model_name.capitalize()}')
+        plt.ylabel('True Label')
+        plt.xlabel('Predicted Label')
+        
+        # 保存图像
+        from time import strftime, localtime
+        timestamp = strftime('%Y%m%d_%H%M%S', localtime())
+        save_path = os.path.join(save_dir, f"confusion_matrix_{model_name}_{timestamp}.png")
+        plt.tight_layout()
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        
+        # 打印混淆矩阵到控制台
+        print(f"\nConfusion Matrix for {model_name.capitalize()}:")
+        print("=" * 50)
+        
+        # 创建表格形式的混淆矩阵
+        cm_df = pd.DataFrame(cm, index=label_names, columns=label_names)
+        print(tabulate(cm_df, headers=label_names, tablefmt="grid", numalign="center"))
+        
+        # 保存混淆矩阵数据到CSV
+        csv_path = os.path.join(save_dir, f"confusion_matrix_{model_name}_{timestamp}.csv")
+        cm_df.to_csv(csv_path)
+        
+        logger.info(f"Confusion matrix for {model_name} saved to {save_path} and {csv_path}")
 
 if __name__ == '__main__':
 
@@ -312,7 +392,7 @@ if __name__ == '__main__':
 
 
     # 2. Initialise the results CSV file
-    testInit.init.init_res_csv(data_dir)
+    # testInit.init.init_res_csv(data_dir)
 
 
     # 3. Predict each file for each model
@@ -323,7 +403,9 @@ if __name__ == '__main__':
     display_accuracy(results, mode=mode)
     visualize_results(results, mode=mode)
 
+    # 5. 保存混淆矩阵
+    save_confusion_matrices(results, mode=mode)
 
-    # 5. Save the results
+    # 6. Save the results
     # testInit.init.save_res_csv(data_dir)
     # print(f"All predictions completed and saved to {data_dir}.")
