@@ -51,12 +51,16 @@ def train_MTWO():
     # 1. Load Data
     """ Either load data from original sources (AX and LAB data): """
     # AX data
-    movement_ax, transport_ax, walking_ax, other_ax  = load_data_from_original_sources(ax=True, lab=False) 
+    # movement_ax, transport_ax, walking_ax, other_ax  = load_data_from_original_sources(ax=True, lab=False) 
     # LAB data
     movement_lab, _, _, other_lab = load_data_from_original_sources(ax=False, lab=True) 
     walking_lab = load_lab_walking()
     # Apple Watch TRANSPORT data
     transport_aw = load_new_transport()  
+
+    logger.info(f"Before mapping: Movement: {len(movement_lab)}, Transport: {len(transport_aw)}, Walking: {len(walking_lab)}, Other: {len(other_lab)}")
+
+    exit()
 
     """ Or load data from custom dataset: """
     # movement_list = load_data(movement_dir, useFilter=True)
