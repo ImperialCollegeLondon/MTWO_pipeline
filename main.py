@@ -10,17 +10,13 @@
 
 from sklearn.model_selection import train_test_split
 import random
-import numpy as np
 import sys
-
 import pandas as pd
 
-from config import *
-from config import getLogger
-
-from dataLoader.load_data import load_data
 from dataLoader.load_data import load_data_from_original_sources
-from dataLoader.load_data import df2array
+from dataLoader.load_data import load_new_transport
+from dataLoader.load_data import load_lab_walking
+from dataLoader.load_data import combine
 from dataAugmenter.augment_data import augment_data
 from dataAugmenter.augment_data import augment_data_MO
 from featureExtractor.extract_features import extract_features
@@ -32,6 +28,10 @@ from dataTransformer.data_mapper import apply_mapping_to_loaded_data
 
 from trainAndEvaluation.train_and_evaluate_all import train_and_evaluate_all
 from trainAndEvaluation.train_and_evaluate_all import save_comparison
+
+from config import *
+from config import getLogger
+
 sys.path.insert(0, '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/my_data/compare')
 logger = getLogger()
 
@@ -49,15 +49,20 @@ def train_MTWO():
     logger.debug("Step #1 Loading data...")
 
     # 1. Load Data
-    # -- Either load data from custom dataset:
+    """ Either load data from original sources (AX and LAB data): """
+    # AX data
+    movement_ax, transport_ax, walking_ax, other_ax  = load_data_from_original_sources(ax=True, lab=False) 
+    # LAB data
+    movement_lab, _, _, other_lab = load_data_from_original_sources(ax=False, lab=True) 
+    walking_lab = load_lab_walking()
+    # Apple Watch TRANSPORT data
+    transport_aw = load_new_transport()  
+
+    """ Or load data from custom dataset: """
     # movement_list = load_data(movement_dir, useFilter=True)
     # transport_list = load_data(transport_dir, useFilter=True)
     # walking_list = load_data(walking_dir, useFilter=True)
     # other_list = load_data(others_dir, useFilter=True)
-    # -- Or load data from original sources (AX and LAB data):
-    # _, transport, walking, _ = load_data_from_original_sources(ax=True, loadNewTransport=True)
-    movement, transport, walking, other = load_data_from_original_sources(loadNewTransport=False)
-    
 
     # from dataTransformer.sliding_window import splitIntoOverlappingWindows
     # movement_windowed, other_windowed = [], []
@@ -67,27 +72,51 @@ def train_MTWO():
     # for df in other_list:
     #     windows = splitIntoOverlappingWindows(df)
     #     other_windowed.extend(windows)
-    # Convert to numpy arrays maintaining the 3D structure (samples, time_steps, features)
+    # # Convert to numpy arrays maintaining the 3D structure (samples, time_steps, features)
     # movement = np.array([window.values for window in movement_windowed])
     # other = np.array([window.values for window in other_windowed])
 
-    logger.info(f"All data Loaded: Movement: {len(movement)}, Transport: {len(transport)}, Walking: {len(walking)}, Other: {len(other)}")
-
+    
     # 1.5 Apply Mapping Transformation (Lab to Apple Watch coordinate system)
+    ENABLE_MAPPING = True
     if ENABLE_MAPPING:
-        logger.debug("Applying mapping transformation...")
-        movement, other, transport, walking = apply_mapping_to_loaded_data(
-            movement_data=movement,
-            other_data=other, 
-            transport_data=transport,
-            walking_data=walking,
+        logger.info("Applying mapping transformation to AXIVITY data...")
+        movement_ax_mapped, other_ax_mapped, transport_ax_mapped, walking_ax_mapped = apply_mapping_to_loaded_data(
+            movement_data=movement_ax,
+            other_data=other_ax, 
+            transport_data=transport_ax,
+            walking_data=walking_ax,
             alignment_method=MAPPING_ALIGNMENT_METHOD,
-            model_path=MAPPING_MODEL_PATH,
+            model_path=MAPPING_MODEL_PATH_AX2AW,
             model_type='lstm'
         )
+        logger.info("Applying mapping transformation to LAB data...")
+        movement_lab_mapped, other_lab_mapped, _, walking_lab_mapped = apply_mapping_to_loaded_data(
+            movement_data=movement_lab,
+            other_data=other_lab, 
+            transport_data=None,
+            walking_data=walking_lab,
+            alignment_method=MAPPING_ALIGNMENT_METHOD,
+            model_path=MAPPING_MODEL_PATH_LAB2AW,
+            model_type='lstm'
+        )
+
+        movement = combine(movement_ax_mapped, movement_lab_mapped)
+        other = combine(other_ax_mapped, other_lab_mapped)
+        walking = combine(walking_ax_mapped, walking_lab_mapped)
+        transport = combine(transport_aw, transport_ax_mapped)
         logger.success("Mapping transformation completed.")
+        
     else:
-        logger.info("Mapping transformation disabled in config.")
+        movement = combine(movement_ax, movement_lab)
+        other = combine(other_ax, other_lab)
+        walking = combine(walking_ax, walking_lab)
+        transport = transport_aw
+        logger.warning("Mapping transformation disabled in config.")
+
+    
+
+    logger.info(f"After mapping: Movement: {len(movement)}, Transport: {len(transport)}, Walking: {len(walking)}, Other: {len(other)}")
 
     # 2. Data Augmentation
     logger.debug("Step #2 Data Augmentating...")
@@ -136,7 +165,7 @@ def train_MO():
     logger.info(f'M-O training started.')
     logger.debug("Step #1 Loading data...")
     # 1. Load Data
-    movement, _, _, other = load_data_from_original_sources(ax=False, lab=True, loadNewTransport=False) # Load data from original sources (AX and LAB data)
+    movement, _, _, other = load_data_from_original_sources(ax=False, lab=True) # Load data from original sources (AX and LAB data)
 
     # movement_list = load_data(movement_dir, useFilter=True) # Load data from custom dataset, return: list(pd.Dataframe,)
     # other_list = load_data(others_dir, useFilter=True) # Load data from custom dataset

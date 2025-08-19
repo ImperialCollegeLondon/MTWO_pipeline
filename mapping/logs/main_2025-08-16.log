@@ -1,0 +1,379 @@
+2025-08-16 11:57:38 | INFO     | mapping:load_paired_training_data:194 - Loaded 7 paired training samples from E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\paired_training_data\paired_training_data_ax2aw.pkl
+2025-08-16 11:57:38 | INFO     | __main__:train_lstm_mapping_model:408 - Starting LSTM mapping model training from paired data...
+2025-08-16 11:57:38 | INFO     | __main__:process_paired_samples_with_alignment_lstm:334 - Processing 7 paired samples for LSTM with alignment method: rotation_matrix
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 1 (chopped_M1-S0077.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 2 (chopped_M3-S0077.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 3 (chopped_M2-S0078.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 4 (chopped_M3-S0078.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 5 (chopped_M2-S0079.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 6 (chopped_M3-S0079.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 7 (chopped_M2-S0080.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | INFO     | __main__:process_paired_samples_with_alignment_lstm:389 - Successfully processed 0 samples with rotation_matrix alignment for LSTM
+2025-08-16 11:57:38 | INFO     | __main__:train_lstm_mapping_model:408 - Starting LSTM mapping model training from paired data...
+2025-08-16 11:57:38 | INFO     | __main__:process_paired_samples_with_alignment_lstm:334 - Processing 7 paired samples for LSTM with alignment method: procrustes
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 1 (chopped_M1-S0077.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 2 (chopped_M3-S0077.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 3 (chopped_M2-S0078.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 4 (chopped_M3-S0078.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 5 (chopped_M2-S0079.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 6 (chopped_M3-S0079.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 7 (chopped_M2-S0080.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | INFO     | __main__:process_paired_samples_with_alignment_lstm:389 - Successfully processed 0 samples with procrustes alignment for LSTM
+2025-08-16 11:57:38 | INFO     | __main__:train_lstm_mapping_model:408 - Starting LSTM mapping model training from paired data...
+2025-08-16 11:57:38 | INFO     | __main__:process_paired_samples_with_alignment_lstm:334 - Processing 7 paired samples for LSTM with alignment method: none
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 1 (chopped_M1-S0077.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 2 (chopped_M3-S0077.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 3 (chopped_M2-S0078.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 4 (chopped_M3-S0078.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 5 (chopped_M2-S0079.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 6 (chopped_M3-S0079.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:386 - Error processing sample 7 (chopped_M2-S0080.csv): 'vicon_accelX'
+2025-08-16 11:57:38 | INFO     | __main__:process_paired_samples_with_alignment_lstm:389 - Successfully processed 0 samples with none alignment for LSTM
+2025-08-16 11:59:36 | INFO     | mapping:load_paired_training_data:194 - Loaded 7 paired training samples from E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\paired_training_data\paired_training_data_ax2aw.pkl
+2025-08-16 11:59:36 | INFO     | __main__:train_lstm_mapping_model:411 - Starting LSTM mapping model training from paired data...
+2025-08-16 11:59:36 | INFO     | __main__:process_paired_samples_with_alignment_lstm:334 - Processing 7 paired samples for LSTM with alignment method: rotation_matrix
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 1 (chopped_M1-S0077.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 2 (chopped_M3-S0077.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 3 (chopped_M2-S0078.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 4 (chopped_M3-S0078.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 5 (chopped_M2-S0079.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 6 (chopped_M3-S0079.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 7 (chopped_M2-S0080.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | INFO     | __main__:process_paired_samples_with_alignment_lstm:392 - Successfully processed 0 samples with rotation_matrix alignment for LSTM
+2025-08-16 11:59:36 | INFO     | __main__:train_lstm_mapping_model:411 - Starting LSTM mapping model training from paired data...
+2025-08-16 11:59:36 | INFO     | __main__:process_paired_samples_with_alignment_lstm:334 - Processing 7 paired samples for LSTM with alignment method: procrustes
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 1 (chopped_M1-S0077.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 2 (chopped_M3-S0077.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 3 (chopped_M2-S0078.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 4 (chopped_M3-S0078.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 5 (chopped_M2-S0079.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 6 (chopped_M3-S0079.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 7 (chopped_M2-S0080.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | INFO     | __main__:process_paired_samples_with_alignment_lstm:392 - Successfully processed 0 samples with procrustes alignment for LSTM
+2025-08-16 11:59:36 | INFO     | __main__:train_lstm_mapping_model:411 - Starting LSTM mapping model training from paired data...
+2025-08-16 11:59:36 | INFO     | __main__:process_paired_samples_with_alignment_lstm:334 - Processing 7 paired samples for LSTM with alignment method: none
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 1 (chopped_M1-S0077.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 2 (chopped_M3-S0077.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 3 (chopped_M2-S0078.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 4 (chopped_M3-S0078.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 5 (chopped_M2-S0079.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 6 (chopped_M3-S0079.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 7 (chopped_M2-S0080.csv): 'vicon_accelX'
+2025-08-16 11:59:36 | INFO     | __main__:process_paired_samples_with_alignment_lstm:392 - Successfully processed 0 samples with none alignment for LSTM
+2025-08-16 11:59:54 | INFO     | mapping:load_paired_training_data:194 - Loaded 7 paired training samples from E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\paired_training_data\paired_training_data_ax2aw.pkl
+2025-08-16 11:59:54 | INFO     | __main__:train_lstm_mapping_model:411 - Starting LSTM mapping model training from paired data...
+2025-08-16 11:59:54 | INFO     | __main__:process_paired_samples_with_alignment_lstm:334 - Processing 7 paired samples for LSTM with alignment method: rotation_matrix
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 1 (chopped_M1-S0077.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 2 (chopped_M3-S0077.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 3 (chopped_M2-S0078.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 4 (chopped_M3-S0078.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 5 (chopped_M2-S0079.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 6 (chopped_M3-S0079.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 7 (chopped_M2-S0080.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | INFO     | __main__:process_paired_samples_with_alignment_lstm:392 - Successfully processed 0 samples with rotation_matrix alignment for LSTM
+2025-08-16 11:59:54 | INFO     | __main__:train_lstm_mapping_model:411 - Starting LSTM mapping model training from paired data...
+2025-08-16 11:59:54 | INFO     | __main__:process_paired_samples_with_alignment_lstm:334 - Processing 7 paired samples for LSTM with alignment method: procrustes
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 1 (chopped_M1-S0077.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 2 (chopped_M3-S0077.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 3 (chopped_M2-S0078.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 4 (chopped_M3-S0078.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 5 (chopped_M2-S0079.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 6 (chopped_M3-S0079.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 7 (chopped_M2-S0080.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | INFO     | __main__:process_paired_samples_with_alignment_lstm:392 - Successfully processed 0 samples with procrustes alignment for LSTM
+2025-08-16 11:59:54 | INFO     | __main__:train_lstm_mapping_model:411 - Starting LSTM mapping model training from paired data...
+2025-08-16 11:59:54 | INFO     | __main__:process_paired_samples_with_alignment_lstm:334 - Processing 7 paired samples for LSTM with alignment method: none
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 1 (chopped_M1-S0077.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 2 (chopped_M3-S0077.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 3 (chopped_M2-S0078.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 4 (chopped_M3-S0078.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 5 (chopped_M2-S0079.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 6 (chopped_M3-S0079.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:389 - Error processing sample 7 (chopped_M2-S0080.csv): 'vicon_accelX'
+2025-08-16 11:59:54 | INFO     | __main__:process_paired_samples_with_alignment_lstm:392 - Successfully processed 0 samples with none alignment for LSTM
+2025-08-16 12:02:55 | INFO     | mapping:load_paired_training_data:194 - Loaded 7 paired training samples from E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\paired_training_data\paired_training_data_ax2aw.pkl
+2025-08-16 12:02:55 | INFO     | __main__:train_lstm_mapping_model:413 - Starting LSTM mapping model training from paired data...
+2025-08-16 12:02:55 | INFO     | __main__:process_paired_samples_with_alignment_lstm:335 - Processing 7 paired samples for LSTM with alignment method: rotation_matrix
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 1 (chopped_M1-S0077.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 2 (chopped_M3-S0077.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 3 (chopped_M2-S0078.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 4 (chopped_M3-S0078.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 5 (chopped_M2-S0079.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 6 (chopped_M3-S0079.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 7 (chopped_M2-S0080.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | INFO     | __main__:process_paired_samples_with_alignment_lstm:394 - Successfully processed 0 samples with rotation_matrix alignment for LSTM
+2025-08-16 12:02:55 | INFO     | __main__:train_lstm_mapping_model:413 - Starting LSTM mapping model training from paired data...
+2025-08-16 12:02:55 | INFO     | __main__:process_paired_samples_with_alignment_lstm:335 - Processing 7 paired samples for LSTM with alignment method: procrustes
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 1 (chopped_M1-S0077.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 2 (chopped_M3-S0077.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 3 (chopped_M2-S0078.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 4 (chopped_M3-S0078.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 5 (chopped_M2-S0079.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 6 (chopped_M3-S0079.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 7 (chopped_M2-S0080.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | INFO     | __main__:process_paired_samples_with_alignment_lstm:394 - Successfully processed 0 samples with procrustes alignment for LSTM
+2025-08-16 12:02:55 | INFO     | __main__:train_lstm_mapping_model:413 - Starting LSTM mapping model training from paired data...
+2025-08-16 12:02:55 | INFO     | __main__:process_paired_samples_with_alignment_lstm:335 - Processing 7 paired samples for LSTM with alignment method: none
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 1 (chopped_M1-S0077.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 2 (chopped_M3-S0077.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 3 (chopped_M2-S0078.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 4 (chopped_M3-S0078.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 5 (chopped_M2-S0079.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 6 (chopped_M3-S0079.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:390 - Error processing sample 7 (chopped_M2-S0080.csv): 'vicon_accelX'
+2025-08-16 12:02:55 | ERROR    | __main__:process_paired_samples_with_alignment_lstm:391 - Traceback (most recent call last):
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\lstm_mapping.py", line 340, in process_paired_samples_with_alignment_lstm
+    aw_df, ax_df = convert_sample_to_dataframes(sample)
+  File "E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\mapping.py", line 214, in convert_sample_to_dataframes
+    'accelX': sample['vicon_accelX'],
+KeyError: 'vicon_accelX'
+
+2025-08-16 12:02:55 | INFO     | __main__:process_paired_samples_with_alignment_lstm:394 - Successfully processed 0 samples with none alignment for LSTM
+2025-08-16 12:03:51 | INFO     | mapping:load_paired_training_data:194 - Loaded 7 paired training samples from E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\paired_training_data\paired_training_data_ax2aw.pkl
+2025-08-16 12:03:51 | INFO     | __main__:train_lstm_mapping_model:413 - Starting LSTM mapping model training from paired data...
+2025-08-16 12:03:51 | INFO     | __main__:process_paired_samples_with_alignment_lstm:335 - Processing 7 paired samples for LSTM with alignment method: rotation_matrix
+2025-08-16 12:03:51 | INFO     | __main__:process_paired_samples_with_alignment_lstm:394 - Successfully processed 7 samples with rotation_matrix alignment for LSTM
+2025-08-16 12:03:51 | INFO     | __main__:prepare_data:74 - Preparing data for LSTM training...
+2025-08-16 12:03:51 | INFO     | __main__:prepare_data:98 - Combined data shape: X=(1629, 3), y=(1629, 3)
+2025-08-16 12:03:51 | INFO     | __main__:prepare_data:111 - Sequence data shape: X=(1579, 50, 3), y=(1579, 3)
+2025-08-16 12:03:51 | INFO     | __main__:train:157 - Building and training LSTM model...
+2025-08-16 12:03:52 | INFO     | __main__:train:164 - LSTM Model Architecture:
+2025-08-16 12:04:54 | INFO     | __main__:train:194 - LSTM model training completed!
+2025-08-16 12:04:56 | INFO     | __main__:train_lstm_mapping_model:443 - LSTM mapping model training completed:
+2025-08-16 12:04:56 | INFO     | __main__:train_lstm_mapping_model:444 -   RMSE: 0.2938
+2025-08-16 12:04:56 | INFO     | __main__:train_lstm_mapping_model:445 -   R² Score: -2.3827
+2025-08-16 12:04:56 | INFO     | __main__:train_lstm_mapping_model:446 -   MAE: 0.2640
+2025-08-16 12:04:56 | INFO     | __main__:train_lstm_mapping_model:447 -   Training sequences: 1579
+2025-08-16 12:04:56 | INFO     | __main__:save_model:289 - LSTM model saved to lstm_mapping_models_rotation_matrix
+2025-08-16 12:04:58 | INFO     | __main__:visualize_lstm_training_history:483 - Training history plot saved to lstm_mapping_models_rotation_matrix\training_history.png
+2025-08-16 12:06:41 | INFO     | __main__:train_lstm_mapping_model:413 - Starting LSTM mapping model training from paired data...
+2025-08-16 12:06:41 | INFO     | __main__:process_paired_samples_with_alignment_lstm:335 - Processing 7 paired samples for LSTM with alignment method: procrustes
+2025-08-16 12:06:41 | INFO     | __main__:process_paired_samples_with_alignment_lstm:394 - Successfully processed 7 samples with procrustes alignment for LSTM
+2025-08-16 12:06:41 | INFO     | __main__:prepare_data:74 - Preparing data for LSTM training...
+2025-08-16 12:06:41 | INFO     | __main__:prepare_data:98 - Combined data shape: X=(1629, 3), y=(1629, 3)
+2025-08-16 12:06:41 | INFO     | __main__:prepare_data:111 - Sequence data shape: X=(1579, 50, 3), y=(1579, 3)
+2025-08-16 12:06:41 | INFO     | __main__:train:157 - Building and training LSTM model...
+2025-08-16 12:06:42 | INFO     | __main__:train:164 - LSTM Model Architecture:
+2025-08-16 12:07:44 | INFO     | __main__:train:194 - LSTM model training completed!
+2025-08-16 12:07:46 | INFO     | __main__:train_lstm_mapping_model:443 - LSTM mapping model training completed:
+2025-08-16 12:07:46 | INFO     | __main__:train_lstm_mapping_model:444 -   RMSE: 0.2925
+2025-08-16 12:07:46 | INFO     | __main__:train_lstm_mapping_model:445 -   R² Score: -2.3473
+2025-08-16 12:07:46 | INFO     | __main__:train_lstm_mapping_model:446 -   MAE: 0.2639
+2025-08-16 12:07:46 | INFO     | __main__:train_lstm_mapping_model:447 -   Training sequences: 1579
+2025-08-16 12:07:46 | INFO     | __main__:save_model:289 - LSTM model saved to lstm_mapping_models_procrustes
+2025-08-16 12:07:46 | INFO     | __main__:visualize_lstm_training_history:483 - Training history plot saved to lstm_mapping_models_procrustes\training_history.png
+2025-08-16 12:08:03 | INFO     | __main__:train_lstm_mapping_model:413 - Starting LSTM mapping model training from paired data...
+2025-08-16 12:08:03 | INFO     | __main__:process_paired_samples_with_alignment_lstm:335 - Processing 7 paired samples for LSTM with alignment method: none
+2025-08-16 12:08:03 | INFO     | __main__:process_paired_samples_with_alignment_lstm:394 - Successfully processed 7 samples with none alignment for LSTM
+2025-08-16 12:08:03 | INFO     | __main__:prepare_data:74 - Preparing data for LSTM training...
+2025-08-16 12:08:03 | INFO     | __main__:prepare_data:98 - Combined data shape: X=(1629, 3), y=(1629, 3)
+2025-08-16 12:08:03 | INFO     | __main__:prepare_data:111 - Sequence data shape: X=(1579, 50, 3), y=(1579, 3)
+2025-08-16 12:08:03 | INFO     | __main__:train:157 - Building and training LSTM model...
+2025-08-16 12:08:03 | INFO     | __main__:train:164 - LSTM Model Architecture:
+2025-08-16 12:09:04 | INFO     | __main__:train:194 - LSTM model training completed!
+2025-08-16 12:09:06 | INFO     | __main__:train_lstm_mapping_model:443 - LSTM mapping model training completed:
+2025-08-16 12:09:06 | INFO     | __main__:train_lstm_mapping_model:444 -   RMSE: 0.2858
+2025-08-16 12:09:06 | INFO     | __main__:train_lstm_mapping_model:445 -   R² Score: -2.2000
+2025-08-16 12:09:06 | INFO     | __main__:train_lstm_mapping_model:446 -   MAE: 0.2561
+2025-08-16 12:09:06 | INFO     | __main__:train_lstm_mapping_model:447 -   Training sequences: 1579
+2025-08-16 12:09:06 | INFO     | __main__:save_model:289 - LSTM model saved to lstm_mapping_models_none
+2025-08-16 12:09:06 | INFO     | __main__:visualize_lstm_training_history:483 - Training history plot saved to lstm_mapping_models_none\training_history.png
+2025-08-16 12:31:33 | INFO     | mapping:load_paired_training_data:194 - Loaded 7 paired training samples from E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\paired_training_data\paired_training_data_ax2aw.pkl
+2025-08-16 12:55:20 | INFO     | __main__:build_training_set:290 - Starting to build paired training set...
+2025-08-16 12:55:20 | INFO     | __main__:build_training_set:297 - Found 8 AW files, 9 left AX files, and 9 right AX files
+2025-08-16 12:55:20 | INFO     | __main__:match_files_by_name:115 - Matching M1-S0077 with left AX files (left hand)
+2025-08-16 12:55:20 | INFO     | __main__:match_files_by_name:133 - Matched pair: chopped_M1-S0077.csv <-> chopped_M1-S0077_filtered.csv
+2025-08-16 12:55:20 | WARNING  | __main__:match_files_by_name:135 - No matching pair found for key: M2-S0077, value: Drinking01
+2025-08-16 12:55:20 | INFO     | __main__:match_files_by_name:115 - Matching M3-S0077 with left AX files (left hand)
+2025-08-16 12:55:20 | INFO     | __main__:match_files_by_name:133 - Matched pair: chopped_M3-S0077.csv <-> chopped_M3-S0077_filtered.csv
+2025-08-16 12:55:20 | INFO     | __main__:match_files_by_name:115 - Matching M1-S0078 with left AX files (left hand)
+2025-08-16 12:55:20 | INFO     | __main__:match_files_by_name:133 - Matched pair: chopped_M1-S0078.csv <-> chopped_M1-S0078_filtered.csv
+2025-08-16 12:55:20 | INFO     | __main__:match_files_by_name:115 - Matching M2-S0078 with left AX files (left hand)
+2025-08-16 12:55:20 | INFO     | __main__:match_files_by_name:133 - Matched pair: chopped_M2-S0078.csv <-> chopped_M2-S0078_filtered.csv
+2025-08-16 12:55:20 | INFO     | __main__:match_files_by_name:115 - Matching M3-S0078 with left AX files (left hand)
+2025-08-16 12:55:20 | INFO     | __main__:match_files_by_name:133 - Matched pair: chopped_M3-S0078.csv <-> chopped_M3-S0078_filtered.csv
+2025-08-16 12:55:20 | WARNING  | __main__:match_files_by_name:135 - No matching pair found for key: M1-S0079, value: Walking03
+2025-08-16 12:55:20 | INFO     | __main__:match_files_by_name:119 - Matching M2-S0079 with right AX files (right hand)
+2025-08-16 12:55:20 | INFO     | __main__:match_files_by_name:133 - Matched pair: chopped_M2-S0079.csv <-> chopped_M2-S0079_filtered.csv
+2025-08-16 12:55:20 | INFO     | __main__:match_files_by_name:119 - Matching M3-S0079 with right AX files (right hand)
+2025-08-16 12:55:20 | INFO     | __main__:match_files_by_name:133 - Matched pair: chopped_M3-S0079.csv <-> chopped_M3-S0079_filtered.csv
+2025-08-16 12:55:20 | INFO     | __main__:match_files_by_name:119 - Matching M2-S0080 with right AX files (right hand)
+2025-08-16 12:55:20 | INFO     | __main__:match_files_by_name:133 - Matched pair: chopped_M2-S0080.csv <-> chopped_M2-S0080_filtered.csv
+2025-08-16 12:55:20 | SUCCESS  | __main__:build_training_set:306 - Successfully matched 8 file pairs
+2025-08-16 12:55:20 | INFO     | __main__:create_paired_training_samples:180 - Processing pair 1: chopped_M1-S0077.csv (148 rows) <-> chopped_M1-S0077_filtered.csv (361 rows)
+2025-08-16 12:55:20 | INFO     | __main__:create_paired_training_samples:206 - Created paired sample 1: 148 synchronized data points
+2025-08-16 12:55:20 | INFO     | __main__:create_paired_training_samples:180 - Processing pair 2: chopped_M3-S0077.csv (214 rows) <-> chopped_M3-S0077_filtered.csv (558 rows)
+2025-08-16 12:55:20 | INFO     | __main__:create_paired_training_samples:206 - Created paired sample 2: 214 synchronized data points
+2025-08-16 12:55:20 | INFO     | __main__:create_paired_training_samples:180 - Processing pair 3: chopped_M1-S0078.csv (161 rows) <-> chopped_M1-S0078_filtered.csv (388 rows)
+2025-08-16 12:55:20 | INFO     | __main__:create_paired_training_samples:206 - Created paired sample 3: 161 synchronized data points
+2025-08-16 12:55:20 | INFO     | __main__:create_paired_training_samples:180 - Processing pair 4: chopped_M2-S0078.csv (125 rows) <-> chopped_M2-S0078_filtered.csv (337 rows)
+2025-08-16 12:55:20 | INFO     | __main__:create_paired_training_samples:206 - Created paired sample 4: 125 synchronized data points
+2025-08-16 12:55:20 | INFO     | __main__:create_paired_training_samples:180 - Processing pair 5: chopped_M3-S0078.csv (312 rows) <-> chopped_M3-S0078_filtered.csv (902 rows)
+2025-08-16 12:55:20 | INFO     | __main__:create_paired_training_samples:206 - Created paired sample 5: 312 synchronized data points
+2025-08-16 12:55:20 | INFO     | __main__:create_paired_training_samples:180 - Processing pair 6: chopped_M2-S0079.csv (277 rows) <-> chopped_M2-S0079_filtered.csv (357 rows)
+2025-08-16 12:55:20 | INFO     | __main__:create_paired_training_samples:206 - Created paired sample 6: 277 synchronized data points
+2025-08-16 12:55:20 | INFO     | __main__:create_paired_training_samples:180 - Processing pair 7: chopped_M3-S0079.csv (413 rows) <-> chopped_M3-S0079_filtered.csv (1025 rows)
+2025-08-16 12:55:20 | INFO     | __main__:create_paired_training_samples:206 - Created paired sample 7: 413 synchronized data points
+2025-08-16 12:55:20 | INFO     | __main__:create_paired_training_samples:180 - Processing pair 8: chopped_M2-S0080.csv (140 rows) <-> chopped_M2-S0080_filtered.csv (379 rows)
+2025-08-16 12:55:20 | INFO     | __main__:create_paired_training_samples:206 - Created paired sample 8: 140 synchronized data points
+2025-08-16 12:55:20 | SUCCESS  | __main__:create_paired_training_samples:213 - Successfully created 8 paired training samples
+2025-08-16 12:55:20 | INFO     | __main__:save_paired_training_data:237 - Saved paired training data as pickle: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\paired_training_data\paired_training_data_AX2aw.pkl
+2025-08-16 12:55:20 | INFO     | __main__:save_paired_training_data:260 - Saved 8 individual CSV files in: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\paired_training_data\paired_csv_samples_AX2aw
+2025-08-16 12:55:20 | INFO     | __main__:save_paired_training_data:276 - Saved training samples summary: E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\paired_training_data\training_samples_summary_AX2aw.csv
+2025-08-16 12:55:20 | INFO     | __main__:build_training_set:318 - Paired training set building completed!
+2025-08-16 12:56:00 | INFO     | mapping:load_paired_training_data:194 - Loaded 8 paired training samples from E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\paired_training_data\paired_training_data_ax2aw.pkl
+2025-08-16 12:56:00 | INFO     | __main__:train_lstm_mapping_model:410 - Starting LSTM mapping model training from paired data...
+2025-08-16 12:56:00 | INFO     | __main__:process_paired_samples_with_alignment_lstm:335 - Processing 8 paired samples for LSTM with alignment method: none
+2025-08-16 12:56:00 | INFO     | __main__:process_paired_samples_with_alignment_lstm:391 - Successfully processed 8 samples with none alignment for LSTM
+2025-08-16 12:56:00 | INFO     | __main__:prepare_data:74 - Preparing data for LSTM training...
+2025-08-16 12:56:00 | INFO     | __main__:prepare_data:98 - Combined data shape: X=(1790, 3), y=(1790, 3)
+2025-08-16 12:56:00 | INFO     | __main__:prepare_data:111 - Sequence data shape: X=(1740, 50, 3), y=(1740, 3)
+2025-08-16 12:56:00 | INFO     | __main__:train:157 - Building and training LSTM model...
+2025-08-16 12:56:00 | INFO     | __main__:train:164 - LSTM Model Architecture:
+2025-08-16 12:57:37 | INFO     | __main__:train:194 - LSTM model training completed!
+2025-08-16 12:57:39 | INFO     | __main__:train_lstm_mapping_model:440 - LSTM mapping model training completed:
+2025-08-16 12:57:39 | INFO     | __main__:train_lstm_mapping_model:441 -   RMSE: 0.2736
+2025-08-16 12:57:39 | INFO     | __main__:train_lstm_mapping_model:442 -   R² Score: -0.6512
+2025-08-16 12:57:39 | INFO     | __main__:train_lstm_mapping_model:443 -   MAE: 0.2491
+2025-08-16 12:57:39 | INFO     | __main__:train_lstm_mapping_model:444 -   Training sequences: 1740
+2025-08-16 12:57:39 | INFO     | __main__:save_model:289 - LSTM model saved to E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\results\LSTM\ax2aw\lstm_mapping_models_none

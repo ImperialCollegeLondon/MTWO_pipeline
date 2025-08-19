@@ -6,7 +6,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import joblib
 import pickle
-from loguru import logger
 from config import getLogger
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.metrics import mean_squared_error, r2_score
@@ -16,6 +15,7 @@ from tensorflow.keras.layers import LSTM, Dense, Dropout
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 import warnings
+import traceback
 warnings.filterwarnings('ignore')
 
 # 导入现有的数据加载和处理函数
@@ -31,7 +31,7 @@ logger = getLogger('INFO')
 
 class LSTMMappingModel:
     """
-    LSTM-based mapping model for converting Vicon acceleration data to Apple Watch acceleration data
+    LSTM-based mapping model for converting AX acceleration data to Apple Watch acceleration data
     """
     
     def __init__(self, sequence_length=50, lstm_units=64, dropout_rate=0.2):
@@ -63,29 +63,29 @@ class LSTMMappingModel:
             sequences.append(data[i:i + sequence_length])
         return np.array(sequences)
     
-    def prepare_data(self, vicon_data_list, aw_data_list):
+    def prepare_data(self, AX_data_list, aw_data_list):
         """
         Prepare data for LSTM training
         
-        @param vicon_data_list: List of Vicon DataFrames
+        @param AX_data_list: List of AX DataFrames
         @param aw_data_list: List of Apple Watch DataFrames
         @return: Tuple of (X_sequences, y_sequences, scalers)
         """
         logger.info("Preparing data for LSTM training...")
         
         # Combine all data
-        all_vicon_data = []
+        all_AX_data = []
         all_aw_data = []
         
-        for vicon_df, aw_df in zip(vicon_data_list, aw_data_list):
-            vicon_features = vicon_df[['accelX', 'accelY', 'accelZ']].values
+        for AX_df, aw_df in zip(AX_data_list, aw_data_list):
+            AX_features = AX_df[['accelX', 'accelY', 'accelZ']].values
             aw_targets = aw_df[['accelX', 'accelY', 'accelZ']].values
             
-            all_vicon_data.append(vicon_features)
+            all_AX_data.append(AX_features)
             all_aw_data.append(aw_targets)
         
         # Stack all data
-        X_combined = np.vstack(all_vicon_data)
+        X_combined = np.vstack(all_AX_data)
         y_combined = np.vstack(all_aw_data)
         
         # Scale the data
@@ -316,16 +316,16 @@ class LSTMMappingModel:
         logger.info(f"LSTM model loaded from {model_dir}")
 
 
-def process_paired_samples_with_alignment_lstm(training_samples, alignment_method='rotation_matrix'):
+def process_paired_samples_with_alignment_lstm(training_samples, alignment_method='none'):
     """
     Process paired samples for LSTM training with coordinate system alignment
     
     @param training_samples: List of paired training samples
     @param alignment_method: Method for alignment ('rotation_matrix', 'procrustes', or 'none')
-    @return: Tuple of (aligned_aw_data_list, aligned_vicon_data_list, alignment_info)
+    @return: Tuple of (aligned_aw_data_list, aligned_AX_data_list, alignment_info)
     """
     aligned_aw_data = []
-    aligned_vicon_data = []
+    aligned_AX_data = []
     alignment_info = {
         'method': alignment_method,
         'rotation_matrices': [],
@@ -337,7 +337,7 @@ def process_paired_samples_with_alignment_lstm(training_samples, alignment_metho
     for i, sample in enumerate(training_samples):
         try:
             # Convert sample to DataFrames
-            aw_df, vicon_df = convert_sample_to_dataframes(sample)
+            aw_df, AX_df = convert_sample_to_dataframes(sample)
             
             # Apply coordinate system alignment
             if alignment_method == 'rotation_matrix':
@@ -345,18 +345,18 @@ def process_paired_samples_with_alignment_lstm(training_samples, alignment_metho
                 rotation_matrix = np.array([[ 0.58377147,  0.28237329,  0.76123334],
                                             [ 0.36897715,  0.74289845, -0.55853179],
                                             [-0.72323352,  0.60693263,  0.32949362]])
-                
-                aligned_vicon_df = apply_rotation_matrix(vicon_df, rotation_matrix)
+                logger.warning("This rotation matrix is used for Vicon Data!")
+                aligned_AX_df = apply_rotation_matrix(AX_df, rotation_matrix)
                 aligned_aw_df = aw_df.copy()
                 alignment_info['rotation_matrices'].append(rotation_matrix)
                 
             elif alignment_method == 'procrustes':
-                aligned_vicon_df, rotation_matrix = align_coordinate_systems_procrustes(vicon_df, aw_df)
+                aligned_AX_df, rotation_matrix = align_coordinate_systems_procrustes(AX_df, aw_df)
                 aligned_aw_df = aw_df.copy()
                 alignment_info['rotation_matrices'].append(rotation_matrix)
                 
             elif alignment_method == 'none':
-                aligned_vicon_df = vicon_df.copy()
+                aligned_AX_df = AX_df.copy()
                 aligned_aw_df = aw_df.copy()
                 alignment_info['rotation_matrices'].append(np.eye(3))
             
@@ -364,20 +364,20 @@ def process_paired_samples_with_alignment_lstm(training_samples, alignment_metho
                 raise ValueError(f"Unknown alignment method: {alignment_method}")
             
             aligned_aw_data.append(aligned_aw_df)
-            aligned_vicon_data.append(aligned_vicon_df)
+            aligned_AX_data.append(aligned_AX_df)
             
             # Record sample statistics
             sample_stats = {
                 'sample_id': sample['sample_id'],
                 'filename_aw': sample['filename_aw'],
-                'filename_vicon': sample['filename_vicon'],
+                'filename_AX': sample['filename_AX'],
                 'length': len(aligned_aw_df),
                 'aw_mean_accel': np.mean([aligned_aw_df['accelX'].mean(), 
                                         aligned_aw_df['accelY'].mean(), 
                                         aligned_aw_df['accelZ'].mean()]),
-                'vicon_mean_accel': np.mean([aligned_vicon_df['accelX'].mean(), 
-                                           aligned_vicon_df['accelY'].mean(), 
-                                           aligned_vicon_df['accelZ'].mean()])
+                'AX_mean_accel': np.mean([aligned_AX_df['accelX'].mean(), 
+                                           aligned_AX_df['accelY'].mean(), 
+                                           aligned_AX_df['accelZ'].mean()])
             }
             alignment_info['sample_stats'].append(sample_stats)
             
@@ -385,13 +385,14 @@ def process_paired_samples_with_alignment_lstm(training_samples, alignment_metho
             
         except Exception as e:
             logger.error(f"Error processing sample {i+1} ({sample.get('filename_aw', 'unknown')}): {str(e)}")
-            continue
+            logger.error(traceback.format_exc())
+            exit()
     
     logger.info(f"Successfully processed {len(aligned_aw_data)} samples with {alignment_method} alignment for LSTM")
-    return aligned_aw_data, aligned_vicon_data, alignment_info
+    return aligned_aw_data, aligned_AX_data, alignment_info
 
 
-def train_lstm_mapping_model(training_samples, alignment_method='rotation_matrix', 
+def train_lstm_mapping_model(training_samples, alignment_method='none', 
                            sequence_length=50, lstm_units=64, dropout_rate=0.2,
                            epochs=100, batch_size=32):
     """
@@ -409,11 +410,11 @@ def train_lstm_mapping_model(training_samples, alignment_method='rotation_matrix
     logger.info("Starting LSTM mapping model training from paired data...")
     
     # Process samples with alignment
-    aligned_aw_data, aligned_vicon_data, alignment_info = process_paired_samples_with_alignment_lstm(
+    aligned_aw_data, aligned_AX_data, alignment_info = process_paired_samples_with_alignment_lstm(
         training_samples, alignment_method
     )
     
-    if not aligned_aw_data or not aligned_vicon_data:
+    if not aligned_aw_data or not aligned_AX_data:
         raise ValueError("No successfully aligned data found for LSTM training")
     
     # Create LSTM model
@@ -424,7 +425,7 @@ def train_lstm_mapping_model(training_samples, alignment_method='rotation_matrix
     )
     
     # Prepare data for LSTM training
-    X_sequences, y_sequences = lstm_model.prepare_data(aligned_vicon_data, aligned_aw_data)
+    X_sequences, y_sequences = lstm_model.prepare_data(aligned_AX_data, aligned_aw_data)
     
     # Train the model
     training_history = lstm_model.train(
@@ -481,7 +482,7 @@ def visualize_lstm_training_history(history, save_path=None):
     plt.show()
 
 
-def test_lstm_model_on_sample(lstm_model, test_sample, alignment_method='rotation_matrix'):
+def test_lstm_model_on_sample(lstm_model, test_sample, alignment_method='none'):
     """
     Test LSTM model on a single sample
     
@@ -491,25 +492,25 @@ def test_lstm_model_on_sample(lstm_model, test_sample, alignment_method='rotatio
     @return: Prediction results and metrics
     """
     # Convert sample to DataFrames
-    aw_df, vicon_df = convert_sample_to_dataframes(test_sample)
+    aw_df, AX_df = convert_sample_to_dataframes(test_sample)
     
     # Apply same alignment as training
     if alignment_method == 'rotation_matrix':
         rotation_matrix = np.array([[ 0.58377147,  0.28237329,  0.76123334],
                                     [ 0.36897715,  0.74289845, -0.55853179],
                                     [-0.72323352,  0.60693263,  0.32949362]])
-        aligned_vicon_df = apply_rotation_matrix(vicon_df, rotation_matrix)
+        aligned_AX_df = apply_rotation_matrix(AX_df, rotation_matrix)
     elif alignment_method == 'procrustes':
-        aligned_vicon_df, _ = align_coordinate_systems_procrustes(vicon_df, aw_df)
+        aligned_AX_df, _ = align_coordinate_systems_procrustes(AX_df, aw_df)
     else:
-        aligned_vicon_df = vicon_df.copy()
+        aligned_AX_df = AX_df.copy()
     
     # Prepare input sequences
-    vicon_data = aligned_vicon_df[['accelX', 'accelY', 'accelZ']].values
-    vicon_scaled = lstm_model.scaler_input.transform(vicon_data)
+    AX_data = aligned_AX_df[['accelX', 'accelY', 'accelZ']].values
+    AX_scaled = lstm_model.scaler_input.transform(AX_data)
     
     # Create sequences
-    X_test_sequences = lstm_model.create_sequences(vicon_scaled, lstm_model.sequence_length)
+    X_test_sequences = lstm_model.create_sequences(AX_scaled, lstm_model.sequence_length)
     
     if len(X_test_sequences) == 0:
         logger.warning(f"Sample too short for sequence length {lstm_model.sequence_length}")
@@ -551,19 +552,45 @@ if __name__ == "__main__":
     print("=== LSTM映射模型训练 ===")
     
     # --- 1. 加载配对训练数据 ---
-    paired_data_path = "paired_training_data/paired_training_data.pkl"
+    paired_data_path = r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\paired_training_data\paired_training_data_ax2aw.pkl"
     
     try:
         training_samples = load_paired_training_data(paired_data_path)
         print(f"成功加载 {len(training_samples)} 个配对训练样本")
         
-        # 显示样本信息
-        print("\n配对样本概览:")
+        # 显示样本信息并分析左右手配对
+        print("\n配对样本概览 (基于左右手匹配):")
+        left_hand_count = 0
+        right_hand_count = 0
+        
         for i, sample in enumerate(training_samples[:5]):
-            print(f"  样本 {sample['sample_id']:2d}: {sample['filename_aw']:25s} <-> {sample['filename_vicon']:25s} "
+            # 检测是否为左手或右手
+            filename_aw = sample['filename_aw']
+            hand_type = "左手" if any(x in filename_aw for x in ["S0077", "S0078"]) else \
+                       "右手" if any(x in filename_aw for x in ["S0079", "S0080"]) else "未知"
+            
+            if hand_type == "左手":
+                left_hand_count += 1
+            elif hand_type == "右手":
+                right_hand_count += 1
+                
+            print(f"  样本 {sample['sample_id']:2d} ({hand_type}): {sample['filename_aw']:25s} <-> {sample['filename_AX']:25s} "
                   f"({sample['length']:4d} 数据点, {sample['duration']:.1f}秒)")
+        
         if len(training_samples) > 5:
+            # 统计剩余样本的左右手分布
+            for sample in training_samples[5:]:
+                filename_aw = sample['filename_aw']
+                if any(x in filename_aw for x in ["S0077", "S0078"]):
+                    left_hand_count += 1
+                elif any(x in filename_aw for x in ["S0079", "S0080"]):
+                    right_hand_count += 1
             print(f"  ... 还有 {len(training_samples) - 5} 个样本")
+        
+        print(f"\n左右手分布统计:")
+        print(f"  左手样本 (S0077, S0078): {left_hand_count} 个")
+        print(f"  右手样本 (S0079, S0080): {right_hand_count} 个")
+        print(f"  总计: {len(training_samples)} 个样本")
     
     except FileNotFoundError:
         print(f"错误: 找不到配对训练数据文件 {paired_data_path}")
@@ -584,7 +611,8 @@ if __name__ == "__main__":
         print(f"  {key}: {value}")
     
     # --- 3. 训练不同对齐方法的LSTM模型 ---
-    alignment_methods = ['rotation_matrix', 'procrustes', 'none']
+    # alignment_methods = ['rotation_matrix', 'procrustes', 'none']
+    alignment_methods = ['none']
     lstm_results = {}
     
     for method in alignment_methods:
@@ -599,7 +627,7 @@ if __name__ == "__main__":
             )
             
             # 保存模型
-            model_dir = f"lstm_mapping_models_{method}"
+            model_dir = rf"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\results\LSTM\ax2aw\lstm_mapping_models_{method}"
             lstm_model.save_model(model_dir)
             
             # 保存对齐信息
@@ -626,9 +654,9 @@ if __name__ == "__main__":
             print(f"  训练序列数: {metrics['n_samples']}")
             
             # 可视化训练历史
-            if lstm_model.training_history:
-                history_plot_path = os.path.join(model_dir, 'training_history.png')
-                visualize_lstm_training_history(lstm_model.training_history, history_plot_path)
+            # if lstm_model.training_history:
+            #     history_plot_path = os.path.join(model_dir, 'training_history.png')
+            #     visualize_lstm_training_history(lstm_model.training_history, history_plot_path)
             
         except Exception as e:
             print(f"使用 {method} 方法训练LSTM时出错: {str(e)}")
@@ -653,53 +681,15 @@ if __name__ == "__main__":
                 best_method = method
         
         print(f"\n最佳LSTM方法: {best_method} (R² = {best_r2:.4f})")
-        
-        # 创建性能比较图
-        methods = list(lstm_results.keys())
-        rmse_values = [lstm_results[m]['metrics']['rmse'] for m in methods]
-        r2_values = [lstm_results[m]['metrics']['r2_score'] for m in methods]
-        mae_values = [lstm_results[m]['metrics']['mae'] for m in methods]
-        
-        fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(18, 5))
-        
-        # RMSE 比较
-        ax1.bar(methods, rmse_values, color='skyblue', alpha=0.7)
-        ax1.set_title('LSTM Model RMSE Comparison')
-        ax1.set_ylabel('RMSE')
-        ax1.set_xlabel('Alignment Method')
-        for i, v in enumerate(rmse_values):
-            ax1.text(i, v + max(rmse_values)*0.01, f'{v:.4f}', ha='center', va='bottom')
-        
-        # R² Score 比较
-        ax2.bar(methods, r2_values, color='lightcoral', alpha=0.7)
-        ax2.set_title('LSTM Model R² Score Comparison')
-        ax2.set_ylabel('R² Score')
-        ax2.set_xlabel('Alignment Method')
-        ax2.set_ylim(0, 1)
-        for i, v in enumerate(r2_values):
-            ax2.text(i, v + 0.01, f'{v:.4f}', ha='center', va='bottom')
-        
-        # MAE 比较
-        ax3.bar(methods, mae_values, color='lightgreen', alpha=0.7)
-        ax3.set_title('LSTM Model MAE Comparison')
-        ax3.set_ylabel('MAE')
-        ax3.set_xlabel('Alignment Method')
-        for i, v in enumerate(mae_values):
-            ax3.text(i, v + max(mae_values)*0.01, f'{v:.4f}', ha='center', va='bottom')
-        
-        plt.tight_layout()
-        plt.savefig('lstm_model_performance_comparison.png', dpi=300, bbox_inches='tight')
-        plt.show()
-        
-        print(f"LSTM性能比较图已保存为 lstm_model_performance_comparison.png")
+
         
         # --- 5. 测试最佳LSTM模型 ---
         if best_method and len(training_samples) > 0:
             print(f"\n--- 测试最佳LSTM模型 ({best_method}) ---")
             
             best_lstm_model = lstm_results[best_method]['model']
-            # test_sample = training_samples[0]
-            test_sample = 'chopped_M1-S0077.csv'
+            test_sample = training_samples[0]
+            # test_sample = 'chopped_M1-S0077.csv'
             
             results, test_metrics = test_lstm_model_on_sample(
                 best_lstm_model, test_sample, best_method
@@ -744,9 +734,10 @@ if __name__ == "__main__":
                 axes[3].grid(True, alpha=0.3)
                 
                 plt.tight_layout()
-                plt.savefig(f'lstm_prediction_test_{best_method}.png', dpi=300, bbox_inches='tight')
+                plt.savefig(f'lstm_prediction_test_{best_method}_ax2aw.png', dpi=300, bbox_inches='tight')
+                print("测试完成，请查看结果图")
                 plt.show()
                 
-                print(f"LSTM预测结果可视化已保存为 lstm_prediction_test_{best_method}.png")
+                print(f"LSTM预测结果可视化已保存为 lstm_prediction_test_{best_method}_ax2aw.png")
     
     print("\n=== LSTM映射模型训练完成 ===")

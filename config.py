@@ -4,13 +4,13 @@ import sys
 # ------------------Log--------------------------------
 
 # Configure loguru logger with colors
-def getLogger(show_level='INFO'):
+def getLogger(show_level="INFO"):
     from loguru import logger
     logger.remove()  # Remove default handler
     logger.add( # logger to print logs to console
         sys.stderr, 
         format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level:<7}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
-        level='INFO', # 等级按照顺序从低到高为 DEBUG, INFO, SUCCESS, WARNING, ERROR
+        level=show_level.upper(), # 等级按照顺序从低到高为 DEBUG, INFO, SUCCESS, WARNING, ERROR, CRITICAL
         colorize=True
     )
     logger.add( # logger to save logs to a file
@@ -23,14 +23,13 @@ def getLogger(show_level='INFO'):
     )
 
     # Custom Level Colours
+    logger.level("DEBUG", color="<cyan>")
     logger.level("INFO", color="<blue>")
     logger.level("SUCCESS", color="<green>")
     logger.level("WARNING", color="<yellow>")
     logger.level("ERROR", color="<red>")
-    logger.level("DEBUG", color="<cyan>")
     
     return logger
-
 
 
 # ------------------Hyperparameters-------------------------
@@ -38,17 +37,20 @@ WINDOW_SIZE = 5  # seconds
 OVERLAPPING_PERCENTAGE = 0.5  # 50% overlapping
 SEED = 42 # Random seed for reproducibility
 LAB_SAMPLING_RATE = 1500  # Hz
+AX_SAMPLING_RATE = 50 # Hz
 AW_SAMPLING_RATE = 20  # Hz, Apple watch sampling rate
 
 # ------------------Mapping Configuration------------------
-ENABLE_MAPPING = False  # Enable/disable coordinate system mapping
+ENABLE_MAPPING = True  # Enable/disable coordinate system mapping
 MAPPING_ALIGNMENT_METHOD = 'none'  # Alignment method: 'none', 'rotation_matrix', 'procrustes'
 # Path to mapping model (None = auto-detect)
 if sys.platform == 'darwin':
     MAPPING_MODEL_PATH = "/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/MTWO_pipeline/mapping/results/LSTM/lstm_mapping_models_none"
 else:
-    MAPPING_MODEL_PATH = r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\results\LSTM\lstm_mapping_models_none"# Path to mapping model (None = auto-detect)
-
+    # lab to aw
+    MAPPING_MODEL_PATH_LAB2AW = r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\results\LSTM\lstm_mapping_models_none"
+    # ax to aw
+    MAPPING_MODEL_PATH_AX2AW = r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\MTWO_pipeline\mapping\results\LSTM\ax2aw\lstm_mapping_models_none"
 # ------------------Directories-----------------------------
 # -- Root directory for the project --
 # All the following directories are sub-directories under this root directory
@@ -80,7 +82,7 @@ others_dir = os.path.join(rootDir, r'Data/Others data')
 ax_data_dir = os.path.join(rootDir, r"Data/ontrack-activity-classifier/training_data")
 # - Directory of the lab data
 # lab_data_dir = os.path.join(rootDir, r"Data/OnTrack")
-lab_data_dir = os.path.join(r"Data/revised_lab_data")  # Revised lab data directory
+lab_data_dir = os.path.join(rootDir, r"Data/revised_Lab_data")  # Revised lab data directory
 # - Positions of new Transport data
 basePath = os.path.join(rootDir, "Data/MTWO_transport_0424")
 ax_newT_xsl = os.path.join(basePath, r"data_transport_index_0424.xlsx")
@@ -88,11 +90,10 @@ ax_newT_csv = os.path.join(basePath, r"data_transport_index_0424.csv")
 
 
 # -- Directory to save the trained models --
-models_dir = os.path.join(rootDir, r"saved_models/ML")
+# models_dir = os.path.join(rootDir, r"saved_models/ML")
+models_dir = os.path.join(rootDir, r'saved_models/ML/MTWO_use_all_data_after_mapping')
 # -- Directory to save the training comparison results csv --
 save_dir = os.path.join(rootDir, r'saved_models/ML/training results')
-
-
 
 
 

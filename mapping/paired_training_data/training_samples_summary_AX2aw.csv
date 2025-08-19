@@ -1,0 +1,9 @@
+Sample_ID,AW_Filename,AX_Filename,Length,Duration_seconds
+0,chopped_M1-S0077.csv,chopped_M1-S0077_filtered.csv,148,7.28220009803772
+1,chopped_M3-S0077.csv,chopped_M3-S0077_filtered.csv,214,10.711009979248047
+2,chopped_M1-S0078.csv,chopped_M1-S0078_filtered.csv,161,7.916730165481567
+3,chopped_M2-S0078.csv,chopped_M2-S0078_filtered.csv,125,6.226880073547363
+4,chopped_M3-S0078.csv,chopped_M3-S0078_filtered.csv,312,15.511409997940063
+5,chopped_M2-S0079.csv,chopped_M2-S0079_filtered.csv,277,8.604009866714478
+6,chopped_M3-S0079.csv,chopped_M3-S0079_filtered.csv,413,20.611740112304688
+7,chopped_M2-S0080.csv,chopped_M2-S0080_filtered.csv,140,6.902930021286011

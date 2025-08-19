@@ -133,7 +133,7 @@ def load_csv_data(csv_path: str, data_type: str) -> pd.DataFrame:
     Load calibration data from a CSV file.
     
     @param csv_path: Path to the CSV file containing calibration data.
-    @param data_type: Type of data, either 'aw' for Apple Watch or 'lab' for Vicon Lab.
+    @param data_type: Type of data, either 'aw' for Apple Watch or 'lab' for AX Lab.
     @return: DataFrame with columns 'accelX', 'accelY', 'accelZ', and 'accel'.
     """
     if not os.path.exists(csv_path):
@@ -197,10 +197,10 @@ def load_paired_training_data(pickle_path: str) -> list:
 
 def convert_sample_to_dataframes(sample: dict) -> tuple:
     """
-    Convert a single paired sample to AW and Vicon DataFrames
+    Convert a single paired sample to AW and AX DataFrames
     
     @param sample: Dictionary containing paired sample data
-    @return: Tuple of (aw_df, vicon_df)
+    @return: Tuple of (aw_df, AX_df)
     """
     aw_df = pd.DataFrame({
         'timestamp': sample['timestamp'],
@@ -209,14 +209,14 @@ def convert_sample_to_dataframes(sample: dict) -> tuple:
         'accelZ': sample['aw_accelZ']
     })
     
-    vicon_df = pd.DataFrame({
+    AX_df = pd.DataFrame({
         'timestamp': sample['timestamp'],
-        'accelX': sample['vicon_accelX'],
-        'accelY': sample['vicon_accelY'],
-        'accelZ': sample['vicon_accelZ']
+        'accelX': sample['AX_accelX'],
+        'accelY': sample['AX_accelY'],
+        'accelZ': sample['AX_accelZ']
     })
     
-    return aw_df, vicon_df
+    return aw_df, AX_df
 
 
 def process_paired_samples_with_alignment(training_samples: list, alignment_method: str = 'rotation_matrix') -> tuple:
@@ -225,10 +225,10 @@ def process_paired_samples_with_alignment(training_samples: list, alignment_meth
     
     @param training_samples: List of paired training samples
     @param alignment_method: Method for alignment ('rotation_matrix', 'procrustes', or 'none')
-    @return: Tuple of (aligned_aw_data_list, aligned_vicon_data_list, alignment_info)
+    @return: Tuple of (aligned_aw_data_list, aligned_AX_data_list, alignment_info)
     """
     aligned_aw_data = []
-    aligned_vicon_data = []
+    aligned_AX_data = []
     alignment_info = {
         'method': alignment_method,
         'rotation_matrices': [],
@@ -240,30 +240,30 @@ def process_paired_samples_with_alignment(training_samples: list, alignment_meth
     for i, sample in enumerate(training_samples):
         try:
             # Convert sample to DataFrames
-            aw_df, vicon_df = convert_sample_to_dataframes(sample)
+            aw_df, AX_df = convert_sample_to_dataframes(sample)
             
             # Apply coordinate system alignment
             if alignment_method == 'rotation_matrix':
                 # Calculate rotation matrix based on mean gravity vectors
-                # rotation_matrix = calculate_rotation_matrix_from_sample(vicon_df, aw_df)
+                # rotation_matrix = calculate_rotation_matrix_from_sample(AX_df, aw_df)
                 rotation_matrix = np.array([[ 0.58377147,  0.28237329,  0.76123334],
                                             [ 0.36897715,  0.74289845, -0.55853179],
                                             [-0.72323352,  0.60693263,  0.32949362]])
 
-                aligned_vicon_df = apply_rotation_matrix(vicon_df, rotation_matrix)
+                aligned_AX_df = apply_rotation_matrix(AX_df, rotation_matrix)
                 aligned_aw_df = aw_df.copy()  # AW data remains unchanged
                 alignment_info['rotation_matrices'].append(rotation_matrix)
                 
             elif alignment_method == 'procrustes':
                 # Use Procrustes analysis for alignment
-                aligned_vicon_df, rotation_matrix = align_coordinate_systems_procrustes(vicon_df, aw_df)
+                aligned_AX_df, rotation_matrix = align_coordinate_systems_procrustes(AX_df, aw_df)
                 aligned_aw_df = aw_df.copy()
                 
                 alignment_info['rotation_matrices'].append(rotation_matrix)
                 
             elif alignment_method == 'none':
                 # No alignment, use original data
-                aligned_vicon_df = vicon_df.copy()
+                aligned_AX_df = AX_df.copy()
                 aligned_aw_df = aw_df.copy()
                 alignment_info['rotation_matrices'].append(np.eye(3))
             
@@ -271,20 +271,20 @@ def process_paired_samples_with_alignment(training_samples: list, alignment_meth
                 raise ValueError(f"Unknown alignment method: {alignment_method}")
             
             aligned_aw_data.append(aligned_aw_df)
-            aligned_vicon_data.append(aligned_vicon_df)
+            aligned_AX_data.append(aligned_AX_df)
             
             # Record sample statistics
             sample_stats = {
                 'sample_id': sample['sample_id'],
                 'filename_aw': sample['filename_aw'],
-                'filename_vicon': sample['filename_vicon'],
+                'filename_AX': sample['filename_AX'],
                 'length': len(aligned_aw_df),
                 'aw_mean_accel': np.mean([aligned_aw_df['accelX'].mean(), 
                                         aligned_aw_df['accelY'].mean(), 
                                         aligned_aw_df['accelZ'].mean()]),
-                'vicon_mean_accel': np.mean([aligned_vicon_df['accelX'].mean(), 
-                                           aligned_vicon_df['accelY'].mean(), 
-                                           aligned_vicon_df['accelZ'].mean()])
+                'AX_mean_accel': np.mean([aligned_AX_df['accelX'].mean(), 
+                                           aligned_AX_df['accelY'].mean(), 
+                                           aligned_AX_df['accelZ'].mean()])
             }
             alignment_info['sample_stats'].append(sample_stats)
             
@@ -295,30 +295,30 @@ def process_paired_samples_with_alignment(training_samples: list, alignment_meth
             continue
     
     logger.info(f"Successfully processed {len(aligned_aw_data)} samples with {alignment_method} alignment")
-    return aligned_aw_data, aligned_vicon_data, alignment_info
+    return aligned_aw_data, aligned_AX_data, alignment_info
 
 
-def calculate_rotation_matrix_from_sample(vicon_df: pd.DataFrame, aw_df: pd.DataFrame) -> np.ndarray:
+def calculate_rotation_matrix_from_sample(AX_df: pd.DataFrame, aw_df: pd.DataFrame) -> np.ndarray:
     """
     Calculate rotation matrix from a single paired sample using mean acceleration vectors
     
-    @param vicon_df: Vicon data DataFrame
+    @param AX_df: AX data DataFrame
     @param aw_df: Apple Watch data DataFrame
     @return: 3x3 rotation matrix
     """
-    vicon_accel = vicon_df[['accelX', 'accelY', 'accelZ']].values
+    AX_accel = AX_df[['accelX', 'accelY', 'accelZ']].values
     aw_accel = aw_df[['accelX', 'accelY', 'accelZ']].values
     
     # Calculate mean acceleration vectors (representing gravity direction)
-    vicon_vec = np.mean(vicon_accel, axis=0)
+    AX_vec = np.mean(AX_accel, axis=0)
     aw_vec = np.mean(aw_accel, axis=0)
     
     # Normalize vectors
-    vicon_vec = vicon_vec / np.linalg.norm(vicon_vec)
+    AX_vec = AX_vec / np.linalg.norm(AX_vec)
     aw_vec = aw_vec / np.linalg.norm(aw_vec)
     
     # Calculate rotation matrix using scipy
-    rot_obj, rmsd = R_scipy.align_vectors([vicon_vec], [aw_vec])
+    rot_obj, rmsd = R_scipy.align_vectors([AX_vec], [aw_vec])
     rotation_matrix = rot_obj.as_matrix()
     
     return rotation_matrix
@@ -335,26 +335,26 @@ def train_mapping_model_from_paired_data(training_samples: list, alignment_metho
     logger.info("Starting mapping model training from paired data...")
     
     # Process samples with alignment
-    aligned_aw_data, aligned_vicon_data, alignment_info = process_paired_samples_with_alignment(
+    aligned_aw_data, aligned_AX_data, alignment_info = process_paired_samples_with_alignment(
         training_samples, alignment_method
     )
     
-    if not aligned_aw_data or not aligned_vicon_data:
+    if not aligned_aw_data or not aligned_AX_data:
         raise ValueError("No successfully aligned data found for training")
     
     # Combine all aligned data for training
-    all_vicon_features = []
+    all_AX_features = []
     all_aw_targets = []
     
-    for vicon_df, aw_df in zip(aligned_vicon_data, aligned_aw_data):
-        vicon_features = vicon_df[['accelX', 'accelY', 'accelZ']].values
+    for AX_df, aw_df in zip(aligned_AX_data, aligned_aw_data):
+        AX_features = AX_df[['accelX', 'accelY', 'accelZ']].values
         aw_targets = aw_df[['accelX', 'accelY', 'accelZ']].values
         
-        all_vicon_features.append(vicon_features)
+        all_AX_features.append(AX_features)
         all_aw_targets.append(aw_targets)
     
     # Stack all data
-    X = np.vstack(all_vicon_features)  # Vicon data as input
+    X = np.vstack(all_AX_features)  # AX data as input
     y = np.vstack(all_aw_targets)      # AW data as target
     
     logger.info(f"Training data shape: X={X.shape}, y={y.shape}")
@@ -402,7 +402,7 @@ def visualise(data, show=True, title="Acceleration Data"):
 
 # ---------------------------------------
 AW_SAMPLING_RATE = 20 # Hz, Apple Watch sampling rate
-LAB_SAMPLING_RATE = 1500 # Hz, Vicon original sampling rate
+LAB_SAMPLING_RATE = 1500 # Hz, AX original sampling rate
 CUTOFF_FREQ = 5 # Hz, Low-pass filter cutoff frequency
 # ---------------------------------------
 
@@ -524,41 +524,41 @@ def align_coordinate_systems_procrustes(source_df: pd.DataFrame, target_df: pd.D
     aligned_df[['accelX', 'accelY', 'accelZ']] = aligned_source_accel
     return aligned_df, R # 返回旋转后的数据和旋转矩阵
 
-def calculate_rotation_matrix_from_flat_pose(vicon_flat_df, aw_flat_df):
+def calculate_rotation_matrix_from_flat_pose(AX_flat_df, aw_flat_df):
     """
-    根据平躺姿态数据计算从Vicon到Apple Watch的旋转矩阵。
+    根据平躺姿态数据计算从AX到Apple Watch的旋转矩阵。
     假设在平躺姿态下，两个设备都静止，且各自的Z轴都近似指向（或反向指向）重力方向。
     更通用的方法是，两个设备的Y轴（通常是设备的前向）都指向某个共同的固定方向（例如受试者头部）。
     
     这里我们使用重力向量作为参考：
-    - Vicon的平均重力向量 (vicon_vec)
+    - AX的平均重力向量 (AX_vec)
     - Apple Watch的平均重力向量 (aw_vec)
-    我们将计算一个旋转矩阵，使得 vicon_vec 旋转后与 aw_vec 方向一致。
+    我们将计算一个旋转矩阵，使得 AX_vec 旋转后与 aw_vec 方向一致。
     
     更精确的校准会使用多于一个姿态，但平躺是最简单的单姿态校准。
     
-    返回一个3x3的旋转矩阵 R，使得 `R @ vicon_accel` 能够对齐到 aw_accel 的坐标系。
+    返回一个3x3的旋转矩阵 R，使得 `R @ AX_accel` 能够对齐到 aw_accel 的坐标系。
     """
-    vicon_accel_flat = vicon_flat_df[['accelX', 'accelY', 'accelZ']].values
+    AX_accel_flat = AX_flat_df[['accelX', 'accelY', 'accelZ']].values
     aw_accel_flat = aw_flat_df[['accelX', 'accelY', 'accelZ']].values
 
     # 计算平均加速度向量 (代表重力方向在各自坐标系下的投影)
-    vicon_vec = np.mean(vicon_accel_flat, axis=0)
+    AX_vec = np.mean(AX_accel_flat, axis=0)
     aw_vec = np.mean(aw_accel_flat, axis=0)
 
     # 归一化向量 (只关心方向)
-    vicon_vec = vicon_vec / np.linalg.norm(vicon_vec)
+    AX_vec = AX_vec / np.linalg.norm(AX_vec)
     aw_vec = aw_vec / np.linalg.norm(aw_vec)
 
     print()
-    print("Vicon source vector:", vicon_vec)
+    print("AX source vector:", AX_vec)
     print("Apple Watch target vector:", aw_vec)
     print()
 
-    # 计算旋转矩阵（将 vicon_vec 旋转到 aw_vec）
+    # 计算旋转矩阵（将 AX_vec 旋转到 aw_vec）
     # 使用 scipy.spatial.transform.Rotation.align_vectors
     # 它能找到将一组向量旋转到另一组向量的最佳旋转
-    rot_obj, rmsd = R_scipy.align_vectors([vicon_vec], [aw_vec])
+    rot_obj, rmsd = R_scipy.align_vectors([AX_vec], [aw_vec])
     rotation_matrix = rot_obj.as_matrix()
     print(f"[Rotation Matrix] RMSD (Root Mean Square Deviation): {rmsd:.4f}")
     return rotation_matrix
@@ -635,13 +635,13 @@ def align_with_dtw(series1: np.ndarray, series2: np.ndarray):
     return alignment
 
 # --- 4. 映射模型训练函数 ---
-def train_mapping_model(aligned_vicon_accel: pd.DataFrame, aligned_aw_accel: pd.DataFrame) -> LinearRegression:
+def train_mapping_model(aligned_AX_accel: pd.DataFrame, aligned_aw_accel: pd.DataFrame) -> LinearRegression:
     """
-    训练一个线性回归模型，将Vicon加速度映射到Apple Watch加速度。
-    输入为Vicon数据，输出为Apple Watch数据。
+    训练一个线性回归模型，将AX加速度映射到Apple Watch加速度。
+    输入为AX数据，输出为Apple Watch数据。
     """
     # 将输入数据转换为 (n_samples, n_features) 形状
-    X = aligned_vicon_accel[['accelX', 'accelY', 'accelZ']].values  # 输入是Vicon数据
+    X = aligned_AX_accel[['accelX', 'accelY', 'accelZ']].values  # 输入是AX数据
     y = aligned_aw_accel[['accelX', 'accelY', 'accelZ']].values     # 目标是Apple Watch的XYZ
 
     # 训练多输出线性回归模型
@@ -653,7 +653,7 @@ def train_mapping_model(aligned_vicon_accel: pd.DataFrame, aligned_aw_accel: pd.
     rmse = np.sqrt(mean_squared_error(y, y_pred))
     r2 = r2_score(y, y_pred)
     
-    print(f"Mapping Model Training Result (Vicon -> Apple Watch):")
+    print(f"Mapping Model Training Result (AX -> Apple Watch):")
     print(f"RMSE: {rmse:.4f}")
     print(f"R^2 Score: {r2:.4f}")
     
@@ -677,7 +677,7 @@ if __name__ == "__main__":
         # 显示样本信息
         print("\n配对样本概览:")
         for i, sample in enumerate(training_samples[:5]):  # 显示前5个样本
-            print(f"  样本 {sample['sample_id']:2d}: {sample['filename_aw']:25s} <-> {sample['filename_vicon']:25s} "
+            print(f"  样本 {sample['sample_id']:2d}: {sample['filename_aw']:25s} <-> {sample['filename_AX']:25s} "
                   f"({sample['length']:4d} 数据点, {sample['duration']:.1f}秒)")
         if len(training_samples) > 5:
             print(f"  ... 还有 {len(training_samples) - 5} 个样本")
@@ -800,29 +800,29 @@ if __name__ == "__main__":
         
         # 使用第一个训练样本进行测试演示
         test_sample = training_samples[0]
-        aw_df, vicon_df = convert_sample_to_dataframes(test_sample)
+        aw_df, AX_df = convert_sample_to_dataframes(test_sample)
         
         # 应用相同的对齐方法
         if best_method == 'rotation_matrix':
-            rotation_matrix = calculate_rotation_matrix_from_sample(vicon_df, aw_df)
-            aligned_vicon_df = apply_rotation_matrix(vicon_df, rotation_matrix)
+            rotation_matrix = calculate_rotation_matrix_from_sample(AX_df, aw_df)
+            aligned_AX_df = apply_rotation_matrix(AX_df, rotation_matrix)
         elif best_method == 'procrustes':
-            aligned_vicon_df, _ = align_coordinate_systems_procrustes(vicon_df, aw_df)
+            aligned_AX_df, _ = align_coordinate_systems_procrustes(AX_df, aw_df)
         else:
-            aligned_vicon_df = vicon_df.copy()
+            aligned_AX_df = AX_df.copy()
         
         # 进行预测
-        vicon_input = aligned_vicon_df[['accelX', 'accelY', 'accelZ']].values
+        AX_input = aligned_AX_df[['accelX', 'accelY', 'accelZ']].values
         
         # 检查模型类型并进行相应的预测
         if isinstance(best_model, list):
             # SVR 模型列表，需要为每个轴分别预测
-            aw_pred = np.zeros((vicon_input.shape[0], 3))
+            aw_pred = np.zeros((AX_input.shape[0], 3))
             for i, svr_model in enumerate(best_model):
-                aw_pred[:, i] = svr_model.predict(vicon_input)
+                aw_pred[:, i] = svr_model.predict(AX_input)
         else:
             # 单一模型（如 LinearRegression）
-            aw_pred = best_model.predict(vicon_input)
+            aw_pred = best_model.predict(AX_input)
         
         aw_true = aw_df[['accelX', 'accelY', 'accelZ']].values
         
@@ -878,19 +878,19 @@ if __name__ == "__main__":
     print("--- 0. 加载平躺姿态数据 ---")
     # root_dir = '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/lying_data/'
     root_dir = r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\lying_data\\"
-    flat_vicon_filepath = root_dir + 'L05 Lying01.c3d.ontrackclassifier.joblib'
-    vicon_flat_data_raw = load_lab_file(flat_vicon_filepath, side='right')
-    flat_aw_filepath = root_dir + 'GERF-L-D524-M3-S0041.csv' # self collected Apple Watch data, with the same lying pose as vicon.
+    flat_AX_filepath = root_dir + 'L05 Lying01.c3d.ontrackclassifier.joblib'
+    AX_flat_data_raw = load_lab_file(flat_AX_filepath, side='right')
+    flat_aw_filepath = root_dir + 'GERF-L-D524-M3-S0041.csv' # self collected Apple Watch data, with the same lying pose as AX.
     aw_flat_data_raw = load_aw_file(flat_aw_filepath)
 
     # 可视化平躺姿态数据，并根据可视化结果粗略截取apple watch数据，使得两者的时间长度大体一致
-    # visualise(vicon_flat_data_raw, title="Vicon Flat Pose Data")
+    # visualise(AX_flat_data_raw, title="AX Flat Pose Data")
     # visualise(aw_flat_data_raw, title="Apple Watch Flat Pose Data")
     # exit()
 
     # 手动截取
-    vicon_flat_data_raw = vicon_flat_data_raw[(vicon_flat_data_raw['timestamp'] >= 2) & (vicon_flat_data_raw['timestamp'] <= 39)]
-    vicon_flat_data_raw['timestamp'] -= vicon_flat_data_raw['timestamp'].min() # 将vicon的时间戳转换为相对时间（从0开始）
+    AX_flat_data_raw = AX_flat_data_raw[(AX_flat_data_raw['timestamp'] >= 2) & (AX_flat_data_raw['timestamp'] <= 39)]
+    AX_flat_data_raw['timestamp'] -= AX_flat_data_raw['timestamp'].min() # 将AX的时间戳转换为相对时间（从0开始）
     # 将aw的所有加速度从g转化为m/s^2
     aw_flat_data_raw['accelX'] *= 9.81
     aw_flat_data_raw['accelY'] *= 9.81
@@ -899,33 +899,33 @@ if __name__ == "__main__":
     aw_flat_data_raw['timestamp'] -= aw_flat_data_raw['timestamp'].min() # 将aw的时间戳转换为相对时间（从0开始）
 
     # 对平躺姿态数据进行预处理（降采样到目标采样率）；因为load data的时候已经过滤过了所以filtered=False
-    vicon_flat_processed = preprocess_acceleration_data(
-        vicon_flat_data_raw, LAB_SAMPLING_RATE, AW_SAMPLING_RATE, CUTOFF_FREQ, filtered=False
+    AX_flat_processed = preprocess_acceleration_data(
+        AX_flat_data_raw, LAB_SAMPLING_RATE, AW_SAMPLING_RATE, CUTOFF_FREQ, filtered=False
     )
     aw_flat_processed = preprocess_acceleration_data(
         aw_flat_data_raw, AW_SAMPLING_RATE, AW_SAMPLING_RATE, CUTOFF_FREQ, filtered=False
     )
 
     # plt.subplot(2, 1, 1)
-    # visualise(vicon_flat_processed, show=False, title="Vicon Flat Pose Processed Data")
+    # visualise(AX_flat_processed, show=False, title="AX Flat Pose Processed Data")
     # plt.subplot(2, 1, 2)
     # plt.tight_layout()
     # visualise(aw_flat_processed, title="Apple Watch Flat Pose Processed Data")
 
 
     print("\n--- 1. 计算坐标系旋转矩阵 ---")
-    # Vicon 是源设备，Apple Watch 是目标设备
-    rotation_matrix_vicon_to_aw = calculate_rotation_matrix_from_flat_pose(
-        vicon_flat_processed, aw_flat_processed
+    # AX 是源设备，Apple Watch 是目标设备
+    rotation_matrix_AX_to_aw = calculate_rotation_matrix_from_flat_pose(
+        AX_flat_processed, aw_flat_processed
     )
-    print("旋转矩阵计算完成 (Vicon -> Apple Watch):", rotation_matrix_vicon_to_aw)
+    print("旋转矩阵计算完成 (AX -> Apple Watch):", rotation_matrix_AX_to_aw)
 
     exit()
     """
     
     # --- 1. 定义坐标系旋转矩阵 ---
     # 这里的旋转矩阵已经由上面的代码基于平躺姿态数据计算得到
-    rotation_matrix_vicon_to_aw = np.array([[ 0.58377147,  0.28237329,  0.76123334],
+    rotation_matrix_AX_to_aw = np.array([[ 0.58377147,  0.28237329,  0.76123334],
                                             [ 0.36897715,  0.74289845, -0.55853179],
                                             [-0.72323352,  0.60693263,  0.32949362]])
 
@@ -933,42 +933,42 @@ if __name__ == "__main__":
     # --- 2. 加载运动数据 ---
     # calib_data_dir = '/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/Calibration Data/'
     calib_data_dir = r"E:\Raine\OneDrive - Imperial College London\IC\70007 Individual Project\Data\Calibration Data\\"
-    motion_vicon_filepath = os.path.join(calib_data_dir, 'Lab/LabChopped/chopped_right_M2TestingDrinking03.csv')
+    motion_AX_filepath = os.path.join(calib_data_dir, 'Lab/LabChopped/chopped_right_M2TestingDrinking03.csv')
     motion_aw_filepath = os.path.join(calib_data_dir, 'AppleWatch/AW_Chopped/chopped_M2-S0079.csv')
-    vicon_motion_data_raw = load_csv_data(motion_vicon_filepath, data_type='lab')
+    AX_motion_data_raw = load_csv_data(motion_AX_filepath, data_type='lab')
     aw_motion_data_raw = load_aw_file(motion_aw_filepath)
 
-    print(f"Vicon 运动数据点数: {len(vicon_motion_data_raw)}")
+    print(f"AX 运动数据点数: {len(AX_motion_data_raw)}")
     print(f"Apple Watch 运动数据点数: {len(aw_motion_data_raw)}")
     
     # --- 3. 预处理运动数据 ---
-    vicon_motion_processed = preprocess_acceleration_data(
-        vicon_motion_data_raw, LAB_SAMPLING_RATE, AW_SAMPLING_RATE, CUTOFF_FREQ
+    AX_motion_processed = preprocess_acceleration_data(
+        AX_motion_data_raw, LAB_SAMPLING_RATE, AW_SAMPLING_RATE, CUTOFF_FREQ
     )
     aw_motion_processed = preprocess_acceleration_data(
         aw_motion_data_raw, AW_SAMPLING_RATE, AW_SAMPLING_RATE, CUTOFF_FREQ
     )
     
     # 对预处理后的数据进行归一化 (可选，但在某些情况下对DTW和映射有帮助)
-    vicon_motion_normalized, vicon_scaler = normalize_data(vicon_motion_processed, type='vicon')
+    AX_motion_normalized, AX_scaler = normalize_data(AX_motion_processed, type='AX')
     aw_motion_normalized, aw_scaler = normalize_data(aw_motion_processed, type='aw')
 
-    print(f"Vicon 归一化后数据点数 ({AW_SAMPLING_RATE}Hz): {len(vicon_motion_normalized)}")
+    print(f"AX 归一化后数据点数 ({AW_SAMPLING_RATE}Hz): {len(AX_motion_normalized)}")
     print(f"Apple Watch 归一化后数据点数 ({AW_SAMPLING_RATE}Hz): {len(aw_motion_normalized)}")
 
     # --- 4. 应用坐标系旋转 ---
-    # 将 Vicon 运动数据旋转到 Apple Watch 的坐标系
-    vicon_motion_rotated = apply_rotation_matrix(vicon_motion_normalized, rotation_matrix_vicon_to_aw)
+    # 将 AX 运动数据旋转到 Apple Watch 的坐标系
+    AX_motion_rotated = apply_rotation_matrix(AX_motion_normalized, rotation_matrix_AX_to_aw)
     aw_motion_rotated = aw_motion_normalized.copy()  # Apple Watch数据不需要旋转
     
-    # 如果需要，进行左右手镜像处理 (例如，Vicon在右手，AW在左手)
-    # vicon_motion_rotated = mirror_data_for_hand(vicon_motion_rotated, hand_type='right')
+    # 如果需要，进行左右手镜像处理 (例如，AX在右手，AW在左手)
+    # AX_motion_rotated = mirror_data_for_hand(AX_motion_rotated, hand_type='right')
 
 
     # --- 5. 初始时间对齐 (粗略对齐) ---
     # 手动进行粗略对齐！
-    valid_start, valid_end = 0, len(vicon_motion_rotated) # 暂且使用整个数据段
-    vicon_accel_for_dtw = vicon_motion_rotated[['accelX', 'accelY', 'accelZ']].values[valid_start:valid_end]
+    valid_start, valid_end = 0, len(AX_motion_rotated) # 暂且使用整个数据段
+    AX_accel_for_dtw = AX_motion_rotated[['accelX', 'accelY', 'accelZ']].values[valid_start:valid_end]
     valid_start, valid_end = 0, len(aw_motion_rotated)
     aw_accel_for_dtw = aw_motion_rotated[['accelX', 'accelY', 'accelZ']].values[valid_start:valid_end]
 
@@ -976,22 +976,22 @@ if __name__ == "__main__":
     # --- 6. 精细时间对齐 (DTW) ---
     print("\n--- 精细时间对齐 (DTW) ---")
     # DTW 对齐坐标系后的数据
-    alignment_result = align_with_dtw(vicon_accel_for_dtw, aw_accel_for_dtw)
+    alignment_result = align_with_dtw(AX_accel_for_dtw, aw_accel_for_dtw)
     
     print(f"DTW 距离: {alignment_result.distance:.4f}")
 
     # 获取对齐后的序列（通过 DTW 路径重新采样）
-    aligned_vicon_series = vicon_accel_for_dtw[alignment_result.index1]
+    aligned_AX_series = AX_accel_for_dtw[alignment_result.index1]
     aligned_aw_series = aw_accel_for_dtw[alignment_result.index2]
 
-    print(f"DTW 对齐后 Vicon 序列长度: {len(aligned_vicon_series)}")
+    print(f"DTW 对齐后 AX 序列长度: {len(aligned_AX_series)}")
     print(f"DTW 对齐后 Apple Watch 序列长度: {len(aligned_aw_series)}")
 
     # 可视化对齐效果
     fig, axs = plt.subplots(2, 2, figsize=(14, 10))
     axis_labels = ['X', 'Y', 'Z']
     for i, ax in enumerate(axs.flat[:3]):
-        ax.plot(aligned_vicon_series[:, i], label=f'Vicon {axis_labels[i]}-axis (DTW Aligned, Rotated)')
+        ax.plot(aligned_AX_series[:, i], label=f'AX {axis_labels[i]}-axis (DTW Aligned, Rotated)')
         ax.plot(aligned_aw_series[:, i], label=f'Apple Watch {axis_labels[i]}-axis (DTW Aligned)', linestyle='--')
         ax.set_title(f"{axis_labels[i]}-axis Acceleration after DTW Alignment")
         ax.set_xlabel("Aligned Sample Index")
@@ -999,9 +999,9 @@ if __name__ == "__main__":
         ax.legend()
         ax.grid(True)
     # 合成加速度
-    vicon_magnitude = np.linalg.norm(aligned_vicon_series, axis=1)
+    AX_magnitude = np.linalg.norm(aligned_AX_series, axis=1)
     aw_magnitude = np.linalg.norm(aligned_aw_series, axis=1)
-    axs[1, 1].plot(vicon_magnitude, label='Vicon Magnitude (DTW Aligned, Rotated)')
+    axs[1, 1].plot(AX_magnitude, label='AX Magnitude (DTW Aligned, Rotated)')
     axs[1, 1].plot(aw_magnitude, label='Apple Watch Magnitude (DTW Aligned)', linestyle='--')
     axs[1, 1].set_title("Magnitude Acceleration after DTW Alignment")
     axs[1, 1].set_xlabel("Aligned Sample Index")
@@ -1014,33 +1014,33 @@ if __name__ == "__main__":
     # --- 7. 映射模型训练 ---
     print("\n--- 7. 映射模型训练 ---")
     # 使用DTW对齐后的数据训练映射模型
-    mapping_model = train_mapping_model(pd.DataFrame(aligned_vicon_series, columns=['accelX','accelY','accelZ']), 
+    mapping_model = train_mapping_model(pd.DataFrame(aligned_AX_series, columns=['accelX','accelY','accelZ']), 
                                         pd.DataFrame(aligned_aw_series, columns=['accelX','accelY','accelZ']))
     
     # 保存模型
-    model_save_path = './mapping/cache/mapping_model_vicon_to_aw.joblib'
+    model_save_path = './mapping/cache/mapping_model_AX_to_aw.joblib'
     joblib.dump(mapping_model, model_save_path)
-    print(f"映射模型已保存到: {model_save_path} (Vicon -> Apple Watch)")
+    print(f"映射模型已保存到: {model_save_path} (AX -> Apple Watch)")
     
     exit()
     
 
     # --- 8. 映射模型应用示例 ---
     print("\n--- 8. 映射模型应用示例 ---")
-    # 因为Vicon是高精度设备，我们假设它是“源”或“输入”，Apple Watch是“目标”或“输出”
+    # 因为AX是高精度设备，我们假设它是“源”或“输入”，Apple Watch是“目标”或“输出”
     # 加载mapping_model
     mapping_model = joblib.load('mapping_model.joblib')
     
-    # 从 aligned_vicon_series 中取一些点进行预测演示
-    sample_vicon_input = load_calib_lab('/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/Calibration Data/Lab/LabChopped/chopped_right_M2TestingReading02.csv')
-    sample_vicon_input = preprocess_acceleration_data(sample_vicon_input, LAB_SAMPLING_RATE, AW_SAMPLING_RATE, CUTOFF_FREQ)
+    # 从 aligned_AX_series 中取一些点进行预测演示
+    sample_AX_input = load_calib_lab('/Users/yufeng/Library/CloudStorage/OneDrive-ImperialCollegeLondon/IC/70007 Individual Project/Data/Calibration Data/Lab/LabChopped/chopped_right_M2TestingReading02.csv')
+    sample_AX_input = preprocess_acceleration_data(sample_AX_input, LAB_SAMPLING_RATE, AW_SAMPLING_RATE, CUTOFF_FREQ)
     # normalize the sample input using the scaler
     scaler = joblib.load('scaler.joblib')
-    sample_vicon_input = scaler.transform(sample_vicon_input[['accelX', 'accelY', 'accelZ']])
-    sample_vicon_input = pd.DataFrame(sample_vicon_input, columns=['accelX', 'accelY', 'accelZ'])
-    predicted_aw_accel = mapping_model.predict(sample_vicon_input)
+    sample_AX_input = scaler.transform(sample_AX_input[['accelX', 'accelY', 'accelZ']])
+    sample_AX_input = pd.DataFrame(sample_AX_input, columns=['accelX', 'accelY', 'accelZ'])
+    predicted_aw_accel = mapping_model.predict(sample_AX_input)
 
-    print(f"Vicon 输入:\n{sample_vicon_input}")
+    print(f"AX 输入:\n{sample_AX_input}")
     print(f"预测的 Apple Watch 加速度:\n{predicted_aw_accel}")
     
     # 与真实的 Apple Watch 对齐数据进行比较

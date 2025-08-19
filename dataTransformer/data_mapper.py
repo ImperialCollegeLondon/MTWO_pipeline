@@ -371,7 +371,7 @@ def apply_mapping_to_loaded_data(movement_data: Union[List[pd.DataFrame], np.nda
                                 walking_data: Union[List[pd.DataFrame], np.ndarray] = None,
                                 alignment_method: str = 'none',
                                 model_path: Optional[str] = None,
-                                model_type: str = 'auto') -> tuple:
+                                model_type: str = 'lstm') -> tuple:
     """
     Apply mapping transformation to loaded data.
     
@@ -417,6 +417,7 @@ def apply_mapping_to_loaded_data(movement_data: Union[List[pd.DataFrame], np.nda
             transport_transformed = mapper.transform_dataframe_list(transport_data)
         else:
             transport_transformed = mapper.transform_array(transport_data)
+            
     
     # Transform walking data if provided
     walking_transformed = None

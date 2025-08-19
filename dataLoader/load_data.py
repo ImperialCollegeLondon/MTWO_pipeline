@@ -91,16 +91,35 @@ def load_data(data_dir:str, useFilter=True) -> np.array:
         data_list.append(df)
     return data_list
 
-def load_data_from_original_sources(ax=True, lab=True, loadNewTransport=False) -> tuple:
-    """Load the data from original sources (AX and LAB data).
-    Set loadNewTransport to True to include new transport data.
-    Return type: list[pd.Dataframe]"""
-    from config import basePath, ax_newT_xsl, ax_newT_csv
-    from dataLoader.load_ax_data import load_ax_data
+def load_new_transport():
+    """
+    Load the new TRANSPORT data collected by Apple Watch
+    """
     from dataLoader.load_new_transport_data import load_new_transport_data
+    from config import basePath, ax_newT_xsl, ax_newT_csv
+    new_transport_data = load_new_transport_data(basePath=basePath, excel_path=ax_newT_xsl, csvPath=ax_newT_csv)
+    if new_transport_data:
+        logger.success("New transport data loaded successfully.")
+        return np.array(new_transport_data)
+    else:
+        logger.error("No new transport data found or loaded.")
+        exit()
+
+def load_lab_walking():
+    from dataLoader.load_lab_data import load_lab_walking_data
+    walking_data_list =  load_lab_walking_data()
+    return np.array(walking_data_list)
+
+
+def load_data_from_original_sources(ax=True, lab=True) -> tuple:
+    """Load the data from AXIVITY and/or LAB data).
+    Return type: list[pd.Dataframe]"""
+    
+    from dataLoader.load_ax_data import load_ax_data
     from dataLoader.load_lab_data import load_lab_data
 
     if ax and not lab:
+        logger.warning("Loading AXIVITY data only.")
         ax_m, ax_t, ax_w, ax_o = load_ax_data()
         ax_m = combine(ax_m, None)
         ax_t = combine(ax_t, None)
@@ -108,27 +127,16 @@ def load_data_from_original_sources(ax=True, lab=True, loadNewTransport=False) -
         ax_o = combine(ax_o, None)
         return ax_m, ax_t, ax_w, ax_o
     if lab and not ax:
+        logger.warning("Loading LAB data only.")
         lab_m, lab_o = load_lab_data()
-        logger.warning("There is only movement and others data available from lab data.")
         lab_m = combine(lab_m, None)
         lab_o = combine(lab_o, None)
         return lab_m, None, None, lab_o
-    
-    new_transport_data = None
-    if loadNewTransport:
-        new_transport_data = load_new_transport_data(basePath=basePath, excel_path=ax_newT_xsl, csvPath=ax_newT_csv)
-        if new_transport_data is not None:
-            logger.success("New transport data loaded successfully.")
-        else:
-            logger.warning("No new transport data found or loaded.")
 
     ax_m, ax_t, ax_w, ax_o = load_ax_data()
     lab_m, lab_o = load_lab_data()
     movement = combine(ax_m, lab_m)
-    transport = combine(ax_t, new_transport_data)
-    logger.debug(f"Before combine new_transport_data: ax_t length = {len(ax_t) if ax_t is not None else 'None'}")
-    logger.debug(f"new_transport_data length = {len(new_transport_data) if new_transport_data is not None else 'None'}")
-    logger.debug(f"After combine new_transport_data: transport length = {len(transport) if transport is not None else 'None'}")
+    transport = combine(ax_t, None)
     walking = combine(ax_w, None)
     other = combine(ax_o, lab_o)
 

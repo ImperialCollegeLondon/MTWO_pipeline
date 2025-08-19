@@ -6,33 +6,10 @@ import datetime
 import pandas as pd
 import os
 import sys
-from loguru import logger
 from joblib import Parallel, delayed
 from itertools import chain
-
-# Configure loguru logger with colors
-logger.remove()  # Remove default handler
-logger.add(
-    sys.stderr, 
-    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
-    level="DEBUG",
-    colorize=True
-)
-logger.add(
-    "logs/load_new_transport_data_{time:YYYY-MM-DD}.log", 
-    rotation="1 day", 
-    retention="7 days", 
-    format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}",
-    level="DEBUG",
-    colorize=False
-)
-
-# 自定义级别颜色
-logger.level("INFO", color="<blue>")
-logger.level("SUCCESS", color="<green>")
-logger.level("WARNING", color="<yellow>")
-logger.level("ERROR", color="<red>")
-logger.level("DEBUG", color="<cyan>")
+from config import getLogger
+logger = getLogger()
 
 # Add the parent directory to the Python path to import config and sliding window transformer
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
